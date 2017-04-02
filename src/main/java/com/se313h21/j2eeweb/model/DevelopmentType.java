@@ -8,7 +8,6 @@ package com.se313h21.j2eeweb.model;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,16 +38,12 @@ public class DevelopmentType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
     @Size(max = 64)
-    @Column(name = "code")
     private String code;
     @Size(max = 128)
-    @Column(name = "name")
     private String name;
     @Size(max = 256)
-    @Column(name = "description")
     private String description;
     @OneToMany(mappedBy = "developmentTypeId")
     private Collection<SeekingJob> seekingJobCollection;

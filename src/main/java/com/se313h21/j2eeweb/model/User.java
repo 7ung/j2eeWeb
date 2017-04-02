@@ -7,10 +7,8 @@ package com.se313h21.j2eeweb.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,9 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,71 +29,44 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Stevie
  */
 @Entity
-@Table(name = "user")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
-    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-    @NamedQuery(name = "User.findByEmailConfirmToken", query = "SELECT u FROM User u WHERE u.emailConfirmToken = :emailConfirmToken"),
-    @NamedQuery(name = "User.findByEmailConfirmTokenExpired", query = "SELECT u FROM User u WHERE u.emailConfirmTokenExpired = :emailConfirmTokenExpired"),
-    @NamedQuery(name = "User.findByPasswordRemindToken", query = "SELECT u FROM User u WHERE u.passwordRemindToken = :passwordRemindToken"),
-    @NamedQuery(name = "User.findByPasswordRemindExpired", query = "SELECT u FROM User u WHERE u.passwordRemindExpired = :passwordRemindExpired"),
-    @NamedQuery(name = "User.findByAccessToken", query = "SELECT u FROM User u WHERE u.accessToken = :accessToken"),
-    @NamedQuery(name = "User.findByAccessTokenExpired", query = "SELECT u FROM User u WHERE u.accessTokenExpired = :accessTokenExpired")})
+    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")})
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 32)
-    @Column(name = "username")
     private String username;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 32)
-    @Column(name = "password")
     private String password;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 128)
-    @Column(name = "email")
     private String email;
-    @Size(max = 64)
-    @Column(name = "email_confirm_token")
-    private String emailConfirmToken;
-    @Column(name = "email_confirm_token_expired")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date emailConfirmTokenExpired;
-    @Size(max = 64)
-    @Column(name = "password_remind_token")
-    private String passwordRemindToken;
-    @Column(name = "password_remind_expired")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date passwordRemindExpired;
-    @Size(max = 64)
-    @Column(name = "access_token")
-    private String accessToken;
-    @Column(name = "access_token_expired")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date accessTokenExpired;
     @ManyToMany(mappedBy = "userCollection")
     private Collection<Experience> experienceCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Image> imageCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Collection<UserSeekingJob> userSeekingJobCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Subject> subjectCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Profile> profileCollection;
+    @OneToMany(mappedBy = "userId")
+    private Collection<SeekingJob> seekingJobCollection;
+    @OneToMany(mappedBy = "userId")
+    private Collection<AccessToken> accessTokenCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Collection<UserTagBookmark> userTagBookmarkCollection;
     @OneToMany(mappedBy = "userId")
@@ -112,9 +80,6 @@ public class User implements Serializable {
     @JoinColumn(name = "user_role_id", referencedColumnName = "id")
     @ManyToOne
     private UserRole userRoleId;
-    @JoinColumn(name = "user_status_id", referencedColumnName = "id")
-    @ManyToOne
-    private UserStatus userStatusId;
 
     public User() {
     }
@@ -162,54 +127,6 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getEmailConfirmToken() {
-        return emailConfirmToken;
-    }
-
-    public void setEmailConfirmToken(String emailConfirmToken) {
-        this.emailConfirmToken = emailConfirmToken;
-    }
-
-    public Date getEmailConfirmTokenExpired() {
-        return emailConfirmTokenExpired;
-    }
-
-    public void setEmailConfirmTokenExpired(Date emailConfirmTokenExpired) {
-        this.emailConfirmTokenExpired = emailConfirmTokenExpired;
-    }
-
-    public String getPasswordRemindToken() {
-        return passwordRemindToken;
-    }
-
-    public void setPasswordRemindToken(String passwordRemindToken) {
-        this.passwordRemindToken = passwordRemindToken;
-    }
-
-    public Date getPasswordRemindExpired() {
-        return passwordRemindExpired;
-    }
-
-    public void setPasswordRemindExpired(Date passwordRemindExpired) {
-        this.passwordRemindExpired = passwordRemindExpired;
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public Date getAccessTokenExpired() {
-        return accessTokenExpired;
-    }
-
-    public void setAccessTokenExpired(Date accessTokenExpired) {
-        this.accessTokenExpired = accessTokenExpired;
-    }
-
     @XmlTransient
     public Collection<Experience> getExperienceCollection() {
         return experienceCollection;
@@ -229,15 +146,6 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Collection<UserSeekingJob> getUserSeekingJobCollection() {
-        return userSeekingJobCollection;
-    }
-
-    public void setUserSeekingJobCollection(Collection<UserSeekingJob> userSeekingJobCollection) {
-        this.userSeekingJobCollection = userSeekingJobCollection;
-    }
-
-    @XmlTransient
     public Collection<Subject> getSubjectCollection() {
         return subjectCollection;
     }
@@ -253,6 +161,24 @@ public class User implements Serializable {
 
     public void setProfileCollection(Collection<Profile> profileCollection) {
         this.profileCollection = profileCollection;
+    }
+
+    @XmlTransient
+    public Collection<SeekingJob> getSeekingJobCollection() {
+        return seekingJobCollection;
+    }
+
+    public void setSeekingJobCollection(Collection<SeekingJob> seekingJobCollection) {
+        this.seekingJobCollection = seekingJobCollection;
+    }
+
+    @XmlTransient
+    public Collection<AccessToken> getAccessTokenCollection() {
+        return accessTokenCollection;
+    }
+
+    public void setAccessTokenCollection(Collection<AccessToken> accessTokenCollection) {
+        this.accessTokenCollection = accessTokenCollection;
     }
 
     @XmlTransient
@@ -306,14 +232,6 @@ public class User implements Serializable {
 
     public void setUserRoleId(UserRole userRoleId) {
         this.userRoleId = userRoleId;
-    }
-
-    public UserStatus getUserStatusId() {
-        return userStatusId;
-    }
-
-    public void setUserStatusId(UserStatus userStatusId) {
-        this.userStatusId = userStatusId;
     }
 
     @Override

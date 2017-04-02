@@ -7,7 +7,6 @@ package com.se313h21.j2eeweb.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -35,7 +34,6 @@ public class UserSubjectBookmark implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected UserSubjectBookmarkPK userSubjectBookmarkPK;
-    @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @JoinColumn(name = "subject_id", referencedColumnName = "id", insertable = false, updatable = false)

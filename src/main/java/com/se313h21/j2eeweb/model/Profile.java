@@ -17,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -29,7 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Stevie
  */
 @Entity
-@Table(name = "profile")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Profile.findAll", query = "SELECT p FROM Profile p"),
@@ -47,32 +45,26 @@ public class Profile implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 128)
     @Column(name = "display_name")
     private String displayName;
-    @Column(name = "dob")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dob;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 16)
-    @Column(name = "gender")
     private String gender;
     @Size(max = 64)
-    @Column(name = "country")
     private String country;
     @Size(max = 128)
-    @Column(name = "location")
     private String location;
     @Size(max = 256)
     @Column(name = "personal_link")
     private String personalLink;
     @Size(max = 512)
-    @Column(name = "about")
     private String about;
     @Column(name = "profile_picture_id")
     private Integer profilePictureId;

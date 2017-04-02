@@ -8,7 +8,6 @@ package com.se313h21.j2eeweb.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -41,13 +40,11 @@ public class UserPostBookmark implements Serializable {
     protected UserPostBookmarkPK userPostBookmarkPK;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1024)
-    @Column(name = "note")
     private String note;
     @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)

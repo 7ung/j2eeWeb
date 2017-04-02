@@ -8,7 +8,6 @@ package com.se313h21.j2eeweb.model;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +17,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -29,7 +27,6 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Stevie
  */
 @Entity
-@Table(name = "experience")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Experience.findAll", query = "SELECT e FROM Experience e"),
@@ -41,15 +38,12 @@ public class Experience implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
-    @Column(name = "code")
     private String code;
     @Size(max = 128)
-    @Column(name = "name")
     private String name;
     @JoinTable(name = "user_experience", joinColumns = {
         @JoinColumn(name = "experience_id", referencedColumnName = "id")}, inverseJoinColumns = {
