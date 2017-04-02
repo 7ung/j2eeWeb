@@ -6,14 +6,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Welcome to Spring Web MVC project</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="resources/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/bootstrap/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <script src="resources/jQuery/jquery-3.0.0.min.js" type="text/javascript"></script>
+        <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     </head>
 
     <body>
-        <p>Hello! This is the default welcome page for a Spring Web MVC project.</p>
-        <p><i>To display a different welcome page for this project, modify</i>
-            <tt>index.jsp</tt> <i>, or create your own welcome page then change
-                the redirection in</i> <tt>redirect.jsp</tt> <i>to point to the new
-                welcome page and also update the welcome-file setting in</i>
-            <tt>web.xml</tt>.</p>
+        <div class="container">
+            <p>Hello! This is the default welcome page for a Spring Web MVC project.</p>
+
+        </div>
     </body>
 </html>

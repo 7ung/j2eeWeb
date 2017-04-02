@@ -45,7 +45,6 @@ public class UserWork implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
     @Size(max = 128)
-    @Column(name = "role")
     private String role;
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)

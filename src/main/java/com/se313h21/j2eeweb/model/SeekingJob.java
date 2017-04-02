@@ -6,9 +6,7 @@
 package com.se313h21.j2eeweb.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,10 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,15 +32,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SeekingJob.findByLocation", query = "SELECT s FROM SeekingJob s WHERE s.location = :location"),
     @NamedQuery(name = "SeekingJob.findByMinSalary", query = "SELECT s FROM SeekingJob s WHERE s.minSalary = :minSalary"),
     @NamedQuery(name = "SeekingJob.findByMaxSalary", query = "SELECT s FROM SeekingJob s WHERE s.maxSalary = :maxSalary"),
-    @NamedQuery(name = "SeekingJob.findByIsActive", query = "SELECT s FROM SeekingJob s WHERE s.isActive = :isActive")})
+    @NamedQuery(name = "SeekingJob.findByIsActive", query = "SELECT s FROM SeekingJob s WHERE s.isActive = :isActive"),
+    @NamedQuery(name = "SeekingJob.findByView", query = "SELECT s FROM SeekingJob s WHERE s.view = :view"),
+    @NamedQuery(name = "SeekingJob.findByCreateDate", query = "SELECT s FROM SeekingJob s WHERE s.createDate = :createDate")})
 public class SeekingJob implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
-    @Column(name = "location")
     private Integer location;
     @Column(name = "min_salary")
     private Integer minSalary;
@@ -52,14 +48,19 @@ public class SeekingJob implements Serializable {
     private Integer maxSalary;
     @Column(name = "is_active")
     private Boolean isActive;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "seekingJob")
-    private Collection<UserSeekingJob> userSeekingJobCollection;
+    private Integer view;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "create_date")
+    private Double createDate;
     @JoinColumn(name = "development_type_id", referencedColumnName = "id")
     @ManyToOne
     private DevelopmentType developmentTypeId;
     @JoinColumn(name = "seniority_id", referencedColumnName = "id")
     @ManyToOne
     private Seniority seniorityId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private User userId;
 
     public SeekingJob() {
     }
@@ -108,13 +109,20 @@ public class SeekingJob implements Serializable {
         this.isActive = isActive;
     }
 
-    @XmlTransient
-    public Collection<UserSeekingJob> getUserSeekingJobCollection() {
-        return userSeekingJobCollection;
+    public Integer getView() {
+        return view;
     }
 
-    public void setUserSeekingJobCollection(Collection<UserSeekingJob> userSeekingJobCollection) {
-        this.userSeekingJobCollection = userSeekingJobCollection;
+    public void setView(Integer view) {
+        this.view = view;
+    }
+
+    public Double getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Double createDate) {
+        this.createDate = createDate;
     }
 
     public DevelopmentType getDevelopmentTypeId() {
@@ -131,6 +139,14 @@ public class SeekingJob implements Serializable {
 
     public void setSeniorityId(Seniority seniorityId) {
         this.seniorityId = seniorityId;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     @Override

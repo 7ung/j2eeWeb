@@ -20,7 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -33,7 +32,6 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Stevie
  */
 @Entity
-@Table(name = "subject")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Subject.findAll", query = "SELECT s FROM Subject s"),
@@ -49,23 +47,17 @@ public class Subject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
-    @Column(name = "code")
     private String code;
     @Size(max = 128)
-    @Column(name = "title")
     private String title;
     @Size(max = 256)
-    @Column(name = "description")
     private String description;
-    @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    @Column(name = "view")
     private Integer view;
     @Column(name = "book_mark")
     private Integer bookMark;

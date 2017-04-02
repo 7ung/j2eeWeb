@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
@@ -32,7 +30,6 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Stevie
  */
 @Entity
-@Table(name = "image")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Image.findAll", query = "SELECT i FROM Image i"),
@@ -46,18 +43,13 @@ public class Image implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
     @Size(max = 128)
-    @Column(name = "url")
     private String url;
     @Size(max = 128)
-    @Column(name = "name")
     private String name;
     @Size(max = 512)
-    @Column(name = "description")
     private String description;
-    @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
