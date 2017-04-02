@@ -1,3 +1,5 @@
 /target
 /.idea
 /j2eeweb.iml
+/src/main/webapp/WEB-INF/jdbc.properties
+/src/main/setup/glassfish-resources.xml
