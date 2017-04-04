@@ -7,6 +7,7 @@ package com.se313h21.j2eeweb.repositories;
 
 import com.se313h21.j2eeweb.model.Experience;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  *
