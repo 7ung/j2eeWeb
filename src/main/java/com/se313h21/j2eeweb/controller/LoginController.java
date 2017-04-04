@@ -23,6 +23,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
  *
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @Service
+//@SessionAttributes("token")
 public class LoginController {
     /**
      * Current account for test: 
@@ -100,12 +102,11 @@ public class LoginController {
                 cookie.setMaxAge(2 * 60 * 59); // should be 59 rather than 60
                 response.addCookie(cookie);
             }
-            else {
-                request.getSession().setAttribute("token", token.getAccessToken());
-            }
+        
+            request.getSession().setAttribute("token", token.getAccessToken());
             
             return "registration";
-        }        
+        }
         
 //        return "registration";
     }
@@ -119,5 +120,6 @@ public class LoginController {
         accessToken = accessTokenRepo.save(accessToken);
         return accessToken;
     }
+   
 
 }

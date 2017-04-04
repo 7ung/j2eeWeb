@@ -129,6 +129,7 @@ public class RegistrationController {
         model.addAttribute("defUsername", user.getUsername());
         model.addAttribute("startPage", 0); // 1 => register;  0 => login
 
+        
         return "registration";
     }
     

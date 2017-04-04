@@ -7,6 +7,7 @@ package com.se313h21.j2eeweb.repositories;
 
 import com.se313h21.j2eeweb.model.AccessToken;
 import com.se313h21.j2eeweb.model.User;
+import java.util.Date;
 import java.util.List;
 import org.jboss.logging.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +21,6 @@ public interface AccessTokenRepository extends JpaRepository<AccessToken, Intege
  
     public List<AccessToken> findByUserId(User user);
     
-    
+    public List<AccessToken> findByAccessToken(String accessToken);
     
 }
