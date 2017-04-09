@@ -1,0 +1,52 @@
+/*------------------Nav---------------------*/
+
+.container-fluid {
+	padding: 0px;
+}
+
+.navbar {
+	background-color: #3B5998;
+
+}
+
+.navbar-brand {
+  padding: 0px;
+  background-color: #3B5998;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 7px 15px;
+  background-color: #3B5998
+}
+
+.navbar-brand>img:hover{
+	
+	background-color: #3B5998;
+}
+
+.input-group {
+	width: 500px;
+}
+
+.navbar-collapse .collapse {
+	display: inline-block;
+}
+
+.btn-default {
+	height: 34px;
+}
+
+.navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:active {
+	color: #FFF;
+}
+
+.btn-primary{
+	background-color: #3B5998;
+	border-color: #3B5998;
+}
+
+.dropdown {
+	padding: 9px 15px;
+	height: 34px;
+}
+/*------------------Kết thúc Nav---------------------*/
