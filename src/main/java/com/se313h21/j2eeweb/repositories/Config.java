@@ -32,11 +32,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan("com.se313h21.j2eeweb.repositories")
 @EnableJpaRepositories(basePackages = "com.se313h21.j2eeweb.repositories", entityManagerFactoryRef = "emf")
 @EnableTransactionManagement
-public class config {
+public class Config {
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource(
-            "jdbc:mysql://localhost:3306/j2ee_db", "root", "123456789");
+            "jdbc:mysql://localhost:3306/j2ee_db", "root", "1234");
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         return dataSource;
     }
@@ -77,6 +77,10 @@ public class config {
     Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.setProperty("hibernate.transaction.jta.platform", "org.hibernate.service.jta.platform.internal.SunOneJtaPlatform");
+//        properties.setProperty("connection.useUnicode", "yes");
+//        properties.setProperty("connection.characterEncoding", "utf-8");
+//        properties.setProperty("hibernate.transaction.factory_class", "org.hibernate.transaction.JTATransactionFactory" );
         return properties;
     }
 }
