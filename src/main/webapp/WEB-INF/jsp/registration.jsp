@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <!--Todo: ràng buộc nhập liệu-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
@@ -54,15 +55,20 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form id="login-form" action="http://phpoll.com/login/process" method="post" role="form" style="${loginPageStyle}">
+                                    <form id="login-form" action="${pageContext.servletContext.contextPath}/login" method="post" role="form" style="${loginPageStyle}">
+                                        <c:choose>
+                                            <c:when test="${startPage == 0}">
+                                                <p>${status.message}</p>
+                                            </c:when>
+                                        </c:choose>
                                         <div class="form-group">
-                                            <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                            <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="${defUsername}">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
                                         </div>
                                         <div class="form-group text-center">
-                                            <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                            <input type="checkbox" tabindex="3" class="" name="remember" id="remember" modelAttribute="remember">
                                             <label for="remember"> Remember Me</label>
                                         </div>
                                         <div class="form-group">
@@ -82,10 +88,10 @@
                                             </div>
                                         </div>
                                     </form>
-                                    <form id="register-form" action="/registration" method="post" role="form" style="${registerPageStyle}">
+                                    <form id="register-form" action="${pageContext.servletContext.contextPath}/registration" method="post" role="form" style="${registerPageStyle}">
                                         <c:choose>
-                                            <c:when test="${status == 1}">
-                                                <p>Username is exists</p>
+                                            <c:when test="${startPage == 1}">
+                                                <p>${status.message}</p>
                                             </c:when>
                                         </c:choose>
                                         <div class="form-group">
