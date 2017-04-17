@@ -36,7 +36,7 @@ public class Config {
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource(
-            "jdbc:mysql://localhost:3306/j2ee_db", "root", "0918280427");
+            "jdbc:mysql://localhost:3306/j2ee_db", "root", "luannt2909");
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         return dataSource;
     }
