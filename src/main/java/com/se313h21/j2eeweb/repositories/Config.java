@@ -9,8 +9,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
@@ -36,26 +40,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class Config {
     
     @Bean
-    public DataSource dataSource(){
-        DriverManagerDataSource dataSource = null;
-        try{
-            FileInputStream istream = new FileInputStream("jdbc.properties");
-            Properties prop = new Properties();
-            prop.load(istream);
-            
-            dataSource = new DriverManagerDataSource();
-            dataSource.setUsername(prop.getProperty("username"));
-            dataSource.setPassword(prop.getProperty("password"));
-            dataSource.setDriverClassName(prop.getProperty("driverClassName"));
-            dataSource.setUrl(prop.getProperty("url"));
-        }
-        catch(IOException ex)
-        {
-            dataSource = new DriverManagerDataSource(
-                "jdbc:mysql://localhost:3306/j2ee_db", "root", "1234");
-            dataSource.setDriverClassName("com.mysql.jdbc.Driver");            
-        }
-
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = 
+                (DriverManagerDataSource) ContextLoader.getCurrentWebApplicationContext().getBean("dataSource");
         return dataSource;
     }
     

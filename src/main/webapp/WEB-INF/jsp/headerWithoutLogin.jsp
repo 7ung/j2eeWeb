@@ -3,11 +3,12 @@
     Created on : Apr 9, 2017, 2:37:02 AM
     Author     : huynphu
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%------Header khi chưa đăng nhập--%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<div class="container-fluid">
+<!--<div class="container-fluid">-->
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -34,13 +35,21 @@
                         </div>
                     </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="${pageContext.servletContext.contextPath}/registration" class="btn btn-primary"> Đăng ký</a></li>
-                <li><a href="${pageContext.servletContext.contextPath}/login" class="btn btn-primary"> Đăng nhập</a></li>
-            </ul>
+            <c:choose>
+                <c:when test="${user != null}">
+                    <li><a href="#" class="btn btn-primary">Logged in</a></li>
+                </c:when>
+                <c:otherwise>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="${pageContext.servletContext.contextPath}/registration" class="btn btn-primary"> Đăng ký</a></li>
+                        <li><a href="${pageContext.servletContext.contextPath}/login" class="btn btn-primary"> Đăng nhập</a></li>
+                    </ul>                    
+                </c:otherwise>
+            </c:choose>
+
         </div>
     </nav>
-</div>
+<!--</div>-->
 
 
 <%--<html>
