@@ -4,14 +4,12 @@
  * and open the template in the editor.
  */
 package com.se313h21.j2eeweb.repositories;
-
-import com.se313h21.j2eeweb.model.Experience;
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import com.se313h21.j2eeweb.model.SeekingJob;
 /**
  *
- * @author Stevie
+ * @author quytocngheo
  */
-public interface TestRepository extends JpaRepository<Experience, Integer>{
+public interface SeekingJobRepository extends JpaRepository<SeekingJob, Integer> {
     
 }

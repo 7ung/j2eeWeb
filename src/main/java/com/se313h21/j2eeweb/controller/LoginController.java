@@ -5,11 +5,13 @@
  */
 package com.se313h21.j2eeweb.controller;
 
+import com.google.common.base.Strings;
 import com.se313h21.j2eeweb.controller.utils.Hashing;
 import com.se313h21.j2eeweb.model.AccessToken;
 import com.se313h21.j2eeweb.model.User;
 import com.se313h21.j2eeweb.repositories.AccessTokenRepository;
 import com.se313h21.j2eeweb.repositories.UserRepository;
+import java.io.Console;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -45,22 +47,26 @@ public class LoginController {
     AccessTokenRepository accessTokenRepo;
     
     @RequestMapping(value="/login", method=RequestMethod.GET)
-    public String registration_get(ModelMap model){
+    public String registration_get(
+            ModelMap model){
 
         model.addAttribute("startPage", 0);
         return "registration";
     }
     
     @RequestMapping(value="/login", method=RequestMethod.POST)
-    public String login(@ModelAttribute("remember") String remember,
+    public String login(
             HttpServletRequest request,
-            HttpServletResponse response, ModelMap model){
+            HttpServletResponse response, ModelMap model,
+            @ModelAttribute("remember") String remember){
         
         // Lấy thông tin parse từ post params
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String hashedPassword = Hashing.generateHash(password);
-      
+//        String redirectPath = request.getParameter("redirect_path");
+        String redirectPath = (String) request.getSession().getAttribute("redirect_login");
+        model.addAttribute("redirectPath", redirectPath);
         
         // Kiểm tra có tồn tại cặp giá trị username - password
         List<User> users = repo.findByUsernameAndPassword(username, hashedPassword);
@@ -74,8 +80,7 @@ public class LoginController {
         }
         else {
             // Đăng nhập thành công.
-            model.addAttribute("status", RegistrationController.eRegistrationStatus.SUCCESS);
-            model.addAttribute("startPage", 0); // 1 => register;  0 => login
+
             // Tạo token. Nếu đã có token thì không tạo mới.
             User user = users.get(0);
             List<AccessToken> tokens = accessTokenRepo.findByUserId(user);
@@ -90,7 +95,7 @@ public class LoginController {
             // token expire sau 2 giờ.
             // thời điểm hiện tại tính bằng giây 
             Date now = new Date();
-            long after2h = now.getTime() + 2 * 60 * 60; // 2 giờ
+            long after2h = now.getTime() + 12 * 60 * 60; // 2 giờ
             Timestamp timestamp = new Timestamp(after2h);
             token.setExpired(timestamp.getTime());
             
@@ -99,13 +104,22 @@ public class LoginController {
             
             if (remember.equals("on")){
                 Cookie cookie = new Cookie("token", token.getAccessToken());
-                cookie.setMaxAge(2 * 60 * 59); // should be 59 rather than 60
+                cookie.setMaxAge(12 * 60 * 59); // should be 59 rather than 60
                 response.addCookie(cookie);
             }
         
             request.getSession().setAttribute("token", token.getAccessToken());
             
-            return "registration";
+            if (Strings.isNullOrEmpty(redirectPath) == false){
+                request.getSession().removeAttribute("redirect_login");
+                return redirectPath;
+            }
+            else {
+                model.addAttribute("status", RegistrationController.eRegistrationStatus.LOGIN_SUCCESS);
+                model.addAttribute("startPage", 0); // 1 => register;  0 => login
+                return "registration";                
+            }
+            
         }
         
 //        return "registration";
