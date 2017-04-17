@@ -90,7 +90,7 @@ public class LoginController {
             // token expire sau 2 giờ.
             // thời điểm hiện tại tính bằng giây 
             Date now = new Date();
-            long after2h = now.getTime() + 2 * 60 * 60; // 2 giờ
+            long after2h = now.getTime() + 12 * 60 * 60; // 2 giờ
             Timestamp timestamp = new Timestamp(after2h);
             token.setExpired(timestamp.getTime());
             
@@ -99,7 +99,7 @@ public class LoginController {
             
             if (remember.equals("on")){
                 Cookie cookie = new Cookie("token", token.getAccessToken());
-                cookie.setMaxAge(2 * 60 * 59); // should be 59 rather than 60
+                cookie.setMaxAge(12 * 60 * 59); // should be 59 rather than 60
                 response.addCookie(cookie);
             }
         

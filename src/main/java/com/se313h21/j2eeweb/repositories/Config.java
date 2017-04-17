@@ -5,6 +5,7 @@
  */
 package com.se313h21.j2eeweb.repositories;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
@@ -33,11 +34,28 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableJpaRepositories(basePackages = "com.se313h21.j2eeweb.repositories", entityManagerFactoryRef = "emf")
 @EnableTransactionManagement
 public class Config {
+    
     @Bean
     public DataSource dataSource(){
-        DriverManagerDataSource dataSource = new DriverManagerDataSource(
-            "jdbc:mysql://localhost:3306/j2ee_db", "root", "1234");
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        DriverManagerDataSource dataSource = null;
+        try{
+            FileInputStream istream = new FileInputStream("jdbc.properties");
+            Properties prop = new Properties();
+            prop.load(istream);
+            
+            dataSource = new DriverManagerDataSource();
+            dataSource.setUsername(prop.getProperty("username"));
+            dataSource.setPassword(prop.getProperty("password"));
+            dataSource.setDriverClassName(prop.getProperty("driverClassName"));
+            dataSource.setUrl(prop.getProperty("url"));
+        }
+        catch(IOException ex)
+        {
+            dataSource = new DriverManagerDataSource(
+                "jdbc:mysql://localhost:3306/j2ee_db", "root", "1234");
+            dataSource.setDriverClassName("com.mysql.jdbc.Driver");            
+        }
+
         return dataSource;
     }
     
