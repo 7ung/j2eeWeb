@@ -27,11 +27,11 @@
     define an explicit mapping for it.
     -->
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-        <property name="mappings">
+<!--        <property name="mappings">
             <props>
                 <prop key="index.htm">indexController</prop>
             </props>
-        </property>
+        </property>-->
     </bean>
 
     <bean id="viewResolver"
@@ -42,8 +42,8 @@
     <!--
     The index controller.
     -->
-    <bean name="indexController"
+<!--    <bean name="indexController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="index" />
+          p:viewName="index" />-->
 
 </beans>

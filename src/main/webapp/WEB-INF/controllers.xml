@@ -16,8 +16,8 @@
             base-package="com.se313h21.j2eeweb.controller,
             com.se313h21.j2eeweb.repositories,
             com.se313h21.j2eeweb.dao" />
-        <mvc:annotation-driven />
-	<mvc:view-controller path="/" view-name="index"/>
+        <mvc:annotation-driven /><!--
+	<mvc:view-controller path="/" view-name="index"/>-->
 	    
 
 	 
