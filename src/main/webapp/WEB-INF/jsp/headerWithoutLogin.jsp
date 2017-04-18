@@ -38,13 +38,39 @@
             </ul>
             <c:choose>
                 <c:when test="${user != null}">
-                    <li><a href="#" class="btn btn-primary">Logged in</a></li>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a hred="#" class="btn btn-primary"><span class="glyphicon glyphicon-bell"></span></a></li>
+                        <li>
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span>
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="${pageContext.servletContext.contextPath}">Bài viết mới</a></li>
+                                    <li><a href="${pageContext.servletContext.contextPath}">Chủ đề</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><span>   Xin chào, ${user}</span></li>
+                                    <li class="divider"></li>
+                                    <li><a href="${pageContext.servletContext.contextPath}">Hồ sơ</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="${pageContext.servletContext.contextPath}">Đăng xuất</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
                 </c:when>
                 <c:otherwise>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="${pageContext.servletContext.contextPath}/registration" class="btn btn-primary"> Đăng ký</a></li>
                         <li><a href="${pageContext.servletContext.contextPath}/login" class="btn btn-primary"> Đăng nhập</a></li>
                     </ul>                    
+                    
                 </c:otherwise>
             </c:choose>
 
