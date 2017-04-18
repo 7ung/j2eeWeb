@@ -10,7 +10,6 @@ import com.google.common.collect.Lists;
 import com.se313h21.j2eeweb.model.Experience;
 import com.se313h21.j2eeweb.model.User;
 import com.se313h21.j2eeweb.repositories.AccessTokenRepository;
-import com.se313h21.j2eeweb.repositories.AuthToken;
 import com.se313h21.j2eeweb.repositories.TestRepository;
 import com.se313h21.j2eeweb.repositories.Utils;
 import java.io.IOException;
@@ -48,12 +47,12 @@ public class TestController extends BaseAuthorizationUserController{
             HttpServletRequest request,
             HttpServletResponse response,
             ModelMap model){
-        
-        String rs = super.fetchUser(request, response);
-        if (rs != null) {
-            return rs;
-        }
-        
+//        
+//        String rs = super.fetchUser(request, response);
+//        if (rs != null) {
+//            return rs;
+//        }
+//        
         return "test";
     }
     

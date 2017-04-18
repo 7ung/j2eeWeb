@@ -21,8 +21,19 @@
         
     </head>
     <body>
-        <jsp:include page="headerWithoutLogin.jsp"></jsp:include>
+        <%--<jsp:include page="headerWithoutLogin.jsp"></jsp:include>--%>
         <div class="container">
+            <form id="login-form" action="${pageContext.servletContext.contextPath}/"
+                    method="post" role="form" >
+
+                <div class="form-group">
+                    <label for="tilte">Title</label>
+                    <input type="text" name="title" id="title" tabindex="1" class="form-control" placeholder="Tilte" value="">
+                </div>
+
+            </form>
+
         </div>
+             
     </body>
 </html>
