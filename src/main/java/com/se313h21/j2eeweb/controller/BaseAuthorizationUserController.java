@@ -5,8 +5,8 @@
  */
 package com.se313h21.j2eeweb.controller;
 
+import com.se313h21.j2eeweb.dao.AccessTokenDAO;
 import com.se313h21.j2eeweb.model.User;
-import com.se313h21.j2eeweb.repositories.AuthToken;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,30 +16,42 @@ import org.springframework.web.portlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
- *
+ * Base controller cho các lớp nào cần kiểm tra user.
+ * 
  * @author Stevie
  */
 @Service
 public class BaseAuthorizationUserController {
     
+    private static String TAG = "BaseAuthorizationUserController";
+    
     @Autowired
-    protected AuthToken authToken; 
+    protected AccessTokenDAO accessTokenDao; 
     
     protected User user;
     
-    protected String fetchUser(HttpServletRequest request,
+    protected static String redirect = "redirect:login"; 
+    
+    protected User fetchUser(HttpServletRequest request,
             HttpServletResponse response) {
-        User user = authToken.determineUser(request, response);
-        ModelAndView modelAndView = new ModelAndView();
-//        redir.addFlashAttribute("redirect_path", "redirect:"+request.getRequestURI());
-        request.getSession().setAttribute("redirect_login", "redirect:" + request.getRequestURL());
+        
+        
+        user = (User) request.getSession().getAttribute("user");
+        
+        if (user != null)
+            return user;
+        System.out.println(TAG + ": Not logged in. Find user from Access Token");
+        user = accessTokenDao.determineUser(request, response);
+        
         if (user == null){
-            return "redirect:login";
+            System.out.println(TAG + ": Can not find user from Access Token");
+            request.getSession().setAttribute("redirect_login", "redirect:" + request.getRequestURL());
         }
         else {
+            System.out.println(TAG + ": Found user from Access Token");
             request.getSession().setAttribute("user", user);
         }
-        return null;
+        return user;
     }
     
 }

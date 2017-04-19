@@ -20,6 +20,10 @@ public class Utils {
         if (atRepo.findByAccessToken(candidateToken).isEmpty()){
             return false;
         }
-        return lists.get(0).getExpired() > (new Date()).getTime();
+        return lists.get(0).getExpired() > currentTimestamp();
     }   
+    
+    public static double currentTimestamp(){
+        return (new Date()).getTime() /1000;
+    }
 }

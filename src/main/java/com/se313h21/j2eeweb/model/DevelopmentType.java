@@ -12,6 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -45,6 +48,11 @@ public class DevelopmentType implements Serializable {
     private String name;
     @Size(max = 256)
     private String description;
+    @JoinTable(name = "user_dev_type", joinColumns = {
+        @JoinColumn(name = "development_type_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "user_id", referencedColumnName = "id")})
+    @ManyToMany
+    private Collection<User> userCollection;
     @OneToMany(mappedBy = "developmentTypeId")
     private Collection<SeekingJob> seekingJobCollection;
 
@@ -85,6 +93,15 @@ public class DevelopmentType implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @XmlTransient
+    public Collection<User> getUserCollection() {
+        return userCollection;
+    }
+
+    public void setUserCollection(Collection<User> userCollection) {
+        this.userCollection = userCollection;
     }
 
     @XmlTransient
