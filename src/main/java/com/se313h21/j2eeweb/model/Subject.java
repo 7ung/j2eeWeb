@@ -7,10 +7,8 @@ package com.se313h21.j2eeweb.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,8 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,8 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Subject.findByTitle", query = "SELECT s FROM Subject s WHERE s.title = :title"),
     @NamedQuery(name = "Subject.findByDescription", query = "SELECT s FROM Subject s WHERE s.description = :description"),
     @NamedQuery(name = "Subject.findByDate", query = "SELECT s FROM Subject s WHERE s.date = :date"),
-    @NamedQuery(name = "Subject.findByView", query = "SELECT s FROM Subject s WHERE s.view = :view"),
-    @NamedQuery(name = "Subject.findByBookMark", query = "SELECT s FROM Subject s WHERE s.bookMark = :bookMark")})
+    @NamedQuery(name = "Subject.findByView", query = "SELECT s FROM Subject s WHERE s.view = :view")})
 public class Subject implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,11 +51,9 @@ public class Subject implements Serializable {
     private String title;
     @Size(max = 256)
     private String description;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    private Double date;
     private Integer view;
-    @Column(name = "book_mark")
-    private Integer bookMark;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User userId;
@@ -113,11 +106,11 @@ public class Subject implements Serializable {
         this.description = description;
     }
 
-    public Date getDate() {
+    public Double getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Double date) {
         this.date = date;
     }
 
@@ -127,14 +120,6 @@ public class Subject implements Serializable {
 
     public void setView(Integer view) {
         this.view = view;
-    }
-
-    public Integer getBookMark() {
-        return bookMark;
-    }
-
-    public void setBookMark(Integer bookMark) {
-        this.bookMark = bookMark;
     }
 
     public User getUserId() {

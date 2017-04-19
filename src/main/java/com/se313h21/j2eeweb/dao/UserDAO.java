@@ -7,6 +7,7 @@ package com.se313h21.j2eeweb.dao;
 
 import com.se313h21.j2eeweb.controller.utils.Hashing;
 import com.se313h21.j2eeweb.model.User;
+import com.se313h21.j2eeweb.model.UserRole;
 import com.se313h21.j2eeweb.repositories.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,18 @@ public class UserDAO {
         }
     }
     
+    public User create(String username, String password, String email){
+        password = Hashing.generateHash(password);
+        User user = new User(-1, username, password, email);
+        user.setUserRoleId(new UserRole(1));
+        user = repo.save(user);
+        return (this.user = user);
+    }
+    
     public User get(){
         return user;
     }
+    
+    
+    
 }

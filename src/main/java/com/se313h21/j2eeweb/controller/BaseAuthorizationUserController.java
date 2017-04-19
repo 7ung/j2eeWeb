@@ -16,7 +16,8 @@ import org.springframework.web.portlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
- *
+ * Base controller cho các lớp nào cần kiểm tra user.
+ * 
  * @author Stevie
  */
 @Service

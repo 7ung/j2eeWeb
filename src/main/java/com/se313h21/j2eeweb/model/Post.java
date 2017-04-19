@@ -7,10 +7,8 @@ package com.se313h21.j2eeweb.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,8 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -43,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Post.findByContent", query = "SELECT p FROM Post p WHERE p.content = :content"),
     @NamedQuery(name = "Post.findByDate", query = "SELECT p FROM Post p WHERE p.date = :date"),
     @NamedQuery(name = "Post.findByView", query = "SELECT p FROM Post p WHERE p.view = :view"),
-    @NamedQuery(name = "Post.findByBookMark", query = "SELECT p FROM Post p WHERE p.bookMark = :bookMark")})
+    @NamedQuery(name = "Post.findByStatus", query = "SELECT p FROM Post p WHERE p.status = :status")})
 public class Post implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,7 +48,7 @@ public class Post implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 64)
+    @Size(min = 1, max = 120)
     private String code;
     @Basic(optional = false)
     @NotNull
@@ -64,11 +60,10 @@ public class Post implements Serializable {
     private String content;
     @Basic(optional = false)
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private double date;
     private Integer view;
-    @Column(name = "book_mark")
-    private Integer bookMark;
+    @Size(max = 32)
+    private String status;
     @JoinTable(name = "post_tag", joinColumns = {
         @JoinColumn(name = "post_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "tag_id", referencedColumnName = "id")})
@@ -92,7 +87,7 @@ public class Post implements Serializable {
         this.id = id;
     }
 
-    public Post(Integer id, String code, String title, String content, Date date) {
+    public Post(Integer id, String code, String title, String content, double date) {
         this.id = id;
         this.code = code;
         this.title = title;
@@ -132,11 +127,11 @@ public class Post implements Serializable {
         this.content = content;
     }
 
-    public Date getDate() {
+    public double getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(double date) {
         this.date = date;
     }
 
@@ -148,12 +143,12 @@ public class Post implements Serializable {
         this.view = view;
     }
 
-    public Integer getBookMark() {
-        return bookMark;
+    public String getStatus() {
+        return status;
     }
 
-    public void setBookMark(Integer bookMark) {
-        this.bookMark = bookMark;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @XmlTransient

@@ -42,11 +42,6 @@ public class LoginController {
      * jobjob - 123123
      * 123 - 123
      */
-    @Autowired(required = false)
-    UserRepository repo;
-    
-    @Autowired(required = false)
-    AccessTokenRepository accessTokenRepo;
     
     @Autowired
     UserDAO userDao;
