@@ -67,17 +67,14 @@ public class PostController extends BaseAuthorizationUserController{
         Subject subject = null;
         
         String[] us = request.getParameterValues("us");
+        String[] uns = request.getParameterValues("uns");
         
-        System.out.println(TAG + "Use subject params: lenght = " + us.length);
-        
-        if (us.length >= 1 && us[0].equals("on")){
+        if (us != null && us.length >= 1 && us[0].equals("on")){
             int subjectId = Integer.parseInt( request.getParameter("subjectid"));
             subject = subjectDao.get(subjectId);
             
-            System.out.println(TAG + "Subject id: " + subjectId);
-            System.out.println(TAG + "Subject = " + subject.toString());
         }
-        else if (us.length >= 2 && us[1].equals("on")){
+        else if (uns != null && uns.length >= 1 && uns[0].equals("on")){
             String subjectName = request.getParameter("subject-name-new");
             subject = subjectDao.create(subjectName, "", user);
         }

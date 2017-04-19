@@ -62,7 +62,7 @@
                         </select>
                     </td>
                 <div class="form-group">
-                    <input type="checkbox" tabindex="6" class="" name="us" id="us" path="us" >
+                    <input type="checkbox" tabindex="6" class="" name="uns" id="uns" path="uns" >
                     <label for="remember">Use new parent subject</label>
                 </div>        
                 <div class="form-group">

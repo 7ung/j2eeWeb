@@ -56,6 +56,8 @@ public class User implements Serializable {
     @Size(min = 1, max = 128)
     private String email;
     @ManyToMany(mappedBy = "userCollection")
+    private Collection<DevelopmentType> developmentTypeCollection;
+    @ManyToMany(mappedBy = "userCollection")
     private Collection<Experience> experienceCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Image> imageCollection;
@@ -125,6 +127,15 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @XmlTransient
+    public Collection<DevelopmentType> getDevelopmentTypeCollection() {
+        return developmentTypeCollection;
+    }
+
+    public void setDevelopmentTypeCollection(Collection<DevelopmentType> developmentTypeCollection) {
+        this.developmentTypeCollection = developmentTypeCollection;
     }
 
     @XmlTransient

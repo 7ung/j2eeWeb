@@ -29,9 +29,9 @@ public class PostDAO {
         post.setStatus("published");
         post = postRepo.save(post);
         post.setCode(Integer.toHexString(post.getId()));
-        post = postRepo.save(post);
         if (subject != null)
             post.setSubjectId(subject);
+        post = postRepo.save(post);
         return post;
     }
     
