@@ -11,6 +11,9 @@ import com.se313h21.j2eeweb.repositories.SubjectRepository;
 import com.se313h21.j2eeweb.repositories.Utils;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,9 +26,29 @@ public class SubjectDAO {
     @Autowired
     SubjectRepository subjectRepo;
     
+    public List<Subject> getMany(){
+        List<Subject> subjects = subjectRepo.findAll();
+        return subjects;
+    }
+    
     public List<Subject> getMany(User user)
     {
         List<Subject> subjects = subjectRepo.findByUserId(user);
+        return subjects;
+    }
+    
+    public List<Subject> getMany(String title){
+        List<Subject> subjects = subjectRepo.findByTitle(title);
+        return subjects;
+    }
+    
+    public List<Subject> getMany(User user, String title){
+        List<Subject> subjects = subjectRepo.findByUserIdAndTitle(user, title);
+        return subjects;
+    }
+    
+    public List<Subject> getTop(User user, String title){
+        List<Subject> subjects = subjectRepo.findFirst6ByUserIdAndTitleContaining(user, title, new Sort("title"));
         return subjects;
     }
     

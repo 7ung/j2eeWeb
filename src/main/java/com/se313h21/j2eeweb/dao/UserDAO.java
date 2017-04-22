@@ -49,6 +49,10 @@ public class UserDAO {
         return user;
     }
     
+    public User get(int id){
+        return repo.findOne(id);
+    }
+    
     
     
 }

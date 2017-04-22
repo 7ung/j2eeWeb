@@ -5,6 +5,7 @@
  */
 package com.se313h21.j2eeweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -151,45 +152,55 @@ public class Post implements Serializable {
         this.status = status;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<Tag> getTagCollection() {
         return tagCollection;
     }
 
+    @JsonIgnore
     public void setTagCollection(Collection<Tag> tagCollection) {
         this.tagCollection = tagCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<PostImage> getPostImageCollection() {
         return postImageCollection;
     }
 
+    @JsonIgnore
     public void setPostImageCollection(Collection<PostImage> postImageCollection) {
         this.postImageCollection = postImageCollection;
     }
 
+    @JsonIgnore
     public Subject getSubjectId() {
         return subjectId;
     }
 
+    @JsonIgnore
     public void setSubjectId(Subject subjectId) {
         this.subjectId = subjectId;
     }
 
+    @JsonIgnore
     public User getUserId() {
         return userId;
     }
 
+    @JsonIgnore
     public void setUserId(User userId) {
         this.userId = userId;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<UserPostBookmark> getUserPostBookmarkCollection() {
         return userPostBookmarkCollection;
     }
 
+    @JsonIgnore
     public void setUserPostBookmarkCollection(Collection<UserPostBookmark> userPostBookmarkCollection) {
         this.userPostBookmarkCollection = userPostBookmarkCollection;
     }

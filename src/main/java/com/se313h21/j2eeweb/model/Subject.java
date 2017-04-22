@@ -5,6 +5,7 @@
  */
 package com.se313h21.j2eeweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -57,9 +58,11 @@ public class Subject implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User userId;
+    @JsonIgnore
     @OneToMany(mappedBy = "subjectId")
     private Collection<Post> postCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subject")
+    @JsonIgnore
     private Collection<UserSubjectBookmark> userSubjectBookmarkCollection;
 
     public Subject() {
@@ -122,28 +125,34 @@ public class Subject implements Serializable {
         this.view = view;
     }
 
+    @JsonIgnore
     public User getUserId() {
         return userId;
     }
 
+    @JsonIgnore
     public void setUserId(User userId) {
         this.userId = userId;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<Post> getPostCollection() {
         return postCollection;
     }
 
+    @JsonIgnore
     public void setPostCollection(Collection<Post> postCollection) {
         this.postCollection = postCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<UserSubjectBookmark> getUserSubjectBookmarkCollection() {
         return userSubjectBookmarkCollection;
     }
 
+    @JsonIgnore
     public void setUserSubjectBookmarkCollection(Collection<UserSubjectBookmark> userSubjectBookmarkCollection) {
         this.userSubjectBookmarkCollection = userSubjectBookmarkCollection;
     }
