@@ -5,6 +5,7 @@
  */
 package com.se313h21.j2eeweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -45,8 +46,10 @@ public class Tag implements Serializable {
     private String code;
     @Size(max = 128)
     private String name;
+    @JsonIgnore
     @ManyToMany(mappedBy = "tagCollection")
     private Collection<Post> postCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tag")
     private Collection<UserTagBookmark> userTagBookmarkCollection;
 

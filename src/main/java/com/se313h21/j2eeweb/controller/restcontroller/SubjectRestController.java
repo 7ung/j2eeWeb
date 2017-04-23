@@ -28,6 +28,7 @@ public class SubjectRestController {
     private static String TAG = SubjectRestController.class.getName();
     
     private static int ItemToSearch = 6;
+    
     @Autowired
     SubjectDAO subjectDao;
     
@@ -44,7 +45,7 @@ public class SubjectRestController {
         return subjectDao.getMany(user);
     }
     
-    @RequestMapping("/user-info/subject-by-title")
+    @RequestMapping(value = "/user-info/subject-by-title", produces="application/json;charset=UTF-8")
     public List<Subject> getUserSubject(
             @RequestParam(value="user_id", defaultValue="0") int userId,
             @RequestParam(value="subject_title", defaultValue="") String subjectTitle){

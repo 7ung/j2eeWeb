@@ -154,3 +154,22 @@
     border: #165f8f 1px solid;
     border-radius: 4px;
 }
+
+.my-mdl-chip{
+    background-color: #eff7f7; 
+    padding: 2px 6px 2px 12px;
+    margin-right: 8px;
+}
+
+.my-mdl-chip:hover{
+    background-color: #ccdbe2;
+}
+
+.my-snack-bar-error {
+    background: #F44336; 
+    width: 480px;
+}
+
+.upper-text {
+    text-transform: uppercase;
+}

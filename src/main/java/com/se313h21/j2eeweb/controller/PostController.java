@@ -58,26 +58,23 @@ public class PostController extends BaseAuthorizationUserController{
     @RequestMapping(value = "/post", method=RequestMethod.POST)
     public String post_store(HttpServletRequest request,
             HttpServletResponse response,
-//            @RequestParam(value ="us", required = false) String useSubject,
-//            @RequestParam(value ="uns", required = false) String useNewSubject,
             ModelMap model){
         
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         Subject subject = null;
         
-        String[] us = request.getParameterValues("us");
-        String[] uns = request.getParameterValues("uns");
+        int subjectId = Integer.parseInt( request.getParameter("subject-id"));
+        String subjectName = request.getParameter("subject-name");
         
-        if (us != null && us.length >= 1 && us[0].equals("on")){
-            int subjectId = Integer.parseInt( request.getParameter("subjectid"));
+        System.out.println(TAG + " subject id = " + subjectId);
+        System.out.println(TAG + " subject name = " + subjectName);
+        
+        if (subjectId != -1){
             subject = subjectDao.get(subjectId);
-            
         }
-        else if (uns != null && uns.length >= 1 && uns[0].equals("on")){
-            String subjectName = request.getParameter("subject-name-new");
+        if (subject == null && subjectId == -1 && !subjectName.equals(""))
             subject = subjectDao.create(subjectName, "", user);
-        }
         
         Post post = postDao.create(title, content, user, subject);
         model.addAttribute("message", "succes");

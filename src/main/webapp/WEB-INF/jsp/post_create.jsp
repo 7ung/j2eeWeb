@@ -15,9 +15,11 @@
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-blue.min.css" />
 
-                
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
         <link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/resources/css/mystyle.css" rel="stylesheet" type="text/css"/>
         
@@ -31,71 +33,61 @@
             body {
               font-family: 'Trirong', sans-serif;
             }
+            span {
+                font-family: 'Trirong', sans-serif;
+            }
         </style>
     </head>
     <body>
         <%--<jsp:include page="headerWithoutLogin.jsp"></jsp:include>--%>
         <div class="container-fuild" style="margin-left: 4%; margin-right:4%;" >
             <row class="row-fluid">
-            <div class="col-md-2" style="background-color: #adadad;">
-                <div style ="background-color: #5bc0de; height: 200px;" >
-                    
+                <div class="col-md-2" style="background-color: #adadad;">
+                    <div style ="background-color: #5bc0de; height: 200px;" >
+
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-7" style="background-color: #fafafa;">
-                                                        <jsp:include page="partial_view/search_autocomplete.jsp"/>
+                <div class="col-md-7" style="background-color: #fafafa;">
 
-                <row class="row">
-                    <form id="post-form" action="${pageContext.servletContext.contextPath}/post"
-                            method="post" role="form"  >
-                        <row class="row-fluid">
-                            <div class="col-md-12">
-                                <row class="row-fuild">
+                    <row class="row">
+                        <form id="post-form" action="${pageContext.servletContext.contextPath}/post"
+                                method="post" role="form"  >
+                            <jsp:include page="partial_view/search_autocomplete.jsp"/>
 
-                                    <div class="form-group">
-                                        <input name="subjectid" type="hidden" id="subjectid" />
-                                    </div>
-
-                                </row>
+                            <div class="form-group">
+                                <input name="subject-id" type="hidden" id="subject-id" />
                             </div>
-                      
-                        </row>
 
-                        <div class="form-group">
-                            <label for="tilte">Tiêu đề</label>
-                            <input type="text" name="title" id="title" tabindex="1" class="form-control" placeholder="Tilte" value="">
-                        </div>
+                            <div class="form-group">
+                                <label for="tilte">Tiêu đề</label>
+                                <input type="text" name="title" id="title" tabindex="2" class="form-control" placeholder="Tilte" value="">
+                            </div>
+                            
+                            <jsp:include page="partial_view/tags_partial.jsp"></jsp:include>
+                            
+                            <textarea cols="80" id="editor1" name="editor1" rows="10" ></textarea>
+                            <input type="hidden" name="content" id="content" tabindex="4" class="form-control" value="">
 
-                        <textarea cols="80" id="editor1" name="editor1" rows="10" ></textarea>
-                        <input type="hidden" name="content" id="content" tabindex="1" class="form-control" value="">
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-6 col-sm-offset-3">
-                                    <input type="submit" name="submit-btn" id="submit-btn" tabindex="4" class="form-control btn btn-login" value="Publish">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6 col-sm-offset-3">
+                                        <input type="submit" name="submit-btn" id="submit-btn" tabindex="5" class="form-control btn btn-login" value="Publish">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <div id="ar"> </div>
-                        </div>    
-  
-                    </form>                    
-                </row>
-
-            </div>
-            <!--<div class="col-md-3" style="background-color: #bce8f1;">-->
+                            <div>
+                                <div id="ar"> </div>
+                            </div>    
+                        </form>                    
+                    </row>
+                </div>
                 <jsp:include page="partial_view/user_subject_partial.jsp"/>
 
-            <!--</div>-->
-
             </row>
-<!--                <p> Json result </p>
-                <div id="json"></div>-->
             <br/>
         </div>
         <p>${message}</p>      
-             
+
     </body>
     <script>var editor1 = CKEDITOR.replace( 'editor1', {
                 height: 250
@@ -106,9 +98,9 @@
         $("#content").val(CKEDITOR.instances.editor1.getData());
     });
     
-    $("#subjectid").val($('#subjects').val());
-    $("#subjects").change(function(){
-        $("#subjectid").val($('#subjects').val());
+    $('#post-form').submit(function (){
+        $("#subject-id").val(getSubjectId());
+        return true;
     });
     
 

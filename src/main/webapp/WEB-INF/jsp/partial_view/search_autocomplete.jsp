@@ -5,37 +5,34 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<form action="#" class="form">
-    <div class="form-group">
-        <label for="sample6">Tên chủ đề</label>
-        <input class="form-control" type="text" id="subject-name" style="">
-    </div>
-    <dialog class="search-result-dialog" id="search_result" role="dialog">
-        <ul class="mdl-list ggdropdown" id="result_list">
-        </ul>
-    </dialog>
-</form>
-
+<div class="form-group">
+    <label for="sample6">Chủ đề</label>
+    <input class="form-control" type="text" id="subject-name" name="subject-name" style="">
+</div>
+<dialog class="search-result-dialog" id="search_result" role="dialog">
+    <ul class="mdl-list ggdropdown" id="result_list">
+    </ul>
+</dialog>
 
 <script>
     $(document).ready(function (){
+
         $('#subject-name').keyup(function (){
-            
-            if ($('#subject-name').val().trim() !== ""){
-                if (!$('#search_result').is(':visible')){
-                    
-                    $('#search_result').fadeIn(80, function() {
-                        // Animation complete
-                    });
-                    searchSubjectByTitle();
-                }
+            selectedSubjectId = -1;
+            selectedSubjectName = $('#subject-name').val().trim();
+            if (selectedSubjectName !== ""){
+                searchSubjectByTitle();
             }
             else {
                 if ($('#search_result').is(':visible'))
                     $('#search_result').hide();
             }
-            
         });
+        
+        $('#subject-name').focusout(function (){
+            closeResultDialog();
+        });
+
     });
 
     function searchSubjectByTitle(){
@@ -45,22 +42,58 @@
                 url: "${pageContext.request.contextPath}/user-info/subject-by-title",
                 data: {
                     user_id: userId,
-                    subject_title: $('#subject-name').val()
+                    subject_title: selectedSubjectName
                 },
                 method: "GET",
                 success:function(data){
                     var json = $.parseJSON(result.responseText);
                     $('#result_list').empty();
-                    json.forEach(function (item, index){
-                            var li =
-                            "<li class='mdl-list__item ggdropdown-list-item'> " +
-                                "<span class='mdl-list__item-primary-content'>" +
-                                    item.title +
-                                "</span>"+
-                            "</li>";
-                            $('#result_list').append(li);
-                        });
+                    if (json.length === 0){
+                        $('#search_result').stop();
+                        closeResultDialog();
                     }
-                });   
+                    else {
+                        json.forEach(function (item, index){
+                                var li =
+                                "<li class='mdl-list__item ggdropdown-list-item' id=" +item.id +" > " +
+                                    "<span class='mdl-list__item-primary-content'>" +
+                                        item.title +
+                                    "</span>"+
+                                "</li>";
+                                $('#result_list').append(li);
+                            });
+                        showResultDialog();                            
+                    }
+                }
+            }); 
+    }
+    
+    function showResultDialog(){
+        $('#search_result').fadeIn(80, function() {
+            $('#result_list li').click(resultItemClick);                        
+        });       
+    }
+    
+    function closeResultDialog(){
+        if (!$('#search_result').is(":hover") || selectedSubjectId !== -1)
+            $('#search_result').hide();
+    }
+    
+    var selectedSubjectId = -1;
+    var selectedSubjectName = "";
+    
+    function resultItemClick(){
+        selectedSubjectId = $(this).attr('id');
+        selectedSubjectName = $(this).children('span')[0].textContent;
+        $('#subject-name').val(selectedSubjectName);
+        $('#search_result').hide();
+    }
+    
+    function getSubjectId(){
+        return selectedSubjectId;
+    }
+    
+    function getSubjectName(){
+        return selectedSubjectName;
     }
 </script>
