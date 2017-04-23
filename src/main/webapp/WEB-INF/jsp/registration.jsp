@@ -55,22 +55,30 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form id="login-form" action="${pageContext.servletContext.contextPath}/login" method="post" role="form" style="${loginPageStyle}">
+                                    <form id="login-form" action="${pageContext.servletContext.contextPath}/login"
+                                           method="post" role="form" style="${loginPageStyle}">
                                         <c:choose>
                                             <c:when test="${startPage == 0}">
                                                 <p>${status.message}</p>
                                             </c:when>
                                         </c:choose>
+                                        <p>${redirect_login} </p>
+                                        <p>${token} </p>
+                                        <p>${time} </p>
+
                                         <div class="form-group">
                                             <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="${defUsername}">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
                                         </div>
+
                                         <div class="form-group text-center">
                                             <input type="checkbox" tabindex="3" class="" name="remember" id="remember" modelAttribute="remember">
                                             <label for="remember"> Remember Me</label>
                                         </div>
+                                        
+                                        
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">

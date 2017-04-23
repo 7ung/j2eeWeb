@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -41,7 +42,8 @@ public class SeekingJob implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer id;
-    private Integer location;
+    @Size(max = 256)
+    private String location;
     @Column(name = "min_salary")
     private Integer minSalary;
     @Column(name = "max_salary")
@@ -77,11 +79,11 @@ public class SeekingJob implements Serializable {
         this.id = id;
     }
 
-    public Integer getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Integer location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 

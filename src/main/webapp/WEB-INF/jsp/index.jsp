@@ -16,7 +16,7 @@
 
     <body>
         <%--Include trang Header--%>
-        <jsp:include page="/WEB-INF/jsp/headerWithoutLogin.jsp"/>
+        <jsp:include page="/WEB-INF/jsp/header.jsp"/>
         
     </body>
 </html>
