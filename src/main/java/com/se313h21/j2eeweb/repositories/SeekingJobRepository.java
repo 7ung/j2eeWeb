@@ -13,6 +13,6 @@ import java.util.List;
  * @author quytocngheo
  */
 public interface SeekingJobRepository extends JpaRepository<SeekingJob, Integer> {
-    public List<SeekingJob> findByLocation(Integer location);
+    public List<SeekingJob> findByLocation(String location);
     public List<SeekingJob> findAll();
 }
