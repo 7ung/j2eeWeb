@@ -17,6 +17,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface TagRepository extends JpaRepository<Tag, Integer>{
     
     public List<Tag> findFirst6ByNameContaining(String name, Sort sort);
-    
+    public List<Tag> findByName(String name);
 //    public List<Tag> findFirst6(Sort sort);
 }

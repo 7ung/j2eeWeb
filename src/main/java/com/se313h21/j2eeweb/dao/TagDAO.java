@@ -27,6 +27,22 @@ public class TagDAO {
         return tags;
     }
     
+    public Tag get(String name){
+        List<Tag> tags = tagRepo.findByName(name);
+        if (tags.isEmpty())
+            return create(name);
+        return tags.get(0);
+    }
+    
+    private Tag create(String name){
+        Tag t = new Tag(-1, "-1");
+        t.setName(name);
+        t = tagRepo.save(t);
+        t.setCode(Integer.toHexString(t.getId()));
+        t = tagRepo.save(t);
+        return t;
+    }
+    
 //    public List<Tag> getTop6(){
 //        List<Tag> tags = tagRepo.findFirst6(new Sort("name"));
 //        return tags;

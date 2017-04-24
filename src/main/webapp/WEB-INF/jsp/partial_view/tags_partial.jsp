@@ -7,18 +7,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<div class="form-group">
-    <label for="tags">Tags</label>
-    <input type="text" name="tags" id="tags" tabindex="3" class="form-control" placeholder="Put your tags" value="">
-</div>
+
+    <div class="form-group">
+        <label for="tags">Tags</label>
+        <input type="text" name="tags" id="tags" tabindex="3" class="form-control" placeholder="Put your tags" value="">
+    </div>
+
 <dialog class="search-result-dialog" id="tags-search-dialog" role="dialog">
     <ul class="mdl-list ggdropdown" id="tags-search-result">
     </ul>
 </dialog>
-<div class="mdl-card" id="tags-box" style="width: 100%; min-height: 0px;">
-    <div class="mdl-card__supporting-text" id="tags-box-holder" style="width: 100%;">
+
+    <div class="mdl-card" id="tags-box" style="width: 100%; min-height: 0px; margin-top: 8px; margin-bottom: 16px;
+         box-shadow: inset 0px 0px 2px 2px #60dda6;">
+        <div class="mdl-card__supporting-text" id="tags-box-holder" style="width: 100%;">
+        </div>
     </div>
-</div>
+
 <div id="snack-bar-error" aria-live="assertive" aria-atomic="true" aria-relevant="text" 
      class="mdl-snackbar mdl-js-snackbar my-snack-bar-error">
     <div class="mdl-snackbar__text upper-text"></div>
@@ -26,7 +31,7 @@
 </div>
 
 <script>
-    
+    var tagsString ='';
     $(document).ready(function(){
         checkIfBoxEmpty();
         $('#tags').focusout(function (){
@@ -35,11 +40,14 @@
         });
     });
     
+    $('#tags-box-holder').on('DOMNodeInserted', 'span', function(e){
+        updateTagsString();
+    });
+    
     $('#tags').bind('keypress', function (e){
        if (e.keyCode === 59){
             createTag($('#tags').val().trim());
             event.preventDefault();
-
        } 
     });
     
@@ -82,6 +90,7 @@
                     $('#tags-search-dialog li').click(function (){
                         $('#tags-search-dialog').hide();
                         createTag($(this).children('span')[0].textContent);
+
                     });                        
                 }); 
             }
@@ -103,13 +112,17 @@
         var chip  = $(this).parents('.mdl-chip');
         chip.remove();
         checkIfBoxEmpty();        
+        updateTagsString();
+
     }
         
     function createTagChip(tag_name){
-        return $.parseHTML( "<span class='mdl-chip mdl-chip--deletable  mdl-shadow--2dp my-mdl-chip'>" +
+        var tagChip = $.parseHTML( "<span class='mdl-chip mdl-chip--deletable  mdl-shadow--2dp my-mdl-chip'>" +
             "<span class='mdl-chip__text'>" + tag_name + "</span>" +
             "<button type='button' class='mdl-chip__action' style='margin-bottom:8px;'><i class='material-icons'> &#x2716</i></button>" +
         "</span>");
+
+        return tagChip;
     }
     
     function isMaxTag(){
@@ -125,6 +138,11 @@
     }
     
     function createTag(tag){
+        if (tagsString.indexOf(tag) !== -1){
+            showSnackBarError('Tags Exists');
+            return;
+        }
+        
         if (isMaxTag()) {
             showSnackBarError('Chỉ có thể tạo tối đa 8 tag trong một post');
             return;
@@ -134,10 +152,25 @@
             var tagChip = createTagChip(tag);
             $('#tags-box-holder').append(tagChip);
             $('#tags-box-holder .mdl-chip__action').last().click(tagclose);
+//            $('#tags-box-holder .mdl-chip').last().on('detach', function (){
+//                updateTagsString();
+//            });
             $('#tags').val('');   
         }
         checkIfBoxEmpty();
 
+    }
+    
+    function updateTagsString(){
+        tagsString = '';
+        var items = $('#tags-box-holder span.mdl-chip__text').toArray();
+        items.forEach(function (item, index){
+            tagsString += item.textContent + ';';
+        });        
+    }
+    
+    function getTagString(){
+        return tagsString;
     }
     
 </script>

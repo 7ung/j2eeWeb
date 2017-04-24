@@ -9,9 +9,10 @@
 <%--<%@taglib uri="/struts-tags" prefix="s"%>--%> 
 <!DOCTYPE html>
 <html>
+    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Đăng bài mới</title>
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -36,6 +37,9 @@
             span {
                 font-family: 'Trirong', sans-serif;
             }
+            textarea {
+                font-family: 'Trirong', sans-serif;
+            }            
         </style>
     </head>
     <body>
@@ -57,6 +61,9 @@
                             <div class="form-group">
                                 <input name="subject-id" type="hidden" id="subject-id" />
                             </div>
+                            <div class="form-group">
+                                <input name="tags-post-list" type="hidden" id="tags-post-list" />
+                            </div>                            
 
                             <div class="form-group">
                                 <label for="tilte">Tiêu đề</label>
@@ -65,13 +72,15 @@
                             
                             <jsp:include page="partial_view/tags_partial.jsp"></jsp:include>
                             
-                            <textarea cols="80" id="editor1" name="editor1" rows="10" ></textarea>
-                            <input type="hidden" name="content" id="content" tabindex="4" class="form-control" value="">
-
+                            <div class="form-group">
+                                <textarea cols="80" id="editor1" name="editor1" tabindex="4" rows="10" ></textarea>
+                                <input type="hidden" name="content" id="content" tabindex="4" class="form-control" value="">
+                            </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6 col-sm-offset-3">
-                                        <input type="submit" name="submit-btn" id="submit-btn" tabindex="5" class="form-control btn btn-login" value="Publish">
+                                        <input type="submit" name="submit-btn" id="submit-btn" tabindex="5" class="form-control btn"
+                                               value="Publish" style="background-color: #B2DFDB"/>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +99,7 @@
 
     </body>
     <script>var editor1 = CKEDITOR.replace( 'editor1', {
-                height: 250
+                height: 280                
         } );
     $("#ar").html(CKEDITOR.instances.editor1.getData());
 
@@ -99,10 +108,30 @@
     });
     
     $('#post-form').submit(function (){
+        if (checkIfValid() === false)
+            return false;
+
         $("#subject-id").val(getSubjectId());
+        $('#tags-post-list').val(getTagString());
         return true;
     });
     
+    
+    function checkIfValid(){
+        if ($('#title').val() === ''){
+            showSnackBarError('Tiêu đề không được để trống');
+            return false;
+        }
+        if (getTagString() === ''){
+            showSnackBarError('Không để trống tags');
+            return false;            
+        }
+        if ($('#content').val() === ''){
+            showSnackBarError('Nội dung không được để trống');
+            return false;            
+        }        
+        return true;
+    }
 
     </script>
 </html>

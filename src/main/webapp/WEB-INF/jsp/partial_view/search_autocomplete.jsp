@@ -7,7 +7,7 @@
 
 <div class="form-group">
     <label for="sample6">Chủ đề</label>
-    <input class="form-control" type="text" id="subject-name" name="subject-name" style="">
+    <input class="form-control" type="text" id="subject-name" tabindex="1" name="subject-name" style="" placeholder="Subject">
 </div>
 <dialog class="search-result-dialog" id="search_result" role="dialog">
     <ul class="mdl-list ggdropdown" id="result_list">
