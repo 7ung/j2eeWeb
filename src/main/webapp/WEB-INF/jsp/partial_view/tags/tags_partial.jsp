@@ -13,10 +13,10 @@
         <input type="text" name="tags" id="tags" tabindex="3" class="form-control" placeholder="Put your tags" value="">
     </div>
 
-<dialog class="search-result-dialog" id="tags-search-dialog" role="dialog">
-    <ul class="mdl-list ggdropdown" id="tags-search-result">
-    </ul>
-</dialog>
+    <dialog class="search-result-dialog" id="tags-search-dialog" role="dialog">
+        <ul class="mdl-list ggdropdown" id="tags-search-result">
+        </ul>
+    </dialog>
 
     <div class="mdl-card" id="tags-box" style="width: 100%; min-height: 0px; margin-top: 8px; margin-bottom: 16px;
          box-shadow: inset 0px 0px 2px 2px #60dda6;">

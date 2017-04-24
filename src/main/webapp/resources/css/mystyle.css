@@ -173,3 +173,13 @@
 .upper-text {
     text-transform: uppercase;
 }
+
+.main-container {
+    margin-left: 4%;
+    margin-right:4%;
+    margin-bottom: 20px;
+}
+
+.border-right{
+    border-right: rgba(204,204, 225, 0.9) inset 1px;
+}

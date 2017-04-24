@@ -55,7 +55,7 @@ public class PostController extends BaseAuthorizationUserController{
         List<Subject> subjects = subjectDao.getMany(user);
         model.addAttribute("subjects", subjects);
         
-        return "post_create";
+        return "post/post_create";
     }
     
     
@@ -88,7 +88,7 @@ public class PostController extends BaseAuthorizationUserController{
         Post post = postDao.create(title, content, user, subject, tags);
         
         model.addAttribute("message", "succes");
-        return "post_create";
+        return "post/post_create";
     }
     
     
@@ -99,19 +99,23 @@ public class PostController extends BaseAuthorizationUserController{
         for (String name : names) {
             System.out.println(TAG + " look for tag names: " + name);
             t = tagDao.get(name);
-//            if (t == null) {
-//                System.out.println(TAG + " Tag not found, creeate new tag, tag names: " + name);
-//                t = tagDao.create(name);
-//            }
-//            else {
-//                System.out.println(TAG + " Tag found, tag names: " + name);
-//            }
             tags.add(t);
             
         }
         return tags;
     }
     
+    @RequestMapping(value="/post", method=RequestMethod.GET, params = {"id"})
+    public String post_show(HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam(value = "id") int postId,
+            ModelMap model){
+        
+        Post post = postDao.get(postId);
+        post = postDao.increaseView(post);
+        model.addAttribute("post", post);
+        return "post/post_show";
+    }
     
     
 }

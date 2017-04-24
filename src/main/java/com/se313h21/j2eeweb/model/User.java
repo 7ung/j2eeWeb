@@ -8,9 +8,11 @@ package com.se313h21.j2eeweb.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,8 +66,8 @@ public class User implements Serializable {
     private Collection<Image> imageCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Subject> subjectCollection;
-    @OneToMany(mappedBy = "userId")
-    private Collection<Profile> profileCollection;
+    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Collection<Profile> profileCollection = new LinkedHashSet<Profile>();;
     @OneToMany(mappedBy = "userId")
     private Collection<SeekingJob> seekingJobCollection;
     @OneToMany(mappedBy = "userId")

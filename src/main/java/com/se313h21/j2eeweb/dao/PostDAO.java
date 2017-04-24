@@ -37,6 +37,7 @@ public class PostDAO {
         Post post = new Post(-1, "-1", title, content, Utils.currentTimestamp());
         post.setUserId(user);
         post.setStatus("published");
+        post.setView(0);
         post = postRepo.save(post);
         post.setCode(Integer.toHexString(post.getId()));
         if (subject != null)
@@ -47,6 +48,15 @@ public class PostDAO {
     
     public Post create(String title, String content, User user){
         return create(title, content, user, null);
+    }
+
+    public Post get(int postId) {
+        return postRepo.findOne(postId);
+    }
+
+    public Post increaseView(Post post) {
+        post.setView(post.getView() + 1);
+        return postRepo.save(post);
     }
     
 }
