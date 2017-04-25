@@ -74,7 +74,6 @@
                     </ul>                    
                 </c:otherwise>
             </c:choose>
-
         </div>
     </nav>
 </div>

@@ -8,9 +8,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<div class="col-md-3 right-container mdl-card mdl-shadow--2dp">
+<div class="mdl-card mdl-shadow--2dp">
     <p class="mdl-card__title mdl-card--border"><b>Các chủ đề đã tạo</b><p>
-    <div id="_holder"> 
+    <div id="_holder" class="card-holder"> 
         <ul class=" mdl-list" id="subject_list">
         </ul>
     </div>

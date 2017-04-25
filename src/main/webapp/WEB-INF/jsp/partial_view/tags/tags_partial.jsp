@@ -21,19 +21,22 @@
     <div class="mdl-card" id="tags-box" style="width: 100%; min-height: 0px; margin-top: 8px; margin-bottom: 16px;
          box-shadow: inset 0px 0px 2px 2px #60dda6;">
         <div class="mdl-card__supporting-text" id="tags-box-holder" style="width: 100%;">
+            <c:forEach items="${tagsCollection}" var="tag">
+                <span class='mdl-chip mdl-chip--deletable  mdl-shadow--2dp my-mdl-chip' id="{tag.id}"> 
+                    <span class='mdl-chip__text'> ${tag.name} </span>
+                    <button type='button' class='mdl-chip__action' style='margin-bottom:8px;'><i class='material-icons'> &#x2716</i></button>
+                </span>   
+            </c:forEach>
         </div>
     </div>
 
-<div id="snack-bar-error" aria-live="assertive" aria-atomic="true" aria-relevant="text" 
-     class="mdl-snackbar mdl-js-snackbar my-snack-bar-error">
-    <div class="mdl-snackbar__text upper-text"></div>
-    <button type="button" class="mdl-snackbar__action"></button>
-</div>
 
 <script>
     var tagsString ='';
     $(document).ready(function(){
         checkIfBoxEmpty();
+        updateTagsString();
+
         $('#tags').focusout(function (){
             if (!$('#tags-search-dialog').is(":hover"))
                 $('#tags-search-dialog').hide();
@@ -129,14 +132,6 @@
         return ($('#tags-box .mdl-chip').length >= 8);
     }
     
-    function showSnackBarError(errorMessage){
-        var notification = document.querySelector('#snack-bar-error');
-        var data = {
-          message: errorMessage
-        };
-        notification.MaterialSnackbar.showSnackbar(data);
-    }
-    
     function createTag(tag){
         if (tagsString.indexOf(tag) !== -1){
             showSnackBarError('Tags Exists');
@@ -165,7 +160,7 @@
         tagsString = '';
         var items = $('#tags-box-holder span.mdl-chip__text').toArray();
         items.forEach(function (item, index){
-            tagsString += item.textContent + ';';
+            tagsString += item.textContent.trim() + ';';
         });        
     }
     

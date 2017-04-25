@@ -3,22 +3,32 @@
     Created on : Apr 22, 2017, 7:02:02 PM
     Author     : Stevie
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <div class="form-group">
     <label for="sample6">Chủ đề</label>
-    <input class="form-control" type="text" id="subject-name" tabindex="1" name="subject-name" style="" placeholder="Subject">
+    <input class="form-control" type="text" id="subject-name" tabindex="1" name="subject-name" style=""
+           placeholder="Subject" value="${subject.title}">
 </div>
 <dialog class="search-result-dialog" id="search_result" role="dialog">
     <ul class="mdl-list ggdropdown" id="result_list">
     </ul>
 </dialog>
-
+<c:choose>
+    <c:when test="${subject != null}">
+        <script>selectedSubjectId = ${subject.id};
+        selectedSubjectName = '${subject.title}';</script>
+    </c:when>
+    <c:otherwise>
+        <script>selectedSubjectId = -1;
+        selectedSubjectName = '';</script>
+    </c:otherwise>
+</c:choose>
 <script>
     $(document).ready(function (){
-
+        
         $('#subject-name').keyup(function (){
-            selectedSubjectId = -1;
             selectedSubjectName = $('#subject-name').val().trim();
             if (selectedSubjectName !== ""){
                 searchSubjectByTitle();
@@ -78,9 +88,6 @@
         if (!$('#search_result').is(":hover") || selectedSubjectId !== -1)
             $('#search_result').hide();
     }
-    
-    var selectedSubjectId = -1;
-    var selectedSubjectName = "";
     
     function resultItemClick(){
         selectedSubjectId = $(this).attr('id');

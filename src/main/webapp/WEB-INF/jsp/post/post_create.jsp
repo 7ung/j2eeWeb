@@ -12,12 +12,11 @@
     <jsp:include page="../partial_view/head.jsp"/>
 
     <body>
-        <%--<jsp:include page="headerWithoutLogin.jsp"></jsp:include>--%>
+        <jsp:include page='../partial_view/snackbar.jsp'/>
         <div class="container-fuild main-container ">
             <row class="row-fluid">
                 <div class="col-md-2" style="background-color: #adadad;">
                     <div style ="background-color: #5bc0de; height: 200px;" >
-
                     </div>
                 </div>
                 <div class="col-md-7" style="background-color: #fafafa;">
@@ -27,21 +26,30 @@
                             <jsp:include page="../partial_view/subject/search_autocomplete.jsp"/>
 
                             <div class="form-group">
-                                <input name="subject-id" type="hidden" id="subject-id" />
+                                <input name="subject-id" type="hidden" id="subject-id" value=""/>
                             </div>
                             <div class="form-group">
                                 <input name="tags-post-list" type="hidden" id="tags-post-list" />
                             </div>                            
-
+                            <c:choose>
+                                <c:when test="${mode == 'edit'}">
+                                    <div class="form-group">
+                                        <input name="post-id" type="hidden" id="post-id" value="${post.id}" />
+                                    </div>      
+                                </c:when>
+                            </c:choose>
                             <div class="form-group">
                                 <label for="tilte">Tiêu đề</label>
-                                <input type="text" name="title" id="title" tabindex="2" class="form-control" placeholder="Tilte" value="">
+                                <input type="text" name="title" id="title" tabindex="2" 
+                                       class="form-control" placeholder="Tilte" value="${post.title}">
                             </div>
                             
                             <jsp:include page="../partial_view/tags/tags_partial.jsp"/>
                             
                             <div class="form-group">
-                                <textarea cols="80" id="editor1" name="editor1" tabindex="4" rows="10" ></textarea>
+                                <textarea cols="80" id="editor1" name="editor1" tabindex="4" rows="10" >
+                                    ${post.content}
+                                </textarea>
                                 <input type="hidden" name="content" id="content" tabindex="4" class="form-control" value="">
                             </div>
                             <div class="form-group">
@@ -52,14 +60,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
+<!--                            <div>
                                 <div id="ar"> </div>
-                            </div>    
+                            </div>    -->
                         </form>                    
                     </row>
                 </div>
-                <jsp:include page="../partial_view/subject/user_subject_partial.jsp"/>
-
+                <div class="col-md-3 right-container">
+                    <jsp:include page="../partial_view/subject/user_subject_partial.jsp"/>
+                </div>
             </row>
         </div>
     </body>
@@ -96,6 +105,25 @@
             return false;            
         }        
         return true;
+    }
+    
+    var mode = '${mode}';
+    
+    $(document).ready(function (){
+        if (mode === 'edit'){
+            fillTextBox();
+        }
+    });
+    
+    function fillTextBox(){
+        
+   
+//        
+//        postTags.forEach(function (item, index){
+//            var tagChip = createTagChip(item.name);
+//            $('#tags-box-holder').append(tagChip);
+//            $('#tags-box-holder .mdl-chip__action').last().click(tagclose);            
+//        });
     }
 
     </script>

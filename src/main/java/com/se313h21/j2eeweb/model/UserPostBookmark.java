@@ -44,7 +44,7 @@ public class UserPostBookmark implements Serializable {
     private Date date;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1024)
+    @Size(min = 0, max = 1024)
     private String note;
     @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)

@@ -5,12 +5,13 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <jsp:include page="../partial_view/head.jsp"/>
     <body>
+        <jsp:include page='../partial_view/snackbar.jsp'/>
+        <jsp:include page='../partial_view/dialog.jsp'/>
         <div class="container-fuild main-container ">
             <row class="row-fluid">
                 <div class="col-md-2" style="background-color: #adadad;">
@@ -51,25 +52,30 @@
                     </row>
                     <row class="row-fluid">
                         <div class="demo-card-wide mdl-card mdl-shadow--2dp post-main" >
-                            <div class="mdl-card__supporting-text post-content mdl-card--border" id="post-content">
-                                ${post.content}
+ 
+                            <div class="mdl-card__supporting-text post-content mdl-card--border" 
+                                 id="post-content" style="position: relative;" >
+                                <c:choose>
+                                    <c:when test="${user != null && user.id == post.userId.id}">
+                                        <jsp:include page="../partial_view/hover-action-btn.jsp"/>
+                                    </c:when>
+                                </c:choose>                                
+                                <div>${post.content}</div>
                             </div>
                             
                             <div class="mdl-card__supporting-text post-content">
-                                <row class="row-fluid">
-                                    <div class="col-md-3 border-right" id="post-date">
-                                    </div>
-                                    <div class="col-md-2" id="post-view">
-                                        ${post.view} 
-                                        <i class="fa fa-eye" aria-hidden="true" style="color: rgba(64,64,64,0.8); margin: 2px;"></i>
-                                    </div>
-                                </row> 
+                                <jsp:include page='post_info.jsp'/>
                             </div>                            
                         </div>
-                    </row>
-                                
+                    </row>      
                 </div>
-                <jsp:include page="../partial_view/subject/user_subject_partial.jsp"/>
+                <div class="col-md-3 right-container">
+                    <c:choose>
+                        <c:when test="${user != null}">
+                            <jsp:include page="../partial_view/subject/user_subject_partial.jsp"/>
+                        </c:when>
+                    </c:choose>
+                </div>
             </row>
 
         </div>
@@ -77,10 +83,79 @@
     
     <script>
         $(document).ready(function() {
-            var dateNumber = ${post.date} * 1000;
-            var date = new Date(dateNumber);
-//            $('#post-date').innerHTML = date.toString();           
-            $('#post-date').text(date.toDateString());
+            
+            $('#edit-btn').click(function (){
+                window.location.replace("${pageContext.request.contextPath}/post-edit?id=${post.id}");
+            });
+            $('#private-btn').click(unpublishPost);            
+            $('#publish-btn').click(publishPost);            
+            $('#delete-btn').click(function (){
+                openDialog('Bạn có muốn xoá bái viết', 'CÓ', 'KHÔNG', function () {
+                    deletePost();
+                });
+
+
+            });
         });
+        
+        function unpublishPost(){
+            var rs = jQuery.ajax({
+                url: "${pageContext.request.contextPath}/post-private",
+                data: {
+                    id: ${post.id}
+                },
+                method: 'GET',
+                success: function (data){
+                    var json = $.parseJSON(data);
+                    if (data === 200){
+                        $('#private-btn').hide();
+                        $('#publish-btn').show();
+                        showSnackBarInfo('Đã huỷ công khai bài viết');
+                    }
+                    else {
+                        showSnackBarError('Lỗi');
+                    }
+                }
+            });
+        }
+        function publishPost(){
+            var rs = jQuery.ajax({
+                url: "${pageContext.request.contextPath}/post-publish",
+                data: {
+                    id: ${post.id}
+                },
+                method: 'GET',
+                success: function (data){
+                    var json = $.parseJSON(data);
+                    if (data === 200){
+                        $('#private-btn').show();
+                        $('#publish-btn').hide();
+                        showSnackBarInfo('Đã công khai bài viết');
+                    }
+                    else {
+                        showSnackBarError('Lỗi');
+                    }                    
+                }
+            });
+        }        
+        
+        function deletePost(){
+            var rs = jQuery.ajax({
+                url: "${pageContext.request.contextPath}/post-delete",
+                data: {
+                    id: ${post.id}
+                },
+                method: 'GET',
+                success: function (data){
+                    var json = $.parseJSON(data);
+                    if (data === 200){
+                        window.location.replace('${pageContext.request.contextPath}');
+                    }
+                    else {
+                        showSnackBarError('Lỗi');
+                    }
+                }
+            });            
+        }
     </script>
 </html>

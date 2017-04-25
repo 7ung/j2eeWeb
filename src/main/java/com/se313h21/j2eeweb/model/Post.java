@@ -83,7 +83,8 @@ public class Post implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User userId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true )
     private Collection<UserPostBookmark> userPostBookmarkCollection;
 
     public Post() {

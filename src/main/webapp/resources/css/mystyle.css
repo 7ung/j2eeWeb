@@ -170,6 +170,11 @@
     width: 480px;
 }
 
+.my-snack-bar-info {
+    background: #00E676; 
+    width: 480px;
+}
+
 .upper-text {
     text-transform: uppercase;
 }
@@ -178,8 +183,30 @@
     margin-left: 4%;
     margin-right:4%;
     margin-bottom: 20px;
+    padding-top: 52px;
 }
 
 .border-right{
     border-right: rgba(204,204, 225, 0.9) inset 1px;
+}
+
+.my-action-btn {
+    size: 28px;
+    background-color: #eff7f7;
+}
+
+.my-action-btn :hover{
+//    background-color: #ccdbe2;
+}
+
+.card-holder {
+    max-height: 460px;
+    overflow-y: auto;
+}
+
+.small-btn {
+    padding: 0px;
+    height: 20px;
+    width: 20px;
+    margin-left: 3px;
 }

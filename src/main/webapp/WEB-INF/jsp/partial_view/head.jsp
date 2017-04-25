@@ -29,7 +29,6 @@
     <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Trirong" rel="stylesheet">
 
-
     <style>
         body {
           font-family: 'Trirong', sans-serif;
@@ -39,6 +38,9 @@
         }
         textarea {
             font-family: 'Trirong', sans-serif;
-        }            
+        }
+        button {
+            font-family: 'Trirong', sans-serif;
+        }
     </style>
 </head>
