@@ -1,3 +1,7 @@
+/* -------- Common ------- */
+
+/* -------- End Common ------- */
+
 /*------------------Nav---------------------*/
 
 .container-fluid {
@@ -50,3 +54,159 @@
 	height: 34px;
 }
 /*------------------Kết thúc Nav---------------------*/
+
+/* -------- Layout ------- */
+
+.left-container{
+    
+}
+
+.right-container {
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+}
+
+.center-container {
+    
+}
+
+/* -------- End Layout -------- */
+
+/* -------- Dropdown list ------- */
+* {
+    box-sizing: border-box;
+}
+.dropdown {
+    display:inline-block;
+    margin:30px;
+    position: relative;
+    padding:0;
+    border:0;
+    border-radius:5px;
+    font-size:24px;
+    font-weight:400;
+    background:#26A69A;
+    color:#FFF;
+    box-shadow: 0px 8px 17px 0px rgba(0, 0, 0, 0.2), 0px 6px 20px 0px rgba(0, 0, 0, 0.19);
+}
+.dropdown > input{
+    display:none;
+    position:fixed;
+    z-index:-2;
+}
+.dropdown > label{
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+.drop-ttl{
+    font-weight:400;
+    padding:5px 20px;
+}
+.dropdown ul {
+    width:100%;
+    font-weight:400;
+    margin:0;
+    padding:0;
+    position:absolute;
+    top:0;
+    text-align:center;
+    list-style-type:none;
+    background:#FFF;
+    color:#26A69A;
+    box-shadow: 0px 8px 17px 0px rgba(0, 0, 0, 0.2), 0px 6px 20px 0px rgba(0, 0, 0, 0.19);
+    border-radius:5px;
+}
+.dropdown ul >li{
+    padding:5px 20px;
+}
+.dropdown ul > li > a{
+    color:inherit;
+    outline:0;
+    text-decoration:none;
+    cursor:pointer;
+}
+.dropdown ul > li:hover{
+    background:#DEDEDE;
+}
+/* -------- End dropdown list -------- */
+
+.ggdropdown {
+    padding: 2px;
+}
+
+.ggdropdown-list-item {
+    margin-top:2px;
+    border: 2px solid #a2b7be;
+    
+}
+
+.ggdropdown-list-item:hover{
+    background-color: #ccdbe2;
+}
+
+.search-result-dialog{
+    width: 100%;
+    z-index: 10;
+    border: #165f8f 1px solid;
+    border-radius: 4px;
+}
+
+.my-mdl-chip{
+    background-color: #eff7f7; 
+    padding: 2px 6px 2px 12px;
+    margin-right: 8px;
+}
+
+.my-mdl-chip:hover{
+    background-color: #ccdbe2;
+}
+
+.my-snack-bar-error {
+    background: #F44336; 
+    width: 480px;
+}
+
+.my-snack-bar-info {
+    background: #00E676; 
+    width: 480px;
+}
+
+.upper-text {
+    text-transform: uppercase;
+}
+
+.main-container {
+    margin-left: 4%;
+    margin-right:4%;
+    margin-bottom: 20px;
+    padding-top: 52px;
+}
+
+.border-right{
+    border-right: rgba(204,204, 225, 0.9) inset 1px;
+}
+
+.my-action-btn {
+    size: 28px;
+    background-color: #eff7f7;
+}
+
+.my-action-btn :hover{
+//    background-color: #ccdbe2;
+}
+
+.card-holder {
+    max-height: 460px;
+    overflow-y: auto;
+}
+
+.small-btn {
+    padding: 0px;
+    height: 20px;
+    width: 20px;
+    margin-left: 3px;
+}

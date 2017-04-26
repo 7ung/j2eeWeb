@@ -5,11 +5,14 @@
  */
 package com.se313h21.j2eeweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -63,8 +66,8 @@ public class User implements Serializable {
     private Collection<Image> imageCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Subject> subjectCollection;
-    @OneToMany(mappedBy = "userId")
-    private Collection<Profile> profileCollection;
+    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Collection<Profile> profileCollection = new LinkedHashSet<Profile>();;
     @OneToMany(mappedBy = "userId")
     private Collection<SeekingJob> seekingJobCollection;
     @OneToMany(mappedBy = "userId")
@@ -129,118 +132,144 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<DevelopmentType> getDevelopmentTypeCollection() {
         return developmentTypeCollection;
     }
 
+    @JsonIgnore
     public void setDevelopmentTypeCollection(Collection<DevelopmentType> developmentTypeCollection) {
         this.developmentTypeCollection = developmentTypeCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<Experience> getExperienceCollection() {
         return experienceCollection;
     }
-
+    
+    @JsonIgnore
     public void setExperienceCollection(Collection<Experience> experienceCollection) {
         this.experienceCollection = experienceCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<Image> getImageCollection() {
         return imageCollection;
     }
-
+    
+    @JsonIgnore
     public void setImageCollection(Collection<Image> imageCollection) {
         this.imageCollection = imageCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<Subject> getSubjectCollection() {
         return subjectCollection;
     }
-
+    
+    @JsonIgnore
     public void setSubjectCollection(Collection<Subject> subjectCollection) {
         this.subjectCollection = subjectCollection;
     }
-
+    
+    @JsonIgnore
     @XmlTransient
     public Collection<Profile> getProfileCollection() {
         return profileCollection;
     }
 
+    @JsonIgnore
     public void setProfileCollection(Collection<Profile> profileCollection) {
         this.profileCollection = profileCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<SeekingJob> getSeekingJobCollection() {
         return seekingJobCollection;
     }
-
+    
+    @JsonIgnore
     public void setSeekingJobCollection(Collection<SeekingJob> seekingJobCollection) {
         this.seekingJobCollection = seekingJobCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<AccessToken> getAccessTokenCollection() {
         return accessTokenCollection;
     }
 
+    @JsonIgnore
     public void setAccessTokenCollection(Collection<AccessToken> accessTokenCollection) {
         this.accessTokenCollection = accessTokenCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<UserTagBookmark> getUserTagBookmarkCollection() {
         return userTagBookmarkCollection;
     }
 
+    @JsonIgnore
     public void setUserTagBookmarkCollection(Collection<UserTagBookmark> userTagBookmarkCollection) {
         this.userTagBookmarkCollection = userTagBookmarkCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<Post> getPostCollection() {
         return postCollection;
     }
 
+    @JsonIgnore
     public void setPostCollection(Collection<Post> postCollection) {
         this.postCollection = postCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<UserPostBookmark> getUserPostBookmarkCollection() {
         return userPostBookmarkCollection;
     }
 
+    @JsonIgnore
     public void setUserPostBookmarkCollection(Collection<UserPostBookmark> userPostBookmarkCollection) {
         this.userPostBookmarkCollection = userPostBookmarkCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<UserSubjectBookmark> getUserSubjectBookmarkCollection() {
         return userSubjectBookmarkCollection;
     }
 
+    @JsonIgnore
     public void setUserSubjectBookmarkCollection(Collection<UserSubjectBookmark> userSubjectBookmarkCollection) {
         this.userSubjectBookmarkCollection = userSubjectBookmarkCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<UserWork> getUserWorkCollection() {
         return userWorkCollection;
     }
 
+    @JsonIgnore
     public void setUserWorkCollection(Collection<UserWork> userWorkCollection) {
         this.userWorkCollection = userWorkCollection;
     }
 
+    @JsonIgnore
     public UserRole getUserRoleId() {
         return userRoleId;
     }
 
+    @JsonIgnore
     public void setUserRoleId(UserRole userRoleId) {
         this.userRoleId = userRoleId;
     }
