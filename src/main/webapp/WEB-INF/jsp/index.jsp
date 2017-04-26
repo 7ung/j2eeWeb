@@ -16,10 +16,11 @@
                     </div>     
                 </div>
                 <div class="col-md-7" style="background-color: #fafafa;">
-                     
+                    <jsp:include page="partial_view/subject/followed_subject_card.jsp"/>
                 </div>
                 <div class="col-md-3 right-container">
-
+                    <div style ="background-color: #5bc0de; height: 200px;" >
+                    </div>  
                 </div>
             </row>
         </div>

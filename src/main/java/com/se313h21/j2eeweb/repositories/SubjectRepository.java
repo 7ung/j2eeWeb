@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -26,4 +27,9 @@ public interface SubjectRepository  extends JpaRepository<Subject, Integer>{
     
     public List<Subject> findFirst6ByUserIdAndTitleContaining(User userid, String title, Sort sort);
 
+    @Query(value = "select * from subject left join user_subject_bookmark on subject.id = user_subject_bookmark.subject_id "
+            + "where user_subject_bookmark.user_id = ?1", nativeQuery  = true)
+    public List<Subject> findSubjectByFollowUserId( Integer userId);
+    
+    
 }

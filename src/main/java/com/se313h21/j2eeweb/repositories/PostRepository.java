@@ -6,6 +6,8 @@
 package com.se313h21.j2eeweb.repositories;
 
 import com.se313h21.j2eeweb.model.Post;
+import com.se313h21.j2eeweb.model.Subject;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +15,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Stevie
  */
 public interface PostRepository  extends JpaRepository<Post, Integer>{
+
+    public Long countBySubjectId(Subject subjectId);
+
+    public List<Post> findBySubjectId(Subject subject);
     
 }

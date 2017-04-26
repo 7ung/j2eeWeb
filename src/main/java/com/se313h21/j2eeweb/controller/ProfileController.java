@@ -5,6 +5,7 @@
  */
 package com.se313h21.j2eeweb.controller;
 
+import com.se313h21.j2eeweb.model.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ public class ProfileController extends BaseAuthorizationUserController{
     public String profile_show(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap model){
-        super.fetchUser(request, response);
+        User user = super.fetchUser(request, response);
         if (user == null) {
             return ProfileController.redirect;
         }

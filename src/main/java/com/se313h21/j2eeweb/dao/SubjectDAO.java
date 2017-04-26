@@ -9,7 +9,9 @@ import com.se313h21.j2eeweb.model.Subject;
 import com.se313h21.j2eeweb.model.User;
 import com.se313h21.j2eeweb.repositories.SubjectRepository;
 import com.se313h21.j2eeweb.repositories.Utils;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -68,4 +70,14 @@ public class SubjectDAO {
         subject = subjectRepo.save(subject);
         return subject;
     }
+    
+    public List<Subject> getFollowedSubject(User user){
+        List<Subject> subjects = subjectRepo.findSubjectByFollowUserId(user.getId());
+        Collections.shuffle(subjects, new Random());
+        if (subjects.size() >= 4)
+            return subjects.subList(0, 4); // thằng này bị điên.  (subList(0,3) thì trả về 3 item)
+        else return subjects;
+    }
+
+
 }

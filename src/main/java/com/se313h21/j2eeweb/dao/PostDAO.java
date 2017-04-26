@@ -12,6 +12,7 @@ import com.se313h21.j2eeweb.model.Tag;
 import com.se313h21.j2eeweb.model.User;
 import com.se313h21.j2eeweb.model.UserPostBookmark;
 import com.se313h21.j2eeweb.repositories.PostRepository;
+import com.se313h21.j2eeweb.repositories.SubjectRepository;
 import com.se313h21.j2eeweb.repositories.UserPostBookmarkRepository;
 import com.se313h21.j2eeweb.repositories.Utils;
 import java.util.Collection;
@@ -32,6 +33,9 @@ public class PostDAO {
 
     @Autowired
     UserPostBookmarkRepository repo;
+    
+    @Autowired 
+    SubjectRepository subjectRepo;
     
     public Post create(String title, String content, User user, Subject subject, Collection<Tag> tags){
         Post post = create(title, content, user, subject);
@@ -63,6 +67,7 @@ public class PostDAO {
 
     public Post increaseView(Post post) {
         post.setView(post.getView() + 1);
+        post.getSubjectId().getPostCollection();
         return postRepo.save(post);
     }
 
@@ -118,6 +123,14 @@ public class PostDAO {
         catch(Exception e){
             return false;
         }   
+    }
+
+    public Long countPost(Subject subjectId) {
+        return postRepo.countBySubjectId(subjectId);
+    }
+
+    public List<Post> get(Subject subject) {
+        return postRepo.findBySubjectId(subject);
     }
     
 
