@@ -212,6 +212,8 @@
     border: rgba(0,0,0,0.1) 1px solid;
     border-radius: 2px;
     padding-bottom: 6px;
+    margin-bottom: 8px;
+    margin-top: 8px;
 }
 
 .small-btn {
@@ -258,4 +260,12 @@
 .subject-card-border {
     border-bottom: rgba(204,204, 204, 0.8) 1px solid;
     border-top: rgba(204,204, 204, 0.8) 1px solid;
+}
+
+.featured-title-color {
+    background-color: #69F0AE;
+}
+
+.follow-title-color {
+    background-color: #FFD54F;
 }

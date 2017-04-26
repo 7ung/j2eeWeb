@@ -74,8 +74,24 @@ public class SubjectDAO {
     public List<Subject> getFollowedSubject(User user){
         List<Subject> subjects = subjectRepo.findSubjectByFollowUserId(user.getId());
         Collections.shuffle(subjects, new Random());
-        if (subjects.size() >= 4)
-            return subjects.subList(0, 4); // thằng này bị điên.  (subList(0,3) thì trả về 3 item)
+        if (subjects.size() > 8)
+            return subjects.subList(0, 8); // thằng này bị điên.  (subList(0,11) thì trả về 1 item)
+        else return subjects;
+    }
+
+    public List<Subject> getNotUser(User user) {
+        List<Subject> subjects = subjectRepo.findByUserIdNot(user);
+        Collections.shuffle(subjects, new Random());
+        if (subjects.size() > 8)
+            return subjects.subList(0, 8); 
+        else return subjects;        
+    }
+
+    public List<Subject> getTop12() {
+        List<Subject> subjects = subjectRepo.findAll();
+        Collections.shuffle(subjects, new Random());
+        if (subjects.size() > 8)
+            return subjects.subList(0, 8); 
         else return subjects;
     }
 

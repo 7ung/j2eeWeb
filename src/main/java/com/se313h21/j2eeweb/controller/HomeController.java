@@ -37,9 +37,22 @@ public class HomeController  extends BaseAuthorizationUserController{
         if (user != null){
             List<Subject> followedSubjects = subjectDao.getFollowedSubject(user);
             model.addAttribute("followed_subject", followedSubjects);
+            
+            List<Subject> featuredSubjects = subjectDao.getNotUser(user);
+            model.addAttribute("featured_subject", featuredSubjects);
+
         }
+        else {
+            List<Subject> featuredSubjects = subjectDao.getTop12();
+            model.addAttribute("featured_subject", featuredSubjects);            
+        }
+        
+        
+        
         
         return "index";
     }
+    
+    
     
 }
