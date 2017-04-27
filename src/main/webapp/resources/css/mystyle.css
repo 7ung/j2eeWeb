@@ -262,10 +262,46 @@
     border-top: rgba(204,204, 204, 0.8) 1px solid;
 }
 
+.top-title {
+    text-shadow: 2px 2px 1px rgba(153, 153, 153, 0.6);
+}
+
+.subject-title {
+    background-color: #9DAAC0;
+    color: white;
+}
+
 .featured-title-color {
     background-color: #69F0AE;
 }
 
 .follow-title-color {
     background-color: #FFD54F;
+}
+
+.subject-description-box {
+    border: #cdcdcd 1px double;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background-color: white;
+    margin-bottom: 8px;
+}
+
+.primary-text {
+    font-size: 14px;
+    color: rgba(5, 5, 5, 0.8);
+}
+
+.secondary-text {
+    font-size: 12px;
+    color: rgba(32, 32, 32, 0.7);
+}
+
+.post-list-item {
+    width:100%;
+    border-bottom: rgba(204,204, 204, 0.8) 1px solid;
+    border-top: rgba(204,204, 204, 0.8) 1px solid;
+    background-color: white;
+    margin-top: 4px;
+    margin-bottom: 8px;
 }

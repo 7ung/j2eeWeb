@@ -30,17 +30,9 @@
     <link href="https://fonts.googleapis.com/css?family=Trirong" rel="stylesheet">
 
     <style>
-        body {
+        body, span, p, h1, h2, h3, h4, h5, h6, textarea, button {
           font-family: 'Trirong', sans-serif;
         }
-        span {
-            font-family: 'Trirong', sans-serif;
-        }
-        textarea {
-            font-family: 'Trirong', sans-serif;
-        }
-        button {
-            font-family: 'Trirong', sans-serif;
-        }
+      
     </style>
 </head>

@@ -10,7 +10,7 @@
 
 <row class='row-fluid'>
     <div class="mdl-card card-stretch card-flat" id='featured-subject-card'  >
-        <p class="mdl-card__title mdl-card--border featured-title-color"><b>Top chủ đề nổi bật</b><p>
+        <p class="mdl-card__title mdl-card--border featured-title-color top-title "><b>Top chủ đề nổi bật</b><p>
         <div id="featured-subject-card-holder" class="" > 
             <row class='row-fluid'>
                 <c:forEach items="${featured_subject}" var="s">

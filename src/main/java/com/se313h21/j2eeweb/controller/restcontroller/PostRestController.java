@@ -40,14 +40,10 @@ public class PostRestController {
     public List<Post> getTopPostBySubjectId(
         @PathVariable(value = "id") int subjectId){
         
-        System.out.println("PostRestController@getTopPostBySubjectId: subjectid = " + subjectId);
-        Subject subject = subjectDao.get(subjectId);
-        if (subject == null)
-            return new ArrayList();
-        List<Post> posts = postDao.get(subject);
+        List<Post> posts =  findPostBySubjectId(subjectId);
+
         if (posts.size() > 3){
             Collections.shuffle(posts);
-            
             posts = posts.subList(0, 4); // 3 item từ 0 tới 3 thì viết subList(0, 4). đm cái hàm thằng nào viết ngu vãi
         }
         for(Post p : posts){
@@ -55,4 +51,34 @@ public class PostRestController {
         }
         return posts;
     }
+    
+    @RequestMapping(value="/subjects/{id}/posts")
+    public List<Post> getPostBySubjectId(
+        @PathVariable(value = "id") int subjectId){
+        
+        List<Post> posts =  findPostBySubjectId(subjectId);
+        for(Post p : posts){
+            // bỏ trường content để giảm json. 
+            // Vì hiển thị list post thì không cần xem content
+            p.setContent(""); 
+        }
+        return posts;
+    }
+    
+    @RequestMapping(value="/post/{id}/follows")
+    public int getPostFollows(@PathVariable(value = "id") int postId){
+        Post post = postDao.get(postId);
+        if (post == null)
+            return 0;
+        return postDao.countFollow(post);
+    }
+    
+    private List<Post> findPostBySubjectId(int subjectId){
+        System.out.println("PostRestController@getTopPostBySubjectId: subjectid = " + subjectId);
+        Subject subject = subjectDao.get(subjectId);
+        if (subject == null)
+            return new ArrayList();
+        return postDao.get(subject);        
+    }
+    
 }

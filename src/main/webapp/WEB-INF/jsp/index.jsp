@@ -28,8 +28,11 @@
                     </c:choose>                   
                 </div>
                 <div class="col-md-3 right-container">
-                    <div style ="background-color: #5bc0de; height: 200px;" >
-                    </div>  
+                    <c:choose>
+                        <c:when test="${user != null}">
+                            <jsp:include page="partial_view/subject/user_subject_partial.jsp"/>
+                        </c:when>
+                    </c:choose>
                 </div>
             </row>
         </div>

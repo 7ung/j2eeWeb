@@ -37,6 +37,7 @@ public class PostDAO {
     @Autowired 
     SubjectRepository subjectRepo;
     
+    
     public Post create(String title, String content, User user, Subject subject, Collection<Tag> tags){
         Post post = create(title, content, user, subject);
         post.setTagCollection(tags);
@@ -131,6 +132,10 @@ public class PostDAO {
 
     public List<Post> get(Subject subject) {
         return postRepo.findBySubjectId(subject);
+    }
+
+    public int countFollow(Post postId) {
+        return repo.countByPostId(postId.getId());
     }
     
 

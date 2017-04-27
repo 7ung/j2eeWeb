@@ -10,7 +10,7 @@
 
 <row class='row-fluid'>
     <div class="mdl-card card-stretch card-flat" id='followed-subject-card'  >
-        <p class="mdl-card__title mdl-card--border follow-title-color "><b>Các chủ đề được theo dõi</b><p>
+        <p class="mdl-card__title mdl-card--border follow-title-color top-title "><b>Các chủ đề được theo dõi</b><p>
         <div id="followed-subject-card-holder" class="" > 
             <row class='row-fluid'>
                 <c:forEach items="${followed_subject}" var="s">

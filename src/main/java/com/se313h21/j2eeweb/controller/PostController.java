@@ -346,10 +346,7 @@ public class PostController extends BaseAuthorizationUserController{
     private boolean isOwner(User user, Post post){
         if (user == null)
             return false;
-        if (Objects.equals(user.getId(), post.getUserId().getId()))
-            return true;
-        else
-            return false;        
+        return Objects.equals(user.getId(), post.getUserId().getId());       
     }
 
     

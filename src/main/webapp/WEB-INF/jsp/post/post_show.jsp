@@ -25,15 +25,18 @@
                         </h1>
                     </row>
                     <row class="row-fluid">
-                        <div class ="col-md-9 post-subtitle" >
-                            <span style="">
-                                <a herf="#" class="post-subject">
-                                    ${post.subjectId.title}
-                                </a>
-                            </span>  
-                            -
+                        <div class ="col-md-12 post-subtitle" >
+                            <c:choose>
+                                <c:when test='${post.subjectId != null}'>
+                                    <span>
+                                        <a href="${pageContext.request.contextPath}/subjects/${post.subjectId.id}" 
+                                           class="post-subject">${post.subjectId.title}</a>
+                                    </span>  
+                                    -                                    
+                                </c:when>
+                            </c:choose>
                             <span>
-                                <a herf="#" class="post-author" >${post.userId.profileCollection[0].displayName}</a>
+                                <a href="#" class="post-author" >${post.userId.profileCollection[0].displayName}</a>
                             </span>
                         </div>
                     </row>         
@@ -72,6 +75,7 @@
                 <div class="col-md-3 right-container">
                     <c:choose>
                         <c:when test="${user != null}">
+                            <c:set var="mode" value="created-subject" scope="request"/>
                             <jsp:include page="../partial_view/subject/user_subject_partial.jsp"/>
                         </c:when>
                     </c:choose>

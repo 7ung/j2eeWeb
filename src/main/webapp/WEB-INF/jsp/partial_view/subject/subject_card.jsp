@@ -11,7 +11,7 @@
     <div class="mdl-card col-md-12 mdl-shadow--2dp" id='followed-subject-card-${subject.id}'
          style='margin-top: 4px; margin-bottom: 4px; padding-bottom: 8px;'>
         <row class='row-fuild'>
-            <p class="mdl-card__title blocked-text title-blocked-text" ><b>${subject.title}</b><p>
+            <a href="${pageContext.request.contextPath}/subjects/${subject.id}" style="color: rgba(102, 120, 146, 0.6);"><p class="mdl-card__title title-blocked-text subject-title" ><b>${subject.title}</b><p></a>
         </row>
         <div id="followed-subject-card-holder-${subject.id}" class="card-holder"> 
             <row class='row-fuild '> 
