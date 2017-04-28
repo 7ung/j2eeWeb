@@ -25,7 +25,8 @@
     <div class='border-bottom'>
         <c:choose>
             <c:when test='${user != null}'>        
-                <button class="mdl-button mdl-js-button mdl-button--secondary left-action-btn">
+                <button class="mdl-button mdl-js-button mdl-button--secondary left-action-btn"
+                        onclick="redirectToCreateSubject()">
                     Tạo chủ đề mới
                 </button>
                 <button class="mdl-button mdl-js-button mdl-button--secondary left-action-btn">
@@ -35,3 +36,9 @@
         </c:choose>        
     </div>
 </row>
+
+<script>
+    function redirectToCreateSubject(){
+        window.location.replace('${pageContext.request.contextPath}/subjects');
+    }
+</script>

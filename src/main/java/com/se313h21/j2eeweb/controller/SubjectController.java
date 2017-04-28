@@ -22,6 +22,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -74,6 +75,18 @@ public class SubjectController extends BaseAuthorizationUserController {
 
         return "subject/subject_show";
     }
+    
+    @RequestMapping(value="/subjects", method=RequestMethod.GET)
+    public String subjectCreate(HttpServletRequest request,
+            HttpServletResponse response,
+            ModelMap model){   
+        User user = super.fetchUser(request, response);
+        if (user == null) {
+            return SubjectController.redirect;
+        }
+        return "subject/subject_create";
+
+    } 
 
         
     @RequestMapping(value = "/subject/{id}/follow")
@@ -153,6 +166,35 @@ public class SubjectController extends BaseAuthorizationUserController {
         else
             return 400;
     }
+    
+    @RequestMapping(value = "subjects/{id}", produces="application/json;charset=UTF-8",  method=RequestMethod.POST)
+    public String updateSubject(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @PathVariable("id") int subjectId,
+            @RequestParam(value="title", defaultValue="") String subjectTitle,
+            @RequestParam(value="description", defaultValue="") String subjectDescription){
+        
+        User user = super.fetchUser(request, response);
+        if (user == null) {
+            return "error_pages/403";
+        } 
+        
+        Subject subject = subjectDao.get(subjectId);
+        if (subject == null)
+            return "error_pages/404";
+        
+        if (isOwner(user, subject) == false){
+            return "error_pages/409";
+        }
+        
+        subject.setTitle(subjectTitle);
+        subject.setDescription(subjectDescription);
+
+        subject = subjectDao.save(subject);
+        
+        return "redirect:" + subject.getId();
+    }    
     
     private boolean isOwner(User user, Subject subject) {
         if (user == null)

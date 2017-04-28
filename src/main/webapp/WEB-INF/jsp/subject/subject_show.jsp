@@ -19,9 +19,16 @@
                 </div>
                 <div class="col-md-7" style="background-color: #fafafa;" >
                     <row class="row-fluid">
-                        <h1 class="post-title" >
-                            ${subject.title}
-                        </h1>
+                        <h1 class="post-title" id='subject-title'>${subject.title}</h1>
+                        <c:choose>
+                            <c:when test='${owner == true}'>
+                                <input type="text" name="subject-title" id="subject-title-textbox" tabindex="1" 
+                                       class="form-control post-title input-lg" style="font-weight: bold; display: none;"/>  
+                                <div class="mdl-tooltip" data-mdl-for="subject-title">
+                                    Click to Edit
+                                </div>
+                            </c:when>
+                        </c:choose>
                     </row>
                     <row class="row-fluid">
                         <div class ="col-md-12 post-subtitle" >
@@ -31,13 +38,27 @@
                         </div>
                     </row> 
                     <row class='row-fluid'>
-                        <c:choose>
-                            <c:when test="${subject.description != ''}">
-                                <div class='col-md-12 subject-description-box' >
+
+                        <div class='col-md-12 subject-description-box' id='subject-description' >
+                            <c:choose >
+                                <c:when test="${subject.description == ''}">
+                                    <span><i>No description</i></span>
+                                </c:when>
+                                <c:otherwise>
                                     <span>${subject.description}</span>
-                                </div>                                
+                                </c:otherwise>
+                            </c:choose>
+                        </div>    
+                        <c:choose >
+                            <c:when test='${owner == true}'>
+                                <textarea type="text" name="subject-description" id="subject-description-textbox" 
+                                          class="form-control " style="display: none;">  </textarea>
+                                <div class="mdl-tooltip" data-mdl-for="subject-description">
+                                    Click to Edit
+                                </div>                                        
                             </c:when>
                         </c:choose>
+
                     </row>
                     <c:choose>
                         <c:when test='${subject.postCollection.isEmpty() == false}'>
@@ -68,9 +89,12 @@
                                             </button>     
                                         </span>
                                     </c:when>
-                                    <c:when test='${user != null && owner == true}'>
-                                        <button type="button" class="btn my-action-btn" id="edit-btn">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"  ></i>
+                                    <c:when test='${owner == true}'>
+                                        <button type="button" class="btn my-action-btn" id="undo-btn" style="display: none">
+                                            <i class="fa fa-undo" aria-hidden="true"  ></i>
+                                        </button>                                        
+                                        <button type="button" class="btn my-action-btn" id="save-btn" style="display: none">
+                                            <i class="fa fa-floppy-o" aria-hidden="true"  ></i>
                                         </button>                                        
                                         <button type="button" class="btn my-action-btn" id="delete-btn">
                                             <i class="fa fa-trash" aria-hidden="true"  ></i>
@@ -89,11 +113,16 @@
         </div>
     </body>
 </html>
+<script src="${pageContext.request.contextPath}/resources/js/editable-text.js" type="text/javascript"></script>
 
 <script>
     $(document).ready(function (){
         hideAllFollowButton();
-
+        
+        registeEditableText($('#subject-title'),$('#subject-title-textbox'), showSaveUndo);
+        registeEditableText($('#subject-description'),$('#subject-description-textbox'), showSaveUndo);
+        
+        
         var dateNumber = ${subject.date} * 1000;
         var date = new Date(dateNumber);
         $('#subject-date').text(date.toDateString());
@@ -111,7 +140,51 @@
                 deleteSubject();
             });
         });
+        
+        $('#undo-btn').click(undoButtonClick);
+        $('#save-btn').click(saveButtonClick);
     });  
+    
+    function showSaveUndo(){
+        $('#undo-btn').show();
+        $('#save-btn').show();
+    }
+    
+    function hideSaveUndo(){
+        $('#undo-btn').hide();
+        $('#save-btn').hide();
+    }    
+    
+    function undoButtonClick(){
+        $('#subject-description-textbox').val('');
+        $('#subject-title-textbox').val('');
+        $('#subject-title').text('${subject.title}');
+        $('#subject-description').text('${subject.description}');
+        hideSaveUndo();
+    }
+    
+    
+    function saveButtonClick(){
+
+        var myForm = document.createElement("form");
+        myForm.method="post" ;
+        myForm.action = "${pageContext.request.contextPath}/subjects/${subject.id}" ;
+
+        var title = document.createElement("input") ;
+        title.setAttribute("name", "title");
+        title.setAttribute("value", $('#subject-title').text());
+
+        var description = document.createElement("input") ;
+        description.setAttribute("name", "description");
+        description.setAttribute("value", $('#subject-description').text());    
+    
+        myForm.appendChild(title);
+        myForm.appendChild(description);
+        
+        document.body.appendChild(myForm);
+        myForm.submit() ;
+
+    }
     
     function checkUserFollowed(){
         var followed = ${isFollowed};

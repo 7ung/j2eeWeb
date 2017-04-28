@@ -15,9 +15,11 @@ import com.se313h21.j2eeweb.repositories.UserSubjectBookmarkRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -68,6 +70,7 @@ public class SubjectRestController  {
         }
         return subjectDao.getTop(user, subjectTitle);
     }
+   
     
     @RequestMapping(value = "/test-subject-follow", produces="application/json;charset=UTF-8")
     public List<Subject> followtest(
@@ -81,6 +84,8 @@ public class SubjectRestController  {
             @RequestParam(value="id", defaultValue="0") int subjectId){
         return usbRepo.countBySubjectId(subjectId).intValue();
     }
+    
+    
     
     @RequestMapping(value = "/subject-posts")
     public int countPost (

@@ -156,4 +156,8 @@ public class SubjectDAO {
         }
     }
 
+    public Subject save(Subject subject) {
+        return  subjectRepo.save(subject);
+    }
+
 }
