@@ -97,8 +97,6 @@
                 openDialog('Bạn có muốn xoá bái viết', 'CÓ', 'KHÔNG', function () {
                     deletePost();
                 });
-
-
             });
         });
         

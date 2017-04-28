@@ -19,5 +19,7 @@ public interface PostRepository  extends JpaRepository<Post, Integer>{
     public Long countBySubjectId(Subject subjectId);
 
     public List<Post> findBySubjectId(Subject subject);
+
+    public void deleteBySubjectId(Integer id);
     
 }

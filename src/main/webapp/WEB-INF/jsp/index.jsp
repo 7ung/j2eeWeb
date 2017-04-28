@@ -9,11 +9,10 @@
         <jsp:include page="/WEB-INF/jsp/header.jsp"/>
         <jsp:include page='partial_view/snackbar.jsp'/>
         <jsp:include page='partial_view/dialog.jsp'/>
-        <div class="container-fuild main-container ">
+        <div class="container-fuild main-container " >
             <row class="row-fluid">
-                <div class="col-md-2" style="background-color: #adadad;">
-                    <div style ="background-color: #5bc0de; height: 200px;" >
-                    </div>
+                <div class="col-md-2"  style='background-color: rgb(240, 240, 240)'>
+                    <jsp:include page="partial_view/left_toolbar.jsp"/>
                 </div>
                 <div class="col-md-7" style="background-color: #fafafa;">
                     <c:choose>

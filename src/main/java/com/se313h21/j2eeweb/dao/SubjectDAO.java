@@ -5,11 +5,18 @@
  */
 package com.se313h21.j2eeweb.dao;
 
+import com.se313h21.j2eeweb.model.Post;
 import com.se313h21.j2eeweb.model.Subject;
 import com.se313h21.j2eeweb.model.User;
+import com.se313h21.j2eeweb.model.UserPostBookmark;
+import com.se313h21.j2eeweb.model.UserSubjectBookmark;
+import com.se313h21.j2eeweb.repositories.PostRepository;
 import com.se313h21.j2eeweb.repositories.SubjectRepository;
+import com.se313h21.j2eeweb.repositories.UserSubjectBookmarkRepository;
 import com.se313h21.j2eeweb.repositories.Utils;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +34,12 @@ public class SubjectDAO {
     
     @Autowired
     SubjectRepository subjectRepo;
+    
+    @Autowired
+    UserSubjectBookmarkRepository usbRepo;
+    
+    @Autowired
+    PostRepository postRepo;
     
     public List<Subject> getMany(){
         List<Subject> subjects = subjectRepo.findAll();
@@ -95,5 +108,52 @@ public class SubjectDAO {
         else return subjects;
     }
 
+    public boolean follow(Subject subject, Integer userId) {
+        try{
+            System.out.println(SubjectDAO.class.getSimpleName() + "@follow: " + "subject id: " + subject.getId() + " user id: " + userId);
+            UserSubjectBookmark bookmark = new UserSubjectBookmark(userId, subject.getId());
+            bookmark.setDate(new Date());
+            Collection<UserSubjectBookmark> userBookmarks = subject.getUserSubjectBookmarkCollection();
+            userBookmarks.add(bookmark);
+            subject.setUserSubjectBookmarkCollection(userBookmarks);
+            subject = subjectRepo.save(subject);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }   
+
+    }
+    
+    public boolean unfollow(Subject subject, Integer userId) {
+        List<UserSubjectBookmark> bookmarks = usbRepo.findByUserIdAndSubjectId(userId, subject.getId());
+        if (bookmarks.isEmpty())
+            return true;
+        try{
+            subject.getUserSubjectBookmarkCollection().remove(bookmarks.get(0));
+            subject = subjectRepo.save(subject);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }   
+    }
+    
+    public Long countFollow(Subject subject) {
+        return usbRepo.countBySubjectId(subject.getId());
+    }
+
+    public boolean delete(Subject subject) {
+        try{
+//            usbRepo.deleteBySubjectId(subject.getId());
+//            postRepo.deleteBySubjectId(subject.getId());
+            subjectRepo.delete(subject.getId());
+            return true;
+        }
+        catch(Exception e){
+            System.out.println("SubjectDao@delete: Error : " + e.getMessage());
+            return false;
+        }
+    }
 
 }

@@ -64,8 +64,6 @@
 .right-container {
     padding-left: 4px;
     padding-right: 4px;
-    padding-bottom: 8px;
-    padding-top: 8px;
 }
 
 .center-container {
@@ -267,7 +265,7 @@
 }
 
 .subject-title {
-    background-color: #9DAAC0;
+    background-color: #667c99;
     color: white;
 }
 
@@ -297,6 +295,11 @@
     color: rgba(32, 32, 32, 0.7);
 }
 
+.small-text {
+    font-size: 10px;
+    color: rgba(32, 32, 32, 0.9);
+}
+
 .post-list-item {
     width:100%;
     border-bottom: rgba(204,204, 204, 0.8) 1px solid;
@@ -305,3 +308,38 @@
     margin-top: 4px;
     margin-bottom: 8px;
 }
+
+.float-right-box {
+    position: relative; 
+    width: 100%;
+    min-height: 44px;
+    margin-top: 28px;
+}
+.float-right-content {
+    background-color: white;
+    margin-bottom: 12px; 
+    padding: 4px 12px 4px 12px;
+    border: #adadad 1px solid; 
+    position: absolute; 
+    right: 0px; 
+    bottom: 0px;
+    border-radius: 1px;
+}
+
+.float-right-item {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.left-action-btn{
+    width: 100%;
+    text-align: left;
+    font-family: 'Trirong', sans-serif; 
+}
+
+.border-bottom{
+    border-bottom: #666666 1px inset;
+} 
+.border-top{
+    border-top: #666666 1px inset;
+} 

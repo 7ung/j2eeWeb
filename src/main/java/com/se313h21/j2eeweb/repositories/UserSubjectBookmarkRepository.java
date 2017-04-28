@@ -25,4 +25,9 @@ public interface UserSubjectBookmarkRepository extends JpaRepository<UserSubject
     public Long countBySubjectId(Integer subjectId);
     
     public Long countByUserId(Integer userId);
+
+    public List<UserSubjectBookmark> findByUserIdAndSubjectId(Integer userId, Integer id);
+
+    public void deleteBySubjectId(Integer id);
+
 }

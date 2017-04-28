@@ -28,17 +28,5 @@ public class UserPostBookmarkDAO {
         return (bookmarks.isEmpty() == false);
     }
     
-    public boolean unFollow(User user,Post post){
-        List<UserPostBookmark> bookmarks = repo.findByUserIdAndPostId(user.getId(), post.getId());
-        if (bookmarks.isEmpty())
-            return true;
-        System.out.println("UserPostBookmarkDAO@unFollow@" + user.getId() + "@" + post.getId());
-        try{
-            repo.delete(bookmarks.get(0).getUserPostBookmarkPK());
-            return true;
-        }
-        catch(Exception e){
-            return false;
-        }
-    }
+
 }

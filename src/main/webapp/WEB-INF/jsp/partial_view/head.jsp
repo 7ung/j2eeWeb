@@ -33,6 +33,10 @@
         body, span, p, h1, h2, h3, h4, h5, h6, textarea, button {
           font-family: 'Trirong', sans-serif;
         }
+        
+        body {
+            background-color: rgb(240, 240, 240);
+        }
       
     </style>
 </head>

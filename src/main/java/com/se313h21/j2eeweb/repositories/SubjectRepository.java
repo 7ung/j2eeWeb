@@ -7,6 +7,7 @@ package com.se313h21.j2eeweb.repositories;
 
 import com.se313h21.j2eeweb.model.Subject;
 import com.se313h21.j2eeweb.model.User;
+import com.se313h21.j2eeweb.model.UserSubjectBookmark;
 import java.awt.print.Pageable;
 import java.io.Serializable;
 import java.util.List;
