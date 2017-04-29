@@ -28,11 +28,7 @@
                     </c:choose>                   
                 </div>
                 <div class="col-md-3 right-container">
-                    <c:choose>
-                        <c:when test="${user != null}">
-                            <jsp:include page="partial_view/subject/user_subject_partial.jsp"/>
-                        </c:when>
-                    </c:choose>
+                    <jsp:include page="partial_view/right_toolbar.jsp"/>
                 </div>
             </row>
         </div>

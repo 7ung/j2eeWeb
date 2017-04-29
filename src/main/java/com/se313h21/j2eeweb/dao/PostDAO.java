@@ -58,7 +58,6 @@ public class PostDAO {
         post.setCode(Integer.toHexString(post.getId()));
         if (subject != null){
             post.setSubjectId(subject);
-            subject.setDate(Utils.currentTimestamp());
         }
         post = postRepo.save(post);
         return post;
@@ -152,8 +151,20 @@ public class PostDAO {
         return postRepo.findAll(new Sort(Direction.DESC, "date"));
     }
 
-    public Page<Post> getManyPaging(Tag tag) {
+    public Page<Post> getFirstPaging() {
         return postRepo.findAll(new PageRequest(0, 16));
+    }
+    
+    public Page<Post> getPaging(int pageNumber) {
+        return postRepo.findAll(new PageRequest(pageNumber, 16));
+    }
+    
+    public Page<Post> getFirstPaging(Tag tag) {
+        return postRepo.findByTagId(tag.getId(), new PageRequest(0, 16));
+    }
+    
+    public Page<Post> getPaging(Tag tag, int pageNumber) {
+        return postRepo.findByTagId(tag.getId(), new PageRequest(pageNumber, 16));
     }
     
 

@@ -157,6 +157,7 @@ public class SubjectDAO {
     }
 
     public Subject save(Subject subject) {
+        subject.setDate(Utils.currentTimestamp());
         return  subjectRepo.save(subject);
     }
 

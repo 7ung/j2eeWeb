@@ -69,6 +69,8 @@
                                         <c:set var="mode" value="subject${subject.id}" scope="request"/>
                                         <jsp:include page="../partial_view/post/post_card.jsp"/>
                                     </c:forEach>
+                                    <c:remove var="post"/>
+                                    <c:remove var="mode"/>                                    
                                 </ul>
                             </row>
                         </c:when>

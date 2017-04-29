@@ -22,6 +22,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -49,8 +51,9 @@ public class Tag implements Serializable {
     @JsonIgnore
     @ManyToMany(mappedBy = "tagCollection")
     private Collection<Post> postCollection;
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tag")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tag", orphanRemoval = true )
     private Collection<UserTagBookmark> userTagBookmarkCollection;
 
     public Tag() {

@@ -5,13 +5,18 @@
  */
 package com.se313h21.j2eeweb.dao;
 
+import com.se313h21.j2eeweb.model.Subject;
 import com.se313h21.j2eeweb.model.Tag;
 import com.se313h21.j2eeweb.model.User;
+import com.se313h21.j2eeweb.model.UserSubjectBookmark;
 import com.se313h21.j2eeweb.model.UserTagBookmark;
 import com.se313h21.j2eeweb.repositories.TagRepository;
 import com.se313h21.j2eeweb.repositories.UserTagBookmarkRepository;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.metamodel.SingularAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -67,5 +72,38 @@ public class TagDAO {
 
     public boolean isUserFollowedTag(User user, Tag tag) {
         return utbRepo.existsByUserIdAndTagId(user.getId(), tag.getId());
+    }
+
+    public boolean follow(Tag tag, Integer userId) {
+        try{
+            UserTagBookmark bookmark = new UserTagBookmark(userId, tag.getId());
+            bookmark.setDate(new Date());
+            Collection<UserTagBookmark> userBookmarks = tag.getUserTagBookmarkCollection();
+            userBookmarks.add(bookmark);
+            tag.setUserTagBookmarkCollection(userBookmarks);
+            System.out.println("TagDAO@follow: set success" );
+            tag = tagRepo.save(tag);
+            System.out.println("TagDAO@follow: save success" );
+
+            return true;
+        }
+        catch(Exception e){
+            System.out.println("TagDAO@follow: " + e.getMessage());
+            return false;
+        }   
+    }
+    
+    public boolean unfollow(Tag tag, Integer userId){
+        List<UserTagBookmark> bookmarks = utbRepo.findByUserIdAndTagId(userId, tag.getId());
+        if (bookmarks.isEmpty())
+            return true;
+        try{
+            tag.getUserTagBookmarkCollection().remove(bookmarks.get(0));
+            tag = tagRepo.save(tag);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }           
     }
 }

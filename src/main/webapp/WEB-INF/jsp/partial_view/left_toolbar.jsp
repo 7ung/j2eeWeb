@@ -11,7 +11,7 @@
     <div class='border-bottom'>
         <c:choose>
             <c:when test='${user != null}'>
-                <button class="mdl-button mdl-js-button mdl-button--secondary left-action-btn">
+                <button class="mdl-button mdl-js-button mdl-button--secondary left-action-btn" onclick="redirectToCreatePost()">
                     Viết bài mới
                 </button>
                 <button class="mdl-button mdl-js-button mdl-button--secondary left-action-btn">
@@ -52,8 +52,8 @@
     </c:when>
 </c:choose> 
 <script>
-    function redirectToCreateSubject(){
-        
+    function redirectToCreatePost(){
+        window.location = "${pageContext.request.contextPath}/post";
     }
 
 </script>

@@ -20,5 +20,7 @@ public interface UserTagBookmarkRepository  extends JpaRepository<UserTagBookmar
     public List<UserTagBookmark> findByUserId(Integer userId);
 
     public boolean existsByUserIdAndTagId(Integer id, Integer id0);
+
+    public List<UserTagBookmark> findByUserIdAndTagId(Integer userId, Integer id);
     
 }

@@ -53,13 +53,16 @@ public class TagController extends BaseAuthorizationUserController{
             boolean isFollowed = tagDao.isUserFollowedTag(user, tag);
             model.addAttribute("isFollowed", String.valueOf(isFollowed));
         }
-        
-        Page<Post> posts = postDao.getManyPaging(tag);
+    
+        model.addAttribute("tag", tag);
+
+        Page<Post> posts = postDao.getFirstPaging(tag);
         model.addAttribute("posts", posts);
         
         return "tag_show";
         
     }
+    
     
 
 }
