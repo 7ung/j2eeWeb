@@ -5,7 +5,9 @@
  */
 package com.se313h21.j2eeweb.controller;
 
+import com.se313h21.j2eeweb.dao.PostDAO;
 import com.se313h21.j2eeweb.dao.SubjectDAO;
+import com.se313h21.j2eeweb.model.Post;
 import com.se313h21.j2eeweb.model.Subject;
 import com.se313h21.j2eeweb.model.User;
 import java.util.List;
@@ -29,6 +31,9 @@ public class HomeController  extends BaseAuthorizationUserController{
     @Autowired
     SubjectDAO subjectDao;
     
+    @Autowired
+    PostDAO postDao;
+    
     @RequestMapping(value="/", method=RequestMethod.GET)
     public String home(HttpServletRequest request,
             HttpServletResponse response,
@@ -47,12 +52,20 @@ public class HomeController  extends BaseAuthorizationUserController{
             model.addAttribute("featured_subject", featuredSubjects);            
         }
         
-        
+        List<Post> allPosts = postDao.getRecent();
+        if (allPosts.size() > 8)
+            model.addAttribute("recent_post", allPosts.subList(0, 8));
+        else
+            model.addAttribute("recent_post", allPosts);
         
         
         return "index";
     }
     
     
+    @RequestMapping(value = "posts/recent")
+    public List<Post> getRecentPost(){
+        return postDao.getRecent();
+    }
     
 }

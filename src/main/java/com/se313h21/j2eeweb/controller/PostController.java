@@ -106,6 +106,9 @@ public class PostController extends BaseAuthorizationUserController{
             post.setTagCollection(tags);
             post.setDate(Utils.currentTimestamp());
             post.setSubjectId(subject);
+            if (post.getSubjectId() != null){
+                post.getSubjectId().setDate(Utils.currentTimestamp());
+            }
             post = postDao.update(post);
         }
         else {

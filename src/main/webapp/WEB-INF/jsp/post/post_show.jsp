@@ -74,6 +74,13 @@
                 </div>
                 <div class="col-md-3 right-container">
                     <c:choose>
+                        <c:when test="${post.subjectId != null}">
+                            <jsp:include page="../partial_view/post/post_by_subject.jsp"/>
+                        </c:when>
+                    </c:choose>
+                    <jsp:include page="../partial_view/post/post_by_user.jsp"/>
+
+                    <c:choose>
                         <c:when test="${user != null}">
                             <c:set var="mode" value="created-subject" scope="request"/>
                             <jsp:include page="../partial_view/subject/user_subject_partial.jsp"/>

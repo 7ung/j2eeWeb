@@ -343,3 +343,7 @@
 .border-top{
     border-top: #666666 1px inset;
 } 
+
+.right-content-card {
+    margin-bottom: 12px;
+}

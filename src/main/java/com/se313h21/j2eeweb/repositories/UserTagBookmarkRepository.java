@@ -5,10 +5,10 @@
  */
 package com.se313h21.j2eeweb.repositories;
 
-import com.se313h21.j2eeweb.model.Post;
+import com.se313h21.j2eeweb.model.Tag;
 import com.se313h21.j2eeweb.model.User;
-import com.se313h21.j2eeweb.model.UserPostBookmark;
-import com.se313h21.j2eeweb.model.UserPostBookmarkPK;
+import com.se313h21.j2eeweb.model.UserTagBookmark;
+import com.se313h21.j2eeweb.model.UserTagBookmarkPK;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,10 +16,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Stevie
  */
-public interface UserPostBookmarkRepository extends JpaRepository<UserPostBookmark, UserPostBookmarkPK>{
-    List<UserPostBookmark> findByUserIdAndPostId(Integer userId, Integer post);
+public interface UserTagBookmarkRepository  extends JpaRepository<UserTagBookmark, UserTagBookmarkPK>{
+    public List<UserTagBookmark> findByUserId(Integer userId);
 
-    public int countByPostId(Integer postId);
-   
+    public boolean existsByUserIdAndTagId(Integer id, Integer id0);
     
 }

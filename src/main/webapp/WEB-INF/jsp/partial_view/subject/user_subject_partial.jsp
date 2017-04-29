@@ -8,8 +8,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<div class="mdl-card mdl-shadow--2dp">
-    <p class="mdl-card__title mdl-card--border"><b>Các chủ đề đã tạo</b><p>
+<div class="mdl-card mdl-shadow--2dp right-content-card">
+    <p class="mdl-card__title mdl-card--border"><b>Các chủ đề của tôi</b><p>
     <div id="_holder" class="card-holder"> 
         <ul class=" mdl-list" id="subject-list-${mode}">
         </ul>

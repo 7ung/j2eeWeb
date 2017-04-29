@@ -19,6 +19,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 /**
@@ -52,8 +56,10 @@ public class PostDAO {
         post.setView(0);
         post = postRepo.save(post);
         post.setCode(Integer.toHexString(post.getId()));
-        if (subject != null)
+        if (subject != null){
             post.setSubjectId(subject);
+            subject.setDate(Utils.currentTimestamp());
+        }
         post = postRepo.save(post);
         return post;
     }
@@ -68,7 +74,7 @@ public class PostDAO {
 
     public Post increaseView(Post post) {
         post.setView(post.getView() + 1);
-        post.getSubjectId().getPostCollection();
+//        post.getSubjectId().getPostCollection();
         return postRepo.save(post);
     }
 
@@ -133,9 +139,21 @@ public class PostDAO {
     public List<Post> get(Subject subject) {
         return postRepo.findBySubjectId(subject);
     }
+    
+    public List<Post> get(User user) {
+        return postRepo.findByUserId(user);
+    }
 
     public int countFollow(Post postId) {
         return repo.countByPostId(postId.getId());
+    }
+
+    public List<Post> getRecent() {
+        return postRepo.findAll(new Sort(Direction.DESC, "date"));
+    }
+
+    public Page<Post> getManyPaging(Tag tag) {
+        return postRepo.findAll(new PageRequest(0, 16));
     }
     
 

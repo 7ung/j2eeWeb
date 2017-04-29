@@ -15,6 +15,7 @@
                     <jsp:include page="partial_view/left_toolbar.jsp"/>
                 </div>
                 <div class="col-md-7" style="background-color: #fafafa;">
+                    <jsp:include page="home/recent_post.jsp"/>
                     <c:choose>
                         <c:when test="${featured_subject != null && featured_subject.size() != 0}">
                             <jsp:include page="partial_view/subject/featured_subject_card.jsp"/>
