@@ -15,11 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefaults;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -59,10 +64,15 @@ public class TagController extends BaseAuthorizationUserController{
         Page<Post> posts = postDao.getFirstPaging(tag);
         model.addAttribute("posts", posts);
         
+        for (Post p : posts){
+            p.setContent("");
+        }
+        
         return "tag_show";
         
     }
-    
+
+
     
 
 }

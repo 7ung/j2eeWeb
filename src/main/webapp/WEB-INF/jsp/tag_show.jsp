@@ -50,13 +50,18 @@
                                             </c:forEach>
                                             <c:remove var="post"/>
                                             <c:remove var="mode"/>
+
                                         </ul>
+                                        <div class="mdl-spinner mdl-js-spinner is-active" id='loadingUI' style="display: none;"></div>
+                                        <div class='' id ='load-tracker' style='height: 42px; visibility: hidden;'>
+                                        </div>                                            
                                     </row>
                                 </c:when>
                             </c:choose>  
                         </ul>
-                    </row>                    
+                    </row>   
                 </div>
+                         
                 <div class="col-md-3 right-container">
                     <jsp:include page="partial_view/right_toolbar.jsp"/>
                 </div>
@@ -64,21 +69,49 @@
         </div>
     </body>
 </html>
-
+<jsp:include  page="partial_view/post/post-card-js-template.jsp"/>
+<script src="${pageContext.request.contextPath}/resources/js/load_paging.js" type="text/javascript"></script>
 <script>
-    console.log("Page Number: ${posts.number}");
-    console.log("Page Size: ${posts.size}");
-    console.log("Total Page: ${posts.totalPages}");
-    console.log("Number of Element : ${posts.numberOfElements}");
-    console.log("Total element: ${posts.totalElements}");
-
+    
+    pagingData = {
+        currentPage : ${posts.number},
+        pageSize : ${posts.size},
+        totalPage : ${posts.totalPages},
+        numberOfElement : ${posts.numberOfElements},
+        totalElements : ${posts.totalElements},
+        hasNext : ${posts.hasNext()},
+        isLoading : false
+    };
+    
     $(document).ready(function (){
         checkUserFollowed();
 
         $('#bookmark-btn').click(followSubject);
-        $('#unbookmark-btn').click(unfollowSubject);        
+        $('#unbookmark-btn').click(unfollowSubject);   
+        
+        loadPaging($('#load-tracker'), '${pageContext.request.contextPath}/tags/${tag.id}/posts',
+            function (item){
+                $('#post-template').tmpl(item).appendTo('#recent-post-list');
+                var _url =  '${pageContext.request.contextPath}/post/{id}/follows'.replace('{id}', item.id);
+                var followid ='#post-card-follows-tag_posts-{id}'.replace('{id}',item.id);
+                var rs_follow = $.ajax({
+                    url: _url,
+                    data: {},
+                    method: 'GET',
+                    success: function (data){
+                        $(followid).text(rs_follow.responseText);
+                    }
+                });
+            },
+            function (){
+                $('#loadingUI').show();
+            }, 
+            function (){
+                $('#loadingUI').hide();
+            });
+            
+            
     });
-
     
     function checkUserFollowed(){
         var followed = ${isFollowed};

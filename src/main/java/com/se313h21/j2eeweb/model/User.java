@@ -27,6 +27,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -54,6 +56,7 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 32)
+    @JsonIgnore
     private String password;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
@@ -70,17 +73,19 @@ public class User implements Serializable {
     private Collection<Image> imageCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Subject> subjectCollection;
-    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "userId", /*fetch = FetchType.EAGER,*/ cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Profile> profileCollection = new LinkedHashSet<Profile>();;
     @OneToMany(mappedBy = "userId")
     private Collection<SeekingJob> seekingJobCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<AccessToken> accessTokenCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Collection<UserTagBookmark> userTagBookmarkCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Post> postCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true )
     private Collection<UserPostBookmark> userPostBookmarkCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Collection<UserSubjectBookmark> userSubjectBookmarkCollection;
@@ -89,6 +94,7 @@ public class User implements Serializable {
     @JoinColumn(name = "user_role_id", referencedColumnName = "id")
     @ManyToOne
     private UserRole userRoleId;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<Comment> commentCollection;
     
@@ -190,13 +196,11 @@ public class User implements Serializable {
         this.subjectCollection = subjectCollection;
     }
     
-    @JsonIgnore
     @XmlTransient
     public Collection<Profile> getProfileCollection() {
         return profileCollection;
     }
 
-    @JsonIgnore
     public void setProfileCollection(Collection<Profile> profileCollection) {
         this.profileCollection = profileCollection;
     }
@@ -287,7 +291,7 @@ public class User implements Serializable {
     public void setUserRoleId(UserRole userRoleId) {
         this.userRoleId = userRoleId;
     }
-    
+    @JsonIgnore
     @XmlTransient
     public Collection<Comment> getCommentCollection() {
         return commentCollection;

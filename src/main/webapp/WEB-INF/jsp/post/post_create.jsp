@@ -10,14 +10,12 @@
 <!DOCTYPE html>
 <html>
     <jsp:include page="../partial_view/head.jsp"/>
-
     <body>
         <jsp:include page='../partial_view/snackbar.jsp'/>
         <div class="container-fuild main-container ">
             <row class="row-fluid">
-                <div class="col-md-2" style="background-color: #adadad;">
-                    <div style ="background-color: #5bc0de; height: 200px;" >
-                    </div>
+                <div class="col-md-2 left-container">
+                    <jsp:include page="../partial_view/left_toolbar.jsp"/>
                 </div>
                 <div class="col-md-7" style="background-color: #fafafa;">
                     <row class="row">
@@ -67,7 +65,7 @@
                     </row>
                 </div>
                 <div class="col-md-3 right-container">
-                    <jsp:include page="../partial_view/subject/user_subject_partial.jsp"/>
+                    <jsp:include page="../partial_view/right_toolbar.jsp"/>
                 </div>
             </row>
         </div>

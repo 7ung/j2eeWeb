@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -47,10 +48,10 @@ public class UserPostBookmark implements Serializable {
     @Size(min = 0, max = 1024)
     private String note;
     @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Post post;
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
     public UserPostBookmark() {

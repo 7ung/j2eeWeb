@@ -14,8 +14,8 @@
         <jsp:include page='../partial_view/dialog.jsp'/>        
         <div class="container-fuild main-container ">
             <row class="row-fluid">
-                <div class="col-md-2" style="background-color: #adadad;">
-                    
+                <div class="col-md-2 left-container">
+                    <jsp:include page="../partial_view/left_toolbar.jsp"/>
                 </div>
                 <div class="col-md-7" style="background-color: #fafafa;" >
                     <row class="row-fluid">
@@ -23,7 +23,7 @@
                         <c:choose>
                             <c:when test='${owner == true}'>
                                 <input type="text" name="subject-title" id="subject-title-textbox" tabindex="1" 
-                                       class="form-control post-title input-lg" style="font-weight: bold; display: none;"/>  
+                                       class="form-control post-title input-lg" style="font-weight: bold; display: none;" />  
                                 <div class="mdl-tooltip" data-mdl-for="subject-title">
                                     Click to Edit
                                 </div>
@@ -38,7 +38,6 @@
                         </div>
                     </row> 
                     <row class='row-fluid'>
-
                         <div class='col-md-12 subject-description-box' id='subject-description' >
                             <c:choose >
                                 <c:when test="${subject.description == ''}">
@@ -52,7 +51,7 @@
                         <c:choose >
                             <c:when test='${owner == true}'>
                                 <textarea type="text" name="subject-description" id="subject-description-textbox" 
-                                          class="form-control " style="display: none;">  </textarea>
+                                          class="form-control " style="display: none;" >  </textarea>
                                 <div class="mdl-tooltip" data-mdl-for="subject-description">
                                     Click to Edit
                                 </div>                                        
@@ -108,8 +107,7 @@
                     </row>
                 </div>
                 <div class="col-md-3 right-container">
-                    <div style ="background-color: #5bc0de; height: 200px;" >
-                    </div>  
+                    <jsp:include page="../partial_view/right_toolbar.jsp"/>
                 </div>
             </row>
         </div>
