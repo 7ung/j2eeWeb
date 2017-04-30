@@ -135,6 +135,21 @@ public class PostRestController extends BaseAuthorizationUserController{
         return posts;
     }
     
+    @RequestMapping(value = "/posts-paging", params = {"page","size"})
+    @ResponseBody
+    public Page<Post> postAllPaging(HttpServletRequest request,
+            HttpServletResponse response,
+            ModelMap model,
+            @RequestParam("page") int pageNumber,
+            @RequestParam("size") int pageSize){
+        Pageable pageable = new PageRequest(pageNumber, pageSize);
+        Page<Post> posts = postDao.getPaging( pageable);
+        for (Post p : posts){
+            p.setContent("");
+        }
+        return posts;
+    }
+    
     private List<Post> findPostBySubjectId(int subjectId){
         System.out.println("PostRestController@getTopPostBySubjectId: subjectid = " + subjectId);
         Subject subject = subjectDao.get(subjectId);

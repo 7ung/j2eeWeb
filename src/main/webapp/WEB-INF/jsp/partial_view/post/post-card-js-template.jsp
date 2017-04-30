@@ -36,7 +36,9 @@
                     {{each(tag) tagCollection}}
                         <span class='mdl-chip mdl-chip--deletable  mdl-shadow--2dp my-mdl-chip'
                                 id="\${tag.id}">
-                            <span class='mdl-chip__text'>\${name}</span>
+                            <span class='mdl-chip__text'>
+                                <a href='${pageContext.request.contextPath}/tags/\${tag.id}'>     \${name} </a>
+                            </span>
                         </span>              
                     {{/each}}
                </div>

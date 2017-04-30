@@ -16,9 +16,12 @@
                 </button>
                 <button class="mdl-button mdl-js-button mdl-button--secondary left-action-btn">
                     Bài viết đã tạo
-                </button>                 
+                </button>  
             </c:when>
         </c:choose>
+        <button class="mdl-button mdl-js-button mdl-button--secondary left-action-btn" onclick="redirectToRecentPost()">
+            Bài viết mới nhất
+        </button>  
     </div>
 </row>
 <c:choose>
@@ -54,6 +57,10 @@
 <script>
     function redirectToCreatePost(){
         window.location = "${pageContext.request.contextPath}/post";
+    }
+    
+    function redirectToRecentPost(){
+        window.location = "${pageContext.request.contextPath}/recent";
     }
 
 </script>

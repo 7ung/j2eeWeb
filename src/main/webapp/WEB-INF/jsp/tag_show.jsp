@@ -61,7 +61,6 @@
                         </ul>
                     </row>   
                 </div>
-                         
                 <div class="col-md-3 right-container">
                     <jsp:include page="partial_view/right_toolbar.jsp"/>
                 </div>
