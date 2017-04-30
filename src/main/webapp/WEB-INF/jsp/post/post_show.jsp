@@ -46,7 +46,11 @@
                                 <c:forEach items="${post.tagCollection}" var="tag">
                                     <span class='mdl-chip mdl-chip--deletable  mdl-shadow--2dp my-mdl-chip'
                                           id="${tag.id}">
-                                        <span class='mdl-chip__text'><c:out value="${tag.name}"/></span>
+                                        <span class='mdl-chip__text'>
+                                            <a href="${pageContext.request.contextPath}/tags/${tag.id}">
+                                                <c:out value="${tag.name}"/>
+                                            </a>
+                                        </span>
                                     </span>                                    
                                 </c:forEach>
                             </div>
