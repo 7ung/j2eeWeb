@@ -27,16 +27,14 @@ public class BaseAuthorizationUserController {
     
     @Autowired
     protected AccessTokenDAO accessTokenDao; 
-    
-    protected User user;
-    
+        
     protected static String redirect = "redirect:login"; 
     
     protected User fetchUser(HttpServletRequest request,
             HttpServletResponse response) {
         
         
-        user = (User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         
         if (user != null)
             return user;

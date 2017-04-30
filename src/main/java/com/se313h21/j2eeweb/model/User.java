@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
-    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")})
+    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+    @NamedQuery(name = "User.findByLastLogin", query = "SELECT u FROM User u WHERE u.lastLogin = :lastLogin")})
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,6 +60,8 @@ public class User implements Serializable {
     @NotNull
     @Size(min = 1, max = 128)
     private String email;
+    @Column(name = "last_login", precision = 22)
+    private Double lastLogin;    
     @ManyToMany(mappedBy = "userCollection")
     private Collection<DevelopmentType> developmentTypeCollection;
     @ManyToMany(mappedBy = "userCollection")
@@ -66,7 +70,7 @@ public class User implements Serializable {
     private Collection<Image> imageCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Subject> subjectCollection;
-    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userId", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Profile> profileCollection = new LinkedHashSet<Profile>();;
     @OneToMany(mappedBy = "userId")
     private Collection<SeekingJob> seekingJobCollection;
@@ -85,7 +89,9 @@ public class User implements Serializable {
     @JoinColumn(name = "user_role_id", referencedColumnName = "id")
     @ManyToOne
     private UserRole userRoleId;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<Comment> commentCollection;
+    
     public User() {
     }
 
@@ -132,6 +138,14 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public Double getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Double lastLogin) {
+        this.lastLogin = lastLogin;
+    }    
+    
     @JsonIgnore
     @XmlTransient
     public Collection<DevelopmentType> getDevelopmentTypeCollection() {
@@ -273,7 +287,17 @@ public class User implements Serializable {
     public void setUserRoleId(UserRole userRoleId) {
         this.userRoleId = userRoleId;
     }
+    
+    @XmlTransient
+    public Collection<Comment> getCommentCollection() {
+        return commentCollection;
+    }
 
+    public void setCommentCollection(Collection<Comment> commentCollection) {
+        this.commentCollection = commentCollection;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

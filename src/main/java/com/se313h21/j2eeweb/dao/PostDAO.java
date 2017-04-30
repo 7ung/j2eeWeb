@@ -12,12 +12,17 @@ import com.se313h21.j2eeweb.model.Tag;
 import com.se313h21.j2eeweb.model.User;
 import com.se313h21.j2eeweb.model.UserPostBookmark;
 import com.se313h21.j2eeweb.repositories.PostRepository;
+import com.se313h21.j2eeweb.repositories.SubjectRepository;
 import com.se313h21.j2eeweb.repositories.UserPostBookmarkRepository;
 import com.se313h21.j2eeweb.repositories.Utils;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 /**
@@ -33,6 +38,10 @@ public class PostDAO {
     @Autowired
     UserPostBookmarkRepository repo;
     
+    @Autowired 
+    SubjectRepository subjectRepo;
+    
+    
     public Post create(String title, String content, User user, Subject subject, Collection<Tag> tags){
         Post post = create(title, content, user, subject);
         post.setTagCollection(tags);
@@ -47,8 +56,9 @@ public class PostDAO {
         post.setView(0);
         post = postRepo.save(post);
         post.setCode(Integer.toHexString(post.getId()));
-        if (subject != null)
+        if (subject != null){
             post.setSubjectId(subject);
+        }
         post = postRepo.save(post);
         return post;
     }
@@ -63,6 +73,7 @@ public class PostDAO {
 
     public Post increaseView(Post post) {
         post.setView(post.getView() + 1);
+//        post.getSubjectId().getPostCollection();
         return postRepo.save(post);
     }
 
@@ -118,6 +129,42 @@ public class PostDAO {
         catch(Exception e){
             return false;
         }   
+    }
+
+    public Long countPost(Subject subjectId) {
+        return postRepo.countBySubjectId(subjectId);
+    }
+
+    public List<Post> get(Subject subject) {
+        return postRepo.findBySubjectId(subject);
+    }
+    
+    public List<Post> get(User user) {
+        return postRepo.findByUserId(user);
+    }
+
+    public int countFollow(Post postId) {
+        return repo.countByPostId(postId.getId());
+    }
+
+    public List<Post> getRecent() {
+        return postRepo.findAll(new Sort(Direction.DESC, "date"));
+    }
+
+    public Page<Post> getFirstPaging() {
+        return postRepo.findAll(new PageRequest(0, 16));
+    }
+    
+    public Page<Post> getPaging(int pageNumber) {
+        return postRepo.findAll(new PageRequest(pageNumber, 16));
+    }
+    
+    public Page<Post> getFirstPaging(Tag tag) {
+        return postRepo.findByTagId(tag.getId(), new PageRequest(0, 16));
+    }
+    
+    public Page<Post> getPaging(Tag tag, int pageNumber) {
+        return postRepo.findByTagId(tag.getId(), new PageRequest(pageNumber, 16));
     }
     
 

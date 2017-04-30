@@ -18,4 +18,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface UserPostBookmarkRepository extends JpaRepository<UserPostBookmark, UserPostBookmarkPK>{
     List<UserPostBookmark> findByUserIdAndPostId(Integer userId, Integer post);
+
+    public int countByPostId(Integer postId);
+   
+    
 }

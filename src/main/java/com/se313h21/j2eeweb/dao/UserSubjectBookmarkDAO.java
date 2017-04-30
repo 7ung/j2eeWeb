@@ -5,10 +5,10 @@
  */
 package com.se313h21.j2eeweb.dao;
 
-import com.se313h21.j2eeweb.model.Post;
+import com.se313h21.j2eeweb.model.Subject;
 import com.se313h21.j2eeweb.model.User;
 import com.se313h21.j2eeweb.model.UserPostBookmark;
-import com.se313h21.j2eeweb.repositories.UserPostBookmarkRepository;
+import com.se313h21.j2eeweb.repositories.UserSubjectBookmarkRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,15 +18,12 @@ import org.springframework.stereotype.Service;
  * @author Stevie
  */
 @Service
-public class UserPostBookmarkDAO {
+public class UserSubjectBookmarkDAO {
     
     @Autowired
-    UserPostBookmarkRepository repo;
+    UserSubjectBookmarkRepository usbRepo;
     
-    public boolean isUserFollowedPost(User user, Post post){
-        List<UserPostBookmark> bookmarks = repo.findByUserIdAndPostId(user.getId(), post.getId());
-        return (bookmarks.isEmpty() == false);
+    public boolean isUserFollowedPost(User user, Subject subject){
+        return usbRepo.existsByUserIdAndSubjectId(user.getId(), subject.getId());
     }
-    
-
 }

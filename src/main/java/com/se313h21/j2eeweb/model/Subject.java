@@ -23,6 +23,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -61,7 +63,8 @@ public class Subject implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "subjectId")
     private Collection<Post> postCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subject")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subject", orphanRemoval = true )
     @JsonIgnore
     private Collection<UserSubjectBookmark> userSubjectBookmarkCollection;
 

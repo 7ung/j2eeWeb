@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Đăng bài mới</title>
+    <title>${page-title}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -30,17 +30,13 @@
     <link href="https://fonts.googleapis.com/css?family=Trirong" rel="stylesheet">
 
     <style>
-        body {
+        body, span, p, h1, h2, h3, h4, h5, h6, textarea, button {
           font-family: 'Trirong', sans-serif;
         }
-        span {
-            font-family: 'Trirong', sans-serif;
+        
+        body {
+            background-color: rgb(240, 240, 240);
         }
-        textarea {
-            font-family: 'Trirong', sans-serif;
-        }
-        button {
-            font-family: 'Trirong', sans-serif;
-        }
+      
     </style>
 </head>

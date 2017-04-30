@@ -13,6 +13,7 @@ import com.se313h21.j2eeweb.dao.UserPostBookmarkDAO;
 import com.se313h21.j2eeweb.model.Post;
 import com.se313h21.j2eeweb.model.Subject;
 import com.se313h21.j2eeweb.model.Tag;
+import com.se313h21.j2eeweb.model.User;
 import com.se313h21.j2eeweb.model.UserPostBookmark;
 import com.se313h21.j2eeweb.repositories.Utils;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class PostController extends BaseAuthorizationUserController{
     public String post_create(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap model){
-        super.fetchUser(request, response);
+        User user = super.fetchUser(request, response);
         if (user == null) {
             return PostController.redirect;
         }
@@ -74,6 +75,7 @@ public class PostController extends BaseAuthorizationUserController{
     public String post_store(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap model){
+        User user = fetchUser(request, response);
         
         String title = request.getParameter("title");
         String content = request.getParameter("content");
@@ -90,7 +92,7 @@ public class PostController extends BaseAuthorizationUserController{
 
         List<Tag> tags = getTagsName(tagsListString);
         
-        subject = retreiveSubject(subjectId, subjectName);
+        subject = retreiveSubject(subjectId, subjectName, user);
         
         Post post = null;
         if (request.getParameter("post-id") != null){
@@ -104,6 +106,9 @@ public class PostController extends BaseAuthorizationUserController{
             post.setTagCollection(tags);
             post.setDate(Utils.currentTimestamp());
             post.setSubjectId(subject);
+            if (post.getSubjectId() != null){
+                post.getSubjectId().setDate(Utils.currentTimestamp());
+            }
             post = postDao.update(post);
         }
         else {
@@ -114,7 +119,7 @@ public class PostController extends BaseAuthorizationUserController{
         
     }
     
-    private Subject retreiveSubject(int subjectId, String subjectName){
+    private Subject retreiveSubject(int subjectId, String subjectName, User user){
         Subject subject = null;
         
         if (subjectId != -1){
@@ -143,13 +148,13 @@ public class PostController extends BaseAuthorizationUserController{
             HttpServletResponse response,
             @RequestParam(value = "id") int postId,
             ModelMap model){
-        super.fetchUser(request, response);
+        User user = super.fetchUser(request, response);
 
         Post post = postDao.get(postId);
         if (post == null)
             return "error_pages/404";
         
-        boolean isOwner = isOwner(post);
+        boolean isOwner = isOwner(user, post);
         
         if (isOwner == false && post.getStatus().equals("private"))
             return "error_pages/403";
@@ -174,7 +179,7 @@ public class PostController extends BaseAuthorizationUserController{
             HttpServletResponse response,
             @RequestParam(value = "id") int postId,
             ModelMap model){
-        super.fetchUser(request, response);
+        User user = super.fetchUser(request, response);
         if (user == null) {
             return PostController.redirect;
         }
@@ -183,9 +188,9 @@ public class PostController extends BaseAuthorizationUserController{
         if (post == null)
             return "error_pages/404";
         
-        boolean isOwner = isOwner(post);
+        boolean isOwner = isOwner(user, post);
         if (isOwner == false)
-            return "error/403";
+            return "error_pages/403";
         
         model.addAttribute("post", post);
         model.addAttribute("tagsCollection", post.getTagCollection());
@@ -201,7 +206,7 @@ public class PostController extends BaseAuthorizationUserController{
             HttpServletResponse response,
             @RequestParam(value = "id") int postId,
             ModelMap model){
-        super.fetchUser(request, response);
+        User user = super.fetchUser(request, response);
         if (user == null) {
             return 403;
         }
@@ -210,7 +215,7 @@ public class PostController extends BaseAuthorizationUserController{
         if (post == null)
             return 404;
         
-        if (isOwner(post)){
+        if (isOwner(user, post)){
             
         }
         else {
@@ -227,7 +232,7 @@ public class PostController extends BaseAuthorizationUserController{
             HttpServletResponse response,
             @RequestParam(value = "id") int postId,
             ModelMap model){
-        super.fetchUser(request, response);
+        User user = super.fetchUser(request, response);
         if (user == null) {
             return 403;
         }
@@ -236,7 +241,7 @@ public class PostController extends BaseAuthorizationUserController{
         if (post == null)
             return 404;
         
-        if (isOwner(post)){
+        if (isOwner(user, post)){
             
         }
         else {
@@ -253,7 +258,7 @@ public class PostController extends BaseAuthorizationUserController{
             HttpServletResponse response,
             @RequestParam(value = "id") int postId,
             ModelMap model){
-        super.fetchUser(request, response);
+        User user = super.fetchUser(request, response);
         if (user == null) {
             return 403;
         }   
@@ -262,7 +267,7 @@ public class PostController extends BaseAuthorizationUserController{
         if (post == null)
             return 404;
         
-        if (isOwner(post)){
+        if (isOwner(user, post)){
             
         }
         else {
@@ -283,7 +288,7 @@ public class PostController extends BaseAuthorizationUserController{
             HttpServletResponse response,
             @RequestParam(value = "id") int postId,
             ModelMap model){
-        super.fetchUser(request, response);
+        User user = super.fetchUser(request, response);
         if (user == null) {
             return 403;
         }   
@@ -292,7 +297,7 @@ public class PostController extends BaseAuthorizationUserController{
         if (post == null)
             return 404;
         
-        if (isOwner(post)){
+        if (isOwner(user, post)){
             return 409;
         }
         
@@ -309,7 +314,7 @@ public class PostController extends BaseAuthorizationUserController{
             HttpServletResponse response,
             @RequestParam(value = "id") int postId,
             ModelMap model){
-        super.fetchUser(request, response);
+        User user = super.fetchUser(request, response);
         if (user == null) {
             return 403;
         }   
@@ -318,7 +323,7 @@ public class PostController extends BaseAuthorizationUserController{
         if (post == null)
             return 404;
         
-        if (isOwner(post)){
+        if (isOwner(user, post)){
             return 409;
         }
         
@@ -341,13 +346,10 @@ public class PostController extends BaseAuthorizationUserController{
         return post.getUserPostBookmarkCollection().size();
     }
     
-    private boolean isOwner(Post post){
+    private boolean isOwner(User user, Post post){
         if (user == null)
             return false;
-        if (Objects.equals(user.getId(), post.getUserId().getId()))
-            return true;
-        else
-            return false;        
+        return Objects.equals(user.getId(), post.getUserId().getId());       
     }
 
     

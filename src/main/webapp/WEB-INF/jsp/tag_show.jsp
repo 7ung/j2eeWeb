@@ -1,0 +1,142 @@
+<%-- 
+    Document   : tag_show
+    Created on : Apr 29, 2017, 4:24:59 PM
+    Author     : Stevie
+--%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <jsp:include page='partial_view/head.jsp'/>
+    <body>
+        <%--Include trang Header--%>
+        <jsp:include page="/WEB-INF/jsp/header.jsp"/>
+        <jsp:include page='partial_view/snackbar.jsp'/>
+        <jsp:include page='partial_view/dialog.jsp'/>
+        <div class="container-fuild main-container " >
+            <row class="row-fluid">
+                <div class="col-md-2"  style='background-color: rgb(240, 240, 240)'>
+                    <jsp:include page="partial_view/left_toolbar.jsp"/>
+                </div>
+                <div class="col-md-7" style="background-color: #fafafa;">
+                    <row class='row-fluid'>
+                        <div class='' style="border-bottom: rgb(51,51,51) 2px inset; position: relative">
+                            <h1>#${tag.name}</h1>
+                            <button type="button" class="btn my-action-btn" id="unbookmark-btn" style='position: absolute; right: 0px; top: 0px; display: none;'>
+                                <i class="fa fa-bookmark-o" aria-hidden="true"  ></i>
+                            </button>                                           
+                            <div class="mdl-tooltip" data-mdl-for="unbookmark-btn">
+                                Click to remove bookmark
+                            </div>                                    
+                            <button type="button" class="btn my-action-btn" id="bookmark-btn" style='position: absolute; right: 0px; top: 0px; display: none;'>
+                                <i class="fa fa-bookmark" aria-hidden="true"  ></i>
+                            </button>                                          
+                            <div class="mdl-tooltip" data-mdl-for="bookmark-btn">
+                                Click to bookmark
+                            </div>  
+                        </div>
+                    </row>
+                    <row class='row-fluid'>
+                        <ul class='mdl-list col-md-12' id='posts-list-recent'>
+                            <c:choose>
+                                <c:when test='${posts.hasContent() == true}'>
+                                    <row class='row-fluid'>
+                                        <ul class='mdl-list' id='recent-post-list'>
+                                            <c:forEach items="${posts.content}" var="p">
+                                                <c:set var="post" value="${p}" scope="request"/>
+                                                <c:set var="mode" value="tag_posts" scope="request"/>
+                                                <jsp:include page="partial_view/post/post_card.jsp"/>
+                                            </c:forEach>
+                                            <c:remove var="post"/>
+                                            <c:remove var="mode"/>
+                                        </ul>
+                                    </row>
+                                </c:when>
+                            </c:choose>  
+                        </ul>
+                    </row>                    
+                </div>
+                <div class="col-md-3 right-container">
+                    <jsp:include page="partial_view/right_toolbar.jsp"/>
+                </div>
+            </row>
+        </div>
+    </body>
+</html>
+
+<script>
+    console.log("Page Number: ${posts.number}");
+    console.log("Page Size: ${posts.size}");
+    console.log("Total Page: ${posts.totalPages}");
+    console.log("Number of Element : ${posts.numberOfElements}");
+    console.log("Total element: ${posts.totalElements}");
+
+    $(document).ready(function (){
+        checkUserFollowed();
+
+        $('#bookmark-btn').click(followSubject);
+        $('#unbookmark-btn').click(unfollowSubject);        
+    });
+
+    
+    function checkUserFollowed(){
+        var followed = ${isFollowed};
+        if (followed === true){
+            showUnfollowButton();
+        }
+        else if (followed === false){
+            showFollowButton();
+        }
+        else if (followed === undefined){
+            hideAllFollowButton();
+        }
+    }
+    
+    function hideAllFollowButton(){
+        $('#bookmark-btn').hide();
+        $('#unbookmark-btn').hide();
+    }
+    
+    function showFollowButton(){
+        $('#bookmark-btn').show();                
+        $('#unbookmark-btn').hide();        
+    }
+    
+    function showUnfollowButton(){
+        $('#bookmark-btn').hide();
+        $('#unbookmark-btn').show();
+    }
+    
+    function followSubject(){
+        var follow = jQuery.ajax({
+            url: "${pageContext.request.contextPath}/tags/${tag.id}/follow",
+            data: {},
+            method: 'GET',
+            success :function(data){
+                if (data === 200){
+                    showUnfollowButton();
+                }
+                else {
+                    showFollowButton();
+                }
+            } 
+        });        
+    }
+    
+    function unfollowSubject(){
+        var unfollow = jQuery.ajax({
+            url: "${pageContext.request.contextPath}/tags/${tag.id}/unfollow",
+            data: {},
+            method: 'GET',
+            success :function(data){
+                if (data === 200){
+                    showFollowButton();
+                }
+                else {
+                    showUnfollowButton();
+                }
+            } 
+        });        
+    }    
+</script>

@@ -86,7 +86,8 @@ public class Post implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true )
     private Collection<UserPostBookmark> userPostBookmarkCollection;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+    private Collection<Comment> commentCollection;
     public Post() {
     }
 
@@ -210,7 +211,16 @@ public class Post implements Serializable {
     public void setUserPostBookmarkCollection(Collection<UserPostBookmark> userPostBookmarkCollection) {
         this.userPostBookmarkCollection = userPostBookmarkCollection;
     }
+    
+    @XmlTransient
+    public Collection<Comment> getCommentCollection() {
+        return commentCollection;
+    }
 
+    public void setCommentCollection(Collection<Comment> commentCollection) {
+        this.commentCollection = commentCollection;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
