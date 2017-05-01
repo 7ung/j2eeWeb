@@ -8,9 +8,11 @@ package com.se313h21.j2eeweb.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,6 +27,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -65,11 +69,12 @@ public class Post implements Serializable {
     private Integer view;
     @Size(max = 32)
     private String status;
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name = "post_tag", joinColumns = {
         @JoinColumn(name = "post_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "tag_id", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<Tag> tagCollection;
+    @ManyToMany()
+    private Collection<Tag> tagCollection = new LinkedHashSet();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private Collection<PostImage> postImageCollection;
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
@@ -78,9 +83,13 @@ public class Post implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User userId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true )
     private Collection<UserPostBookmark> userPostBookmarkCollection;
-
+    @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId", orphanRemoval = true )
+    private Collection<Comment> commentCollection;
     public Post() {
     }
 
@@ -152,13 +161,11 @@ public class Post implements Serializable {
         this.status = status;
     }
 
-    @JsonIgnore
     @XmlTransient
     public Collection<Tag> getTagCollection() {
         return tagCollection;
     }
 
-    @JsonIgnore
     public void setTagCollection(Collection<Tag> tagCollection) {
         this.tagCollection = tagCollection;
     }
@@ -184,12 +191,11 @@ public class Post implements Serializable {
         this.subjectId = subjectId;
     }
 
-    @JsonIgnore
     public User getUserId() {
         return userId;
     }
 
-    @JsonIgnore
+    
     public void setUserId(User userId) {
         this.userId = userId;
     }
@@ -204,7 +210,16 @@ public class Post implements Serializable {
     public void setUserPostBookmarkCollection(Collection<UserPostBookmark> userPostBookmarkCollection) {
         this.userPostBookmarkCollection = userPostBookmarkCollection;
     }
+    
+    @XmlTransient
+    public Collection<Comment> getCommentCollection() {
+        return commentCollection;
+    }
 
+    public void setCommentCollection(Collection<Comment> commentCollection) {
+        this.commentCollection = commentCollection;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

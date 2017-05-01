@@ -5,8 +5,11 @@
  */
 package com.se313h21.j2eeweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -21,6 +24,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -45,10 +50,14 @@ public class Tag implements Serializable {
     private String code;
     @Size(max = 128)
     private String name;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
     @ManyToMany(mappedBy = "tagCollection")
-    private Collection<Post> postCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tag")
-    private Collection<UserTagBookmark> userTagBookmarkCollection;
+    private Collection<Post> postCollection = new ArrayList();
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tag", orphanRemoval = true )
+    private Collection<UserTagBookmark> userTagBookmarkCollection = new ArrayList();
 
     public Tag() {
     }
@@ -86,20 +95,24 @@ public class Tag implements Serializable {
         this.name = name;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<Post> getPostCollection() {
         return postCollection;
     }
 
+    @JsonIgnore
     public void setPostCollection(Collection<Post> postCollection) {
         this.postCollection = postCollection;
     }
 
+    @JsonIgnore
     @XmlTransient
     public Collection<UserTagBookmark> getUserTagBookmarkCollection() {
         return userTagBookmarkCollection;
     }
 
+    @JsonIgnore
     public void setUserTagBookmarkCollection(Collection<UserTagBookmark> userTagBookmarkCollection) {
         this.userTagBookmarkCollection = userTagBookmarkCollection;
     }

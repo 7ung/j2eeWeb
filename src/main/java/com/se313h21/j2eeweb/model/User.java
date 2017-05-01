@@ -8,9 +8,12 @@ package com.se313h21.j2eeweb.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +27,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -36,7 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
     @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
-    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")})
+    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+    @NamedQuery(name = "User.findByLastLogin", query = "SELECT u FROM User u WHERE u.lastLogin = :lastLogin")})
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,12 +56,15 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 32)
+    @JsonIgnore
     private String password;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 128)
     private String email;
+    @Column(name = "last_login", precision = 22)
+    private Double lastLogin;    
     @ManyToMany(mappedBy = "userCollection")
     private Collection<DevelopmentType> developmentTypeCollection;
     @ManyToMany(mappedBy = "userCollection")
@@ -64,17 +73,19 @@ public class User implements Serializable {
     private Collection<Image> imageCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Subject> subjectCollection;
-    @OneToMany(mappedBy = "userId")
-    private Collection<Profile> profileCollection;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "userId", /*fetch = FetchType.EAGER,*/ cascade = CascadeType.ALL, orphanRemoval = true)
+    private Collection<Profile> profileCollection = new LinkedHashSet<Profile>();;
     @OneToMany(mappedBy = "userId")
     private Collection<SeekingJob> seekingJobCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<AccessToken> accessTokenCollection;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Collection<UserTagBookmark> userTagBookmarkCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Post> postCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true )
     private Collection<UserPostBookmark> userPostBookmarkCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Collection<UserSubjectBookmark> userSubjectBookmarkCollection;
@@ -83,7 +94,10 @@ public class User implements Serializable {
     @JoinColumn(name = "user_role_id", referencedColumnName = "id")
     @ManyToOne
     private UserRole userRoleId;
-
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<Comment> commentCollection;
+    
     public User() {
     }
 
@@ -130,6 +144,14 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public Double getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Double lastLogin) {
+        this.lastLogin = lastLogin;
+    }    
+    
     @JsonIgnore
     @XmlTransient
     public Collection<DevelopmentType> getDevelopmentTypeCollection() {
@@ -174,13 +196,11 @@ public class User implements Serializable {
         this.subjectCollection = subjectCollection;
     }
     
-    @JsonIgnore
     @XmlTransient
     public Collection<Profile> getProfileCollection() {
         return profileCollection;
     }
 
-    @JsonIgnore
     public void setProfileCollection(Collection<Profile> profileCollection) {
         this.profileCollection = profileCollection;
     }
@@ -271,7 +291,17 @@ public class User implements Serializable {
     public void setUserRoleId(UserRole userRoleId) {
         this.userRoleId = userRoleId;
     }
+    @JsonIgnore
+    @XmlTransient
+    public Collection<Comment> getCommentCollection() {
+        return commentCollection;
+    }
 
+    public void setCommentCollection(Collection<Comment> commentCollection) {
+        this.commentCollection = commentCollection;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

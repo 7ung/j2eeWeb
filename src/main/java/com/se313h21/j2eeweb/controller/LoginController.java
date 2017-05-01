@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @Controller
 @Service
 //@SessionAttributes("token")
-public class LoginController {
+public class LoginController extends BaseAuthorizationUserController {
     /**
      * Current account for test: 
      * jobjob - 123123
@@ -77,6 +77,8 @@ public class LoginController {
             AccessToken token = accessTokenDao.get(userDao.get());
             accessTokenDao.updateExpiredTime();
             
+            userDao.updateLastLogin();
+            
             if (remember.equals("on")){
                 Cookie cookie = new Cookie("token", token.getAccessToken());
                 cookie.setMaxAge((int) AccessTokenDAO.TOKEN_EXPIRED);
@@ -95,6 +97,22 @@ public class LoginController {
             }
         }
     }
+    
+    @RequestMapping(value="/logout", method=RequestMethod.GET)
+    public String logout(
+            HttpServletRequest request,
+            HttpServletResponse response, ModelMap model,
+            @ModelAttribute("remember") String remember){
+        request.getSession().removeAttribute("token");
+        Cookie[] cookies = request.getCookies();
+        for (Cookie ck : cookies){
+            if (ck.getName().equals("token"))
+                ck.setValue("");
+        }
+        return "index";
+    }
+    
+    
     
    
 }

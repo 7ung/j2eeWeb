@@ -6,6 +6,7 @@
 package com.se313h21.j2eeweb.controller;
 
 import com.se313h21.j2eeweb.controller.utils.Hashing;
+import com.se313h21.j2eeweb.dao.UserDAO;
 import com.se313h21.j2eeweb.model.User;
 import com.se313h21.j2eeweb.model.UserRole;
 import com.se313h21.j2eeweb.repositories.UserRepository;
@@ -29,6 +30,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @Service
 public class RegistrationController {
+    
+    @Autowired
+    UserDAO userDao;
     
     @Autowired(required = false)
     UserRepository repo;
@@ -113,12 +117,7 @@ public class RegistrationController {
             return "/registration";
         }
         
-        
-        String hashedPassword = Hashing.generateHash(password);
-        
-        User user = new User(-1, username, hashedPassword, email);
-        user.setUserRoleId(new UserRole(1));
-        user = repo.save(user);
+        User user = userDao.create(username, password, email);
 
         // nếu có redirect thì redirect đến trang đó.
         // todo: if redirect ...

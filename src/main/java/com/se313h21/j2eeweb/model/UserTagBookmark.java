@@ -5,10 +5,12 @@
  */
 package com.se313h21.j2eeweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -36,9 +38,11 @@ public class UserTagBookmark implements Serializable {
     protected UserTagBookmarkPK userTagBookmarkPK;
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+    @JsonIgnore
     @JoinColumn(name = "tag_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Tag tag;
+    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private User user;
@@ -70,18 +74,22 @@ public class UserTagBookmark implements Serializable {
         this.date = date;
     }
 
+    @JsonIgnore
     public Tag getTag() {
         return tag;
     }
 
+    @JsonIgnore
     public void setTag(Tag tag) {
         this.tag = tag;
     }
-
+    
+    @JsonIgnore
     public User getUser() {
         return user;
     }
 
+    @JsonIgnore
     public void setUser(User user) {
         this.user = user;
     }
