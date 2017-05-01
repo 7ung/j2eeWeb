@@ -14,6 +14,7 @@ import com.se313h21.j2eeweb.repositories.PostRepository;
 import com.se313h21.j2eeweb.repositories.SubjectRepository;
 import com.se313h21.j2eeweb.repositories.UserSubjectBookmarkRepository;
 import com.se313h21.j2eeweb.repositories.Utils;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -80,6 +81,7 @@ public class SubjectDAO {
         subject.setView(0);
         subject = subjectRepo.save(subject);
         subject.setCode(Integer.toHexString(subject.getId()));
+        subject.setUserSubjectBookmarkCollection(new ArrayList());
         subject = subjectRepo.save(subject);
         return subject;
     }

@@ -5,6 +5,7 @@
  */
 package com.se313h21.j2eeweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -70,6 +71,7 @@ public class Profile implements Serializable {
     private Integer profilePictureId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private User userId;
 
     public Profile() {

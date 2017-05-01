@@ -15,12 +15,14 @@ import com.se313h21.j2eeweb.repositories.PostRepository;
 import com.se313h21.j2eeweb.repositories.SubjectRepository;
 import com.se313h21.j2eeweb.repositories.UserPostBookmarkRepository;
 import com.se313h21.j2eeweb.repositories.Utils;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -44,7 +46,7 @@ public class PostDAO {
     
     public Post create(String title, String content, User user, Subject subject, Collection<Tag> tags){
         Post post = create(title, content, user, subject);
-        post.setTagCollection(tags);
+        post.getTagCollection().addAll(tags);
         post = postRepo.save(post);
         return post;
     }
@@ -59,6 +61,8 @@ public class PostDAO {
         if (subject != null){
             post.setSubjectId(subject);
         }
+        post.setCommentCollection(new ArrayList());
+        post.setUserPostBookmarkCollection(new  ArrayList());
         post = postRepo.save(post);
         return post;
     }
@@ -152,20 +156,29 @@ public class PostDAO {
     }
 
     public Page<Post> getFirstPaging() {
-        return postRepo.findAll(new PageRequest(0, 16));
+        return postRepo.findAll(new PageRequest(0, 6, Sort.Direction.DESC, "date"));
     }
-    
-    public Page<Post> getPaging(int pageNumber) {
-        return postRepo.findAll(new PageRequest(pageNumber, 16));
-    }
-    
+
     public Page<Post> getFirstPaging(Tag tag) {
-        return postRepo.findByTagId(tag.getId(), new PageRequest(0, 16));
+        return postRepo.findByTagId(tag.getId(), new PageRequest(0, 6));
     }
     
-    public Page<Post> getPaging(Tag tag, int pageNumber) {
-        return postRepo.findByTagId(tag.getId(), new PageRequest(pageNumber, 16));
+    public Page<Post> getFirstPaging(User user) {
+        return postRepo.findByUserId(user, new PageRequest(0, 6));        
     }
+    
+    public Page<Post> getPaging(Pageable pageable) {
+        return postRepo.findAll(pageable);
+    }
+    
+    public Page<Post> getPaging(Tag tag, Pageable pageable) {
+        return postRepo.findByTagId(tag.getId(), pageable);
+    }
+
+    public Page<Post> getPaging(User user, Pageable pageable) {
+        return postRepo.findByUserId(user, pageable);
+    }
+
     
 
 }

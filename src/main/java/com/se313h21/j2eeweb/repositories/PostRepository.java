@@ -33,12 +33,12 @@ public interface PostRepository  extends JpaRepository<Post, Integer>{
     public List<Post> findAll(Sort sort);
     
     public Page<Post> findAll(Pageable pageable);
-    
-  
-    @Query(value ="select *,post_tag.tag_id as tag_id from post inner join post_tag on post.id = post_tag.post_id where post_tag.tag_id = ?1 order by ?#{#pageable}",
+            
+    @Query(value ="select *,post_tag.tag_id as tag_id from post inner join post_tag on post.id = post_tag.post_id where post_tag.tag_id = ?1 order by post.date desc,?#{#pageable}",
         countQuery = "select count(*) as tag_id from post inner join post_tag on post.id = post_tag.post_id where post_tag.tag_id = ?1 ",
         nativeQuery= true)
     Page<Post> findByTagId(Integer userId, Pageable pageable);
-    
+
+    Page<Post> findByUserId(User user, Pageable pageable);    
     
 }

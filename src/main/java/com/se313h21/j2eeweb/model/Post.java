@@ -86,7 +86,9 @@ public class Post implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true )
     private Collection<UserPostBookmark> userPostBookmarkCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
+    @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId", orphanRemoval = true )
     private Collection<Comment> commentCollection;
     public Post() {
     }
@@ -159,13 +161,11 @@ public class Post implements Serializable {
         this.status = status;
     }
 
-    @JsonIgnore
     @XmlTransient
     public Collection<Tag> getTagCollection() {
         return tagCollection;
     }
 
-    @JsonIgnore
     public void setTagCollection(Collection<Tag> tagCollection) {
         this.tagCollection = tagCollection;
     }
@@ -191,12 +191,11 @@ public class Post implements Serializable {
         this.subjectId = subjectId;
     }
 
-    @JsonIgnore
     public User getUserId() {
         return userId;
     }
 
-    @JsonIgnore
+    
     public void setUserId(User userId) {
         this.userId = userId;
     }

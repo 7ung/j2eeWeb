@@ -52,7 +52,7 @@ public class TagDAO {
             return new ArrayList();
         List<Tag> rs = new ArrayList();
         for (UserTagBookmark t : userTags){
-            rs.add(t.getTag());
+            rs.add(tagRepo.findOne(t.getTag().getId()));
         }
         return rs;
     }
@@ -62,6 +62,7 @@ public class TagDAO {
         t.setName(name);
         t = tagRepo.save(t);
         t.setCode(Integer.toHexString(t.getId()));
+        t.setUserTagBookmarkCollection(new ArrayList());
         t = tagRepo.save(t);
         return t;
     }

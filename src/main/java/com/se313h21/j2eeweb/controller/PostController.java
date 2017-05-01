@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.activiti.engine.impl.util.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -70,6 +71,15 @@ public class PostController extends BaseAuthorizationUserController{
         return "post/post_create";
     }
     
+    @RequestMapping(value="/recent", method=RequestMethod.GET)
+    public String recentPost(HttpServletRequest request,
+        HttpServletResponse response,
+        ModelMap model){
+        User user = super.fetchUser(request, response);
+        Page<Post> posts = postDao.getFirstPaging();
+        model.addAttribute("posts", posts);
+        return "post/post_recent";
+    }
     
     @RequestMapping(value = "/post", method=RequestMethod.POST)
     public String post_store(HttpServletRequest request,

@@ -14,9 +14,8 @@
         <jsp:include page='../partial_view/dialog.jsp'/>
         <div class="container-fuild main-container ">
             <row class="row-fluid">
-                <div class="col-md-2" style="background-color: #adadad;">
-                    <div style ="background-color: #5bc0de; height: 200px;" >
-                    </div>     
+                <div class="col-md-2 left-container">
+                    <jsp:include page="../partial_view/left_toolbar.jsp"/>
                 </div>
                 <div class="col-md-7" style="background-color: #fafafa;">
                     <row class="row-fluid">
@@ -47,7 +46,11 @@
                                 <c:forEach items="${post.tagCollection}" var="tag">
                                     <span class='mdl-chip mdl-chip--deletable  mdl-shadow--2dp my-mdl-chip'
                                           id="${tag.id}">
-                                        <span class='mdl-chip__text'><c:out value="${tag.name}"/></span>
+                                        <span class='mdl-chip__text'>
+                                            <a href="${pageContext.request.contextPath}/tags/${tag.id}">
+                                                <c:out value="${tag.name}"/>
+                                            </a>
+                                        </span>
                                     </span>                                    
                                 </c:forEach>
                             </div>

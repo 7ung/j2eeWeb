@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -37,10 +38,10 @@ public class UserSubjectBookmark implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @JoinColumn(name = "subject_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.EAGER,  optional = false)
     private Subject subject;
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private User user;
 
     public UserSubjectBookmark() {

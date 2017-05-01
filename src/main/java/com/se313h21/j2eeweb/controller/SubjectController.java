@@ -5,6 +5,7 @@
  */
 package com.se313h21.j2eeweb.controller;
 
+import com.google.common.base.Strings;
 import com.se313h21.j2eeweb.dao.PostDAO;
 import com.se313h21.j2eeweb.dao.SubjectDAO;
 import com.se313h21.j2eeweb.dao.UserSubjectBookmarkDAO;
@@ -187,9 +188,11 @@ public class SubjectController extends BaseAuthorizationUserController {
         if (isOwner(user, subject) == false){
             return "error_pages/409";
         }
-        
-        subject.setTitle(subjectTitle);
-        subject.setDescription(subjectDescription);
+        System.out.println("SubjectController@updateSubject: " + subjectDescription);
+        if (Strings.isNullOrEmpty(subjectTitle))
+            subject.setTitle(subjectTitle);
+        if (Strings.isNullOrEmpty(subjectDescription))
+            subject.setDescription(subjectDescription);
 
         subject = subjectDao.save(subject);
         
