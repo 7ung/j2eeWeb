@@ -83,15 +83,17 @@
                     </span>
                   </div>
                   <div class="" style="width:100%; margin-top: 20px ">
-                    <div class="job-label "   >
+<!--                    <div class="job-label "   >
                       android
                     </div>
                     <div class="job-label "   >
                       java
-                    </div>
-                    <div class="job-label "   >
-                      mobile
-                    </div>
+                    </div>-->
+                   <c:forEach items="${seekingJob.userId.experienceCollection}" var="experience">
+                     <div class="job-label "   >
+                      <c:out value="${experience.name}" />
+                    </div>           
+                    </c:forEach>
                   </div>
                 </div>
             </tr>
