@@ -47,11 +47,22 @@ public class CommentDAO {
         commentRepo.save(comment);
         return comment;
     }
+    
     public Comment update(Comment comment){
         return commentRepo.save(comment);
     }
-    public void Delete(Comment comment){
-        commentRepo.delete(comment);
+    
+    public boolean Delete(Comment comment){
+        try{
+        commentRepo.delete(comment.getId());
+        return true;}
+        catch(Exception e){
+            return false;
+        }
+    }
+    
+    public Integer getCommentCount(Post post){
+        return post.getCommentCollection().size();
     }
     
     

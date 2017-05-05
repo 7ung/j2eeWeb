@@ -11,7 +11,7 @@
 <li class='mdl-list__item mdl-shadow--2dp post-list-item' >                                    
     <div class='col-md-12'>
         <row class='row-fluid'>
-            <div class='col-md-8'>
+            <div class='col-md-6'>
                 <h5>
                     <a href="${pageContext.request.contextPath}/post?id=${post.id}" >
                         <span id='post-card-title-${mode}-${post.id}'>${post.title}<span>
@@ -26,6 +26,10 @@
             <div class='col-md-2' id="post-card-follows-${mode}-${post.id}-div">
                 <h5 class='primary-text' id='post-card-follows-${mode}-${post.id}'>0</h5>
                 <h6 class='secondary-text'>followed</h6>
+            </div>
+            <div class='col-md-2' id="post-card-comments-${mode}-${post.id}-div">
+                <h5 class='primary-text' id='post-card-comments-${mode}-${post.id}'>10</h5>
+                <h6 class='secondary-text'>comments</h6>
             </div> 
         </row>
         <c:choose >
