@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SeekingJob.findByIsActive", query = "SELECT s FROM SeekingJob s WHERE s.isActive = :isActive"),
     @NamedQuery(name = "SeekingJob.findByView", query = "SELECT s FROM SeekingJob s WHERE s.view = :view"),
     @NamedQuery(name = "SeekingJob.findByCreateDate", query = "SELECT s FROM SeekingJob s WHERE s.createDate = :createDate")})
+
 public class SeekingJob implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

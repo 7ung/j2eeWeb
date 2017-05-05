@@ -67,7 +67,7 @@ public class User implements Serializable {
     private Double lastLogin;    
     @ManyToMany(mappedBy = "userCollection")
     private Collection<DevelopmentType> developmentTypeCollection;
-    @ManyToMany(mappedBy = "userCollection")
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "userCollection")
     private Collection<Experience> experienceCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Image> imageCollection;
