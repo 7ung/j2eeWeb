@@ -6,10 +6,13 @@
 package com.se313h21.j2eeweb.controller;
 
 import com.google.common.base.Strings;
+import com.se313h21.j2eeweb.dao.CommentDAO;
 import com.se313h21.j2eeweb.dao.PostDAO;
 import com.se313h21.j2eeweb.dao.SubjectDAO;
 import com.se313h21.j2eeweb.dao.TagDAO;
+import com.se313h21.j2eeweb.dao.UserDAO;
 import com.se313h21.j2eeweb.dao.UserPostBookmarkDAO;
+import com.se313h21.j2eeweb.model.Comment;
 import com.se313h21.j2eeweb.model.Post;
 import com.se313h21.j2eeweb.model.Subject;
 import com.se313h21.j2eeweb.model.Tag;
@@ -55,6 +58,12 @@ public class PostController extends BaseAuthorizationUserController{
     
     @Autowired
     UserPostBookmarkDAO upbDao;
+    
+    @Autowired
+    CommentDAO commentDao;
+    
+    @Autowired
+    UserDAO userDao;
     
     @RequestMapping(value="/post", method=RequestMethod.GET)
     public String post_create(HttpServletRequest request,
@@ -361,7 +370,6 @@ public class PostController extends BaseAuthorizationUserController{
             return false;
         return Objects.equals(user.getId(), post.getUserId().getId());       
     }
-
     
     
 }

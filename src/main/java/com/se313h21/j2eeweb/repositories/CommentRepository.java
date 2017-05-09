@@ -6,6 +6,7 @@
 package com.se313h21.j2eeweb.repositories;
 
 import com.se313h21.j2eeweb.model.Comment;
+import com.se313h21.j2eeweb.model.Post;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,6 +16,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CommentRepository extends JpaRepository<Comment, Integer>{
     public List<Comment> findByUserId(Integer userId);
-    public List<Comment> findByPostId(Integer postId);
+    public List<Comment> findByPostId(Post postId);
     
 }

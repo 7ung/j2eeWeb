@@ -73,7 +73,13 @@
                                 <jsp:include page='post_info.jsp'/>
                             </div>                            
                         </div>
-                    </row>      
+                    </row>
+                    <row class="row_fluid">
+                        <div class="post-comments mdl-card__supporting-text" style="width: 100%; min-height: 0px; margin-top: 8px; margin-bottom: 16px; padding: 16px;
+                             box-shadow: inset 0px 0px 2px 2px #60dda6;">
+                            <jsp:include page='post_comment.jsp'/>
+                        </div>
+                    </row>
                 </div>
                 <div class="col-md-3 right-container">
                     <jsp:include page="../partial_view/right_toolbar.jsp"/>

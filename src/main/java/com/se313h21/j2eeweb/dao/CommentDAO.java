@@ -36,7 +36,7 @@ public class CommentDAO {
     }
     
     public List<Comment> getMany(Post post){
-        List<Comment> listComment=commentRepo.findByPostId(post.getId());
+        List<Comment> listComment=commentRepo.findByPostId(post);
         return listComment;
     }
     

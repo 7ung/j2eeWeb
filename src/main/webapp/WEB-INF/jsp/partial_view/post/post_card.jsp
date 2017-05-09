@@ -28,7 +28,7 @@
                 <h6 class='secondary-text'>followed</h6>
             </div>
             <div class='col-md-2' id="post-card-comments-${mode}-${post.id}-div">
-                <h5 class='primary-text' id='post-card-comments-${mode}-${post.id}'>10</h5>
+                <h5 class='primary-text' id='post-card-comments-${mode}-${post.id}'>${post.commentCollection.size()}</h5>
                 <h6 class='secondary-text'>comments</h6>
             </div> 
         </row>

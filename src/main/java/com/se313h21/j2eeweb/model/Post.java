@@ -86,7 +86,7 @@ public class Post implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post", orphanRemoval = true )
     private Collection<UserPostBookmark> userPostBookmarkCollection;
-    @JsonIgnore
+    //@JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId", orphanRemoval = true )
     private Collection<Comment> commentCollection;

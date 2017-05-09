@@ -7,22 +7,26 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<li class="media media-replied">
-    <a class="pull-left" href="#">
-        <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/ManikRathee/128.jpg" alt="profile">
-    </a>
-    <div class="media-body">
+
+<div class="comment-body">
+    <div class="col-md-12 well well-lg">
+        <div class="col-md-12">
+        <h4 class="col-md-8"><span></span> ${comment.userId}</h4>
+        <ul class="col-md-4 text-uppercase reviews list-inline">
+            <li class="dd">22</li>
+            <li class="mm">09</li>
+            <li class="aaaa">2014</li>
+            <li class="date">${comment.date}</li>
+        </ul>
+        </div>
         <div class="well well-lg">
-            <h4 class="media-heading text-uppercase reviews"><span>${}</span> The Hipster</h4>
-            <ul class="media-date text-uppercase reviews list-inline">
-                <li class="dd">22</li>
-                <li class="mm">09</li>
-                <li class="aaaa">2014</li>
-            </ul>
-            <p class="media-comment">
-                Nice job Maria.s
-            </p>
-            <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-        </div>              
+        <p class="media-comment">
+        ${comment.content}
+        </p>
+        <!--            <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>-->
+        </div>   
     </div>
-</li>
+    
+    
+</div>
+
