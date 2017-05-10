@@ -48,12 +48,14 @@
     
     function unfollowPost(){
         jQuery.ajax({
-            url: "${pageContext.request.contextPath}/post-unfollow",
+            url: "${pageContext.request.contextPath}/post-unfollow", // path, nếu là query get thì để ở đây luôn
             data: {
-                id: ${post.id}
+                id: ${post.id}          // post / put data
             },
             method: 'GET',
             success :function(data){
+                // kết quả trả về/ 
+                // đoạn bên dươi thì tùy xử lý
                 if (data === 200){
                     showFollowButton();
                 }

@@ -11,6 +11,7 @@ import com.se313h21.j2eeweb.dao.UserDAO;
 import com.se313h21.j2eeweb.model.Comment;
 import com.se313h21.j2eeweb.model.Post;
 import com.se313h21.j2eeweb.model.User;
+import com.se313h21.j2eeweb.repositories.Utils;
 import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import sun.rmi.runtime.Log;
 
 /**
@@ -31,52 +33,87 @@ import sun.rmi.runtime.Log;
 @Controller
 @Service
 public class CommentController extends BaseAuthorizationUserController {
-    
+
     @Autowired
     PostDAO postDao;
-    
+
     @Autowired
     CommentDAO commentDao;
-    
+
     @Autowired
     UserDAO userDao;
-    
-    @RequestMapping(value="/post-add-comment", method=RequestMethod.POST, params={"id"})
+
+    @RequestMapping(value = "/post", method = RequestMethod.POST, params = {"id"})
     public String comment_create(HttpServletRequest request,
             HttpServletResponse response,
             @RequestParam(value = "id") int postId,
-            ModelMap model){
-        
-        User user=super.fetchUser(request, response);
-        Post post=postDao.get(postId);
+            ModelMap model) {
+        String content = request.getParameter("comment-content");
+        User user = super.fetchUser(request, response);
+        if (user == null) {
+            model.addAttribute("startPage", 0); // 1 => register;  0 => login
+            return "registration";
+        }
+
+        Post post = postDao.get(postId);
+        Comment comment = commentDao.create(content, user, post);
         return "redirect:post?id=" + post.getId();
     }
-    
-    @RequestMapping(value="/post", method=RequestMethod.GET, params="{id}")
+
+    @RequestMapping(value = "/comment-edit", method = RequestMethod.POST, params = {"id"})
+    @ResponseBody
+    public int comment_edit(HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam(value = "id") int commentId,
+            @RequestParam(value = "post_id") int postId,
+            ModelMap model) {
+        String content = request.getParameter("comment-content");
+        User user = super.fetchUser(request, response);
+        Comment comment = commentDao.getCommentById(commentId);
+        if (comment != null) {
+            comment.setContent(content);
+            comment.setdate(Utils.currentTimestamp());
+        }
+        Comment commentSuccess=commentDao.update(comment);
+        if(commentSuccess!=null){
+            return 200;
+        }else 
+            return 400;
+        //return "redirect:post?id=" + postId;
+        //return "post/post_show";
+    }
+
+    @RequestMapping(value = "/comment-delete", method = RequestMethod.DELETE)
+    @ResponseBody
+    public int comment_delete(HttpServletRequest request,
+            HttpServletResponse response,
+            @RequestParam(value = "id") int commentId,
+            ModelMap model) {
+        Comment comment=commentDao.getCommentById(commentId);
+        boolean success = commentDao.delete(comment);
+        if (success) {
+            return 200;
+        } else {
+            return 400;
+        }
+        //return "post/post_show";
+    }
+
+    @RequestMapping(value = "/post", method = RequestMethod.GET, params = "{id}")
     public String comment_show(HttpServletRequest request,
             HttpServletResponse response,
             @RequestParam(value = "id") int postId,
-            ModelMap model){
-        
-        Post post=postDao.get(postId);
-        
-        List<Comment> comments=commentDao.getMany(post);
-        if(comments.size()>8){
-            comments=comments.subList(0, 8);
+            ModelMap model) {
+
+        Post post = postDao.get(postId);
+
+        List<Comment> comments = commentDao.getMany(post);
+        if (comments.size() > 8) {
+            comments = comments.subList(0, 8);
         }
-        String message="abc";
-        if(comments.isEmpty()){
-            message="No comment";
-        }
-       
-        model.addAttribute("message",message);
-        model.addAttribute("comments", comments);
-        model.addAttribute("post", post);
-        return "post/post_comment";
-        //return "redirect:post?id=" + post.getId();
+
+        //model.addAttribute("comments", comments);
+        return "post/post_show";
     }
-    
-    
-    
-    
+
 }

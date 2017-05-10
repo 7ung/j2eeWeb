@@ -20,6 +20,7 @@
                             <row class='row-fluid'>
                                 <ul class='mdl-list' id='recent-post-list'>
                                     <c:forEach items="${recent_post}" var="p">
+                                        <!--như cái này không khai báo scope = request là cái post_card không kiểu-->
                                         <c:set var="post" value="${p}" scope="request"/>
                                         <c:set var="mode" value="recent_post" scope="request"/>
                                         <jsp:include page="../partial_view/post/post_card.jsp"/>

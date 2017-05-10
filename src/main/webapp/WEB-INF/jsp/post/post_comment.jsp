@@ -4,9 +4,8 @@
     Author     : Nguyen Tan Luan
 --%>
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page isELIgnored="false" %>
+<%@page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 
 <row class="row-fluid">
@@ -14,10 +13,10 @@
     <h2>Leave your comment</h2>
 
     <div class="add-comment">
-        <form action="#" method="post" class="form-horizontal" id="commentForm" role="form"> 
+        <form action="${pageContext.servletContext.contextPath}/post?id=${post.id}" method="post" class="form-horizontal" id="commentForm" role="form"> 
             <div class="form-group">
                 <div class="col-sm-12">
-                    <textarea class="form-control" name="addComment" id="addComment" rows="5"></textarea>
+                    <textarea class="form-control" name="comment-content" id="addComment" rows="5"></textarea>
                 </div>
             </div>
 
@@ -37,7 +36,7 @@
                 <c:when test='${post.commentCollection.isEmpty() == false}'>
                     <row class='row-fluid'>
                         <ul class='mdl-list' id='recent-post-list'>
-                            <c:forEach items="${post.commentCollection}" var="p">
+                            <c:forEach items="${comments}" var="p">
                                 <c:set var="comment" value="${p}" scope="request"/>
                                 <jsp:include page="../partial_view/comment/comment_card.jsp"/>
                             </c:forEach>

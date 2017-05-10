@@ -186,10 +186,13 @@ public class PostController extends BaseAuthorizationUserController{
             boolean isFollowed = upbDao.isUserFollowedPost(user, post);
             model.addAttribute("isFollowed", String.valueOf(isFollowed));
         }
-        
+        List<Comment> comments=commentDao.getMany(post);
+        if(comments.size()>8){
+            comments=comments.subList(0, 8);
+        }
         post = postDao.increaseView(post);
-        
         model.addAttribute("post", post);
+        model.addAttribute("comments", comments);
         return "post/post_show";
     }
     
