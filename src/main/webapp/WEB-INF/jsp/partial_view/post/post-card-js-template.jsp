@@ -28,6 +28,10 @@
                 <h5 class='primary-text' id='post-card-follows-tag_posts-\${id}'>0</h5>
                 <h6 class='secondary-text'>followed</h6>
             </div> 
+            <div class='col-md-2' id="post-card-comments-tag_posts-\${id}-div">
+                <h5 class='primary-text' id='post-card-comments-tag_posts-\${id}'>${commentCollection.size()}</h5>
+                <h6 class='secondary-text'>followed</h6>
+            </div> 
         </row>  
         <row class='row-fluid'>
             <div class="mdl-card" id="tags-box" style="width: 100%; min-height: 0px; margin-top: 8px; margin-bottom: 16px;

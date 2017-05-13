@@ -32,6 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id"),
     @NamedQuery(name = "Comment.findByContent", query = "SELECT c FROM Comment c WHERE c.content = :content"),
     @NamedQuery(name = "Comment.findByDate", query = "SELECT c FROM Comment c WHERE c.date = :date")})
+    
+
 public class Comment implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,10 +50,10 @@ public class Comment implements Serializable {
     @Column(precision = 22)
     private Double date;
     @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Post postId;
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private User userId;
 
     public Comment() {
@@ -129,6 +131,10 @@ public class Comment implements Serializable {
     @Override
     public String toString() {
         return "com.se313h21.j2eeweb.model.Comment[ id=" + id + " ]";
+    }
+
+    public void setdate(double currentTimestamp) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
