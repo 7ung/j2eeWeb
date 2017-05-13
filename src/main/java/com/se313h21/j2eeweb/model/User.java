@@ -27,6 +27,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -65,7 +67,8 @@ public class User implements Serializable {
     private String email;
     @Column(name = "last_login", precision = 22)
     private Double lastLogin;    
-    @ManyToMany(mappedBy = "userCollection")
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "userCollection")
+    @Fetch(value = FetchMode.SUBSELECT)
     private Collection<DevelopmentType> developmentTypeCollection;
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "userCollection")
     private Collection<Experience> experienceCollection;
@@ -75,7 +78,8 @@ public class User implements Serializable {
     private Collection<Subject> subjectCollection;
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "userId", /*fetch = FetchType.EAGER,*/ cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<Profile> profileCollection = new LinkedHashSet<Profile>();;
+    private Collection<Profile> profileCollection = new LinkedHashSet<Profile>();    
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "userId")
     private Collection<SeekingJob> seekingJobCollection;
     @OneToMany(mappedBy = "userId")

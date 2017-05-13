@@ -26,4 +26,6 @@ public interface SeekingJobRepository extends JpaRepository<SeekingJob, Integer>
             "LOWER(t.developmentTypeId.name) LIKE LOWER(CONCAT('%',:searchTerm, '%')) AND "  +
             "t.isActive = true")
     List<SeekingJob> findBySearchTerm(@Param("searchTerm") String searchTerm,Sort sort);
+    List<SeekingJob> findById(int id);
+    
 }

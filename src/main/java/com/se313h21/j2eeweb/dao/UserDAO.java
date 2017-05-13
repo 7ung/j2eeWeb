@@ -7,10 +7,12 @@ package com.se313h21.j2eeweb.dao;
 
 import com.se313h21.j2eeweb.controller.utils.Hashing;
 import com.se313h21.j2eeweb.model.Profile;
+import com.se313h21.j2eeweb.model.SeekingJob;
 import com.se313h21.j2eeweb.model.User;
 import com.se313h21.j2eeweb.model.UserRole;
 import com.se313h21.j2eeweb.repositories.UserRepository;
 import com.se313h21.j2eeweb.repositories.Utils;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +70,15 @@ public class UserDAO {
         repo.save(user);
     }
     
-    
+    public List<SeekingJob> getSeekingJobActive(User user) {
+        List<SeekingJob> result = new ArrayList<>();
+        List<SeekingJob> tamp = (List<SeekingJob>) user.getSeekingJobCollection();
+        for (SeekingJob item : tamp) {
+            if(item.getIsActive()) {
+                result.add(item);
+            }
+        }
+        return result;
+    }
     
 }

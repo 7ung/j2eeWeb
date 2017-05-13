@@ -51,6 +51,7 @@ public class SeekingJobController {
     public String registration_post(HttpServletRequest request,
             HttpServletResponse response, ModelMap model) {
         String searchKeyword = request.getParameter("password");
+        System.out.print("dmm"+searchKeyword);
         //List<SeekingJob> listseekingJob = Lists.newArrayList(repo.findBySearchTerm(searchKeyword,new Sort(Sort.Direction.DESC, "id")).iterator());
        List<SeekingJob> listseekingJob = seekDao.search(searchKeyword);
         LOGGER.log( Level.FINE, "processing {0} entries in loop", "abc" );

@@ -6,8 +6,15 @@
 package com.se313h21.j2eeweb.dao;
 
 import com.google.common.collect.Lists;
+import com.se313h21.j2eeweb.controller.utils.Hashing;
+import com.se313h21.j2eeweb.model.DevelopmentType;
 import com.se313h21.j2eeweb.model.Experience;
+import com.se313h21.j2eeweb.model.Post;
+import com.se313h21.j2eeweb.model.Profile;
 import com.se313h21.j2eeweb.model.SeekingJob;
+import com.se313h21.j2eeweb.model.Seniority;
+import com.se313h21.j2eeweb.model.User;
+import com.se313h21.j2eeweb.model.UserRole;
 import com.se313h21.j2eeweb.repositories.SeekingJobRepository;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,6 +64,9 @@ public class SeekingJobDAO {
         for (SeekingJob element:list1) {
             if(checkSearch(element,keyword)) result.add(element);
         }
+        
+       System.out.printf("so luong %d", result.size());
+       System.out.printf("key "+keyword);
         return result;
     }
     
@@ -65,5 +75,14 @@ public class SeekingJobDAO {
         List<SeekingJob> list2 = Lists.newArrayList(repo.findBySearchTerm(keyword,new Sort(Sort.Direction.DESC, "id")).iterator());
         List<SeekingJob> result = refactorList(list1,list2);
         return result;
+    }
+    public SeekingJob create(String location, Integer minSalary, Integer maxSalary, DevelopmentType developmentTypeId, Seniority seniorityId, User userId){
+
+        SeekingJob seekingJob = new SeekingJob(location, minSalary, maxSalary, developmentTypeId, seniorityId, userId);
+        seekingJob = repo.save(seekingJob);
+        return seekingJob;
+    }
+    public SeekingJob update(SeekingJob seek) {
+        return repo.save(seek);
     }
 }
