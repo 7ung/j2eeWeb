@@ -33,8 +33,17 @@
                     <span class="input-group-addon">
                         <button type="submit" >
                             <span class="glyphicon glyphicon-search"></span>
-                        </button>  
+                        </button>                      
                     </span>
+<!--<span class="input-group-addon" style = "padding: 0px; background-color: transparent; border: 1px;
+border-style: solid;
+border-radius: 5px;
+border-color: transparent;">
+    <button type="submit" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+</span>-->
+                    
                 </form>
             </div>
         </div>

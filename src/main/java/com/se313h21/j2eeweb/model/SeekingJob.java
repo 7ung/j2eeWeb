@@ -5,6 +5,7 @@
  */
 package com.se313h21.j2eeweb.model;
 
+import com.se313h21.j2eeweb.repositories.Utils;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -150,6 +151,19 @@ public class SeekingJob implements Serializable {
 
     public void setUserId(User userId) {
         this.userId = userId;
+    }
+
+    public SeekingJob(String location, Integer minSalary, Integer maxSalary, DevelopmentType developmentTypeId, Seniority seniorityId, User userId) {
+        this.id = -1;
+        this.location = location;
+        this.minSalary = minSalary;
+        this.maxSalary = maxSalary;
+        this.developmentTypeId = developmentTypeId;
+        this.seniorityId = seniorityId;
+        this.userId = userId;
+        this.createDate = Utils.currentTimestamp();
+        this.isActive = true;
+        this.view = 0;
     }
 
     @Override
