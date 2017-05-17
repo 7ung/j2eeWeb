@@ -95,7 +95,7 @@ public class User implements Serializable {
     @ManyToOne
     private UserRole userRoleId;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId",orphanRemoval = true )
     private Collection<Comment> commentCollection;
     
     public User() {

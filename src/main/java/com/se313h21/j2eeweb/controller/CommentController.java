@@ -65,10 +65,9 @@ public class CommentController extends BaseAuthorizationUserController {
     public int comment_edit(HttpServletRequest request,
             HttpServletResponse response,
             @RequestParam(value = "id") int commentId,
-            @RequestParam(value = "post_id") int postId,
             ModelMap model) {
         String content = request.getParameter("comment-content");
-        User user = super.fetchUser(request, response);
+        System.out.println("edit---comment--- "+commentId);
         Comment comment = commentDao.getCommentById(commentId);
         if (comment != null) {
             comment.setContent(content);
@@ -76,44 +75,51 @@ public class CommentController extends BaseAuthorizationUserController {
         }
         Comment commentSuccess=commentDao.update(comment);
         if(commentSuccess!=null){
+            System.out.println("aaaaaaaaaaaaaa ");
             return 200;
-        }else 
+        }else{ 
+             System.out.println("aaaaaaaaaaaaaa ");
             return 400;
+        }
         //return "redirect:post?id=" + postId;
         //return "post/post_show";
     }
 
-    @RequestMapping(value = "/comment-delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/comment-delete", method = RequestMethod.GET,params = {"id"})
     @ResponseBody
     public int comment_delete(HttpServletRequest request,
             HttpServletResponse response,
             @RequestParam(value = "id") int commentId,
             ModelMap model) {
         Comment comment=commentDao.getCommentById(commentId);
+        System.out.println("delete ------comment--- "+commentId);
         boolean success = commentDao.delete(comment);
         if (success) {
+            System.out.println("aaaaaaaaaa");
             return 200;
+            
         } else {
+            System.out.println("bbbbbbbbbb");
             return 400;
         }
         //return "post/post_show";
     }
 
-    @RequestMapping(value = "/post", method = RequestMethod.GET, params = "{id}")
-    public String comment_show(HttpServletRequest request,
-            HttpServletResponse response,
-            @RequestParam(value = "id") int postId,
-            ModelMap model) {
-
-        Post post = postDao.get(postId);
-
-        List<Comment> comments = commentDao.getMany(post);
-        if (comments.size() > 8) {
-            comments = comments.subList(0, 8);
-        }
-
-        //model.addAttribute("comments", comments);
-        return "post/post_show";
-    }
+//    @RequestMapping(value = "/post", method = RequestMethod.GET, params = "{id}")
+//    public String comment_show(HttpServletRequest request,
+//            HttpServletResponse response,
+//            @RequestParam(value = "id") int postId,
+//            ModelMap model) {
+//
+//        Post post = postDao.get(postId);
+//
+//        List<Comment> comments = commentDao.getMany(post);
+//        if (comments.size() > 8) {
+//            comments = comments.subList(0, 8);
+//        }
+//
+//        //model.addAttribute("comments", comments);
+//        return "post/post_show";
+//    }
 
 }

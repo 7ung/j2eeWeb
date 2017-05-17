@@ -60,7 +60,9 @@ public class CommentDAO {
     
     public boolean delete(Comment comment){
         try{
+            System.out.println("delete ------comment "+comment.getId());
         commentRepo.delete(comment.getId());
+            
         return true;}
         catch(Exception e){
             return false;

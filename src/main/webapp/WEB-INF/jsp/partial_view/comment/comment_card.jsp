@@ -14,10 +14,12 @@
 
             <h4 class="col-md-8"><span></span> <c:out value="${comment.userId.username}"/></h4>
             <div class="col-md-4" id="commnent-date-${comment.id}">
+                
             </div>
         </div>
         <div class="well well-lg">
             <p class="media-comment">
+                <c:out value="${comment.id}"/>
                 <c:out value="${comment.content}"/>
             </p>
             <!--            <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>-->
@@ -26,10 +28,10 @@
             <c:when test='${user!=null && user.id == comment.userId.id}'>
                 <div class="form-group">
                     <div class="col-sm-2">                    
-                        <button class="btn btn-default btn-circle text-uppercase " aria-hidden="true" type="submit" id="edit-comment"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+                        <button class="btn btn-default btn-circle text-uppercase " aria-hidden="true" type="submit" id="edit-comment-${comment.id}"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                     </div>
                     <div class="col-sm-2">                    
-                        <button class="btn btn-danger btn-circle text-uppercase" aria-hidden="true" type="submit" id="delete-comment"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                        <button class="btn btn-danger btn-circle text-uppercase" aria-hidden="true" type="submit" id="delete-comment-${comment.id}"><span class="glyphicon glyphicon-remove"></span> Delete</button>
                     </div>
                 </div>    
             </c:when>
@@ -42,7 +44,7 @@
         var dateNumber = ${comment.date} * 1000;
         var date = new Date(dateNumber);
         $('#commnent-date-${comment.id}').text(date.toDateString());
-
+        $('#delete-comment-${comment.id}').click(deleteComment);
         $('#edit-comment-${comment.id}').click(function () {
             document.getElementById("addComment").text(comment.content);
             document.getElementById("addComment").focus();
@@ -51,14 +53,14 @@
 
             editComment();
         });
-
-        $('#delete-comment-${comment.id}').click(function () {
-
-            openDialog('Bạn có muốn xoá bình luận?', 'CÓ', 'KHÔNG', function () {
-                deleteComment();
-            });
-            
-        });
+//
+//        $('#delete-comment-${comment.id}').click(function () {
+//
+//            openDialog('Bạn có muốn xoá bình luận?', 'CÓ', 'KHÔNG', function () {
+//                deleteComment();
+//            });
+//            
+//        });
 
     });
 
@@ -76,7 +78,7 @@
                 // đoạn bên dươi thì tùy xử lý
                 var json = $.parseJSON(data);
                 if (data === 200) {
-                    window.location.replace('${pageContext.request.contextPath}');
+                    window.location.replace('${pageContext.request.contextPath}/post?id=${post.id}');
                 } else {
                     showSnackBarError('Lỗi');
                 }
@@ -97,7 +99,7 @@
                 // đoạn bên dươi thì tùy xử lý
                 var json = $.parseJSON(data);
                 if (data === 200) {
-                    window.location.replace('${pageContext.request.contextPath}');
+                    window.location.replace('${pageContext.request.contextPath}/post?id=${post.id}');
                 } else {
                     
                     showSnackBarError('Lỗi');
