@@ -24,14 +24,14 @@
             </p>
             <!--            <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>-->
         </div>
-        <c:choose>
+        <c:choose> 
             <c:when test='${user!=null && user.id == comment.userId.id}'>
                 <div class="form-group">
                     <div class="col-sm-2">                    
                         <button class="btn btn-default btn-circle text-uppercase " aria-hidden="true" type="submit" id="edit-comment-${comment.id}"><span class="glyphicon glyphicon-edit"></span> Edit</button>
                     </div>
                     <div class="col-sm-2">                    
-                        <button class="btn btn-danger btn-circle text-uppercase" aria-hidden="true" type="submit" id="delete-comment-${comment.id}"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                        <button class="btn btn-danger bt n-circle text-uppercase" aria-hidden="true" type="submit" id="delete-comment-${comment.id}"><span class="glyphicon glyphicon-remove"></span> Delete</button>
                     </div>
                 </div>    
             </c:when>
