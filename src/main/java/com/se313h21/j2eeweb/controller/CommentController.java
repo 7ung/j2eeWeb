@@ -65,9 +65,10 @@ public class CommentController extends BaseAuthorizationUserController {
     public int comment_edit(HttpServletRequest request,
             HttpServletResponse response,
             @RequestParam(value = "id") int commentId,
+            @RequestParam(value = "post_id") int postId,
             ModelMap model) {
         String content = request.getParameter("comment-content");
-        System.out.println("edit---comment--- "+commentId);
+        User user = super.fetchUser(request, response);
         Comment comment = commentDao.getCommentById(commentId);
         if (comment != null) {
             comment.setContent(content);
