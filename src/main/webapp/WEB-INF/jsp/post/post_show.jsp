@@ -9,6 +9,8 @@
 <!DOCTYPE html>
 <html>
     <jsp:include page="../partial_view/head.jsp"/>
+    <%--Include trang Header--%>
+    <jsp:include page="/WEB-INF/jsp/header.jsp"/>
     <body>
         <jsp:include page='../partial_view/snackbar.jsp'/>
         <jsp:include page='../partial_view/dialog.jsp'/>
