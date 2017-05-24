@@ -6,12 +6,12 @@
 package com.se313h21.j2eeweb.repositories;
 
 import com.se313h21.j2eeweb.model.Profile;
+import com.se313h21.j2eeweb.model.User;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-/**
- *
- * @author Stevie
- */
+
 public interface ProfileRepository extends JpaRepository<Profile, Integer>{
-    
+    public List<Profile> findByUserId(User user);
+    public 
 }
