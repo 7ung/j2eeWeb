@@ -37,6 +37,7 @@ com\se313h21\j2eeweb\model\Seniority_.class
 com\se313h21\j2eeweb\model\UserRole.class
 com\se313h21\j2eeweb\repositories\SeekingJobRepository.class
 com\se313h21\j2eeweb\model\PostImage.class
+com\se313h21\j2eeweb\dao\ProfileDAO.class
 com\se313h21\j2eeweb\model\Subject.class
 com\se313h21\j2eeweb\controller\HomeController.class
 com\se313h21\j2eeweb\repositories\TagRepository.class

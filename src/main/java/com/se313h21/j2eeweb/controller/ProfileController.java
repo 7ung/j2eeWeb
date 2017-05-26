@@ -42,7 +42,7 @@ public class ProfileController extends BaseAuthorizationUserController{
             return ProfileController.redirect;
         }
         
-        Profile profile = proDao.get()
+        //Profile profile = proDao.get();
         return "user_profile";
     }
 }
