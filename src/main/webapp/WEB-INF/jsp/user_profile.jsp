@@ -47,13 +47,13 @@
 			<fieldset>
                             <!-- Họ và tên-->
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="Full name">Full name</label>
-                                <div class="col-md-3">
+                                <label class="col-md-3 control-label" for="DisplayName">Tên tài khoản</label>
+                                <div class="col-md-9">
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <i class="fa fa-user"></i>
                                         </div>
-                                        <input id="Full name" name="Full name" type="text" placeholder="Full name" class="form-control input-md">
+                                        <input id="DisplayName" name="DisplayName" type="text" placeholder="" class="form-control input-md width-input">
                                     </div>
                                 </div>
                             </div>
@@ -61,12 +61,12 @@
                             <!-- Ngày sinh-->
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="Date Of Birth">Ngày sinh</label>
-                                <div class="col-md-3">
+                                <div class="col-md-9">
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <i class="fa fa-birthday-cake"></i>
                                         </div>
-                                        <input id="Date Of Birth" name="Date Of Birth" type="text" placeholder="Date Of Birth" class="form-control input-md">
+                                        <input id="Date Of Birth" name="Date Of Birth" type="text" placeholder="Ngày sinh" class="form-control input-md">
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                             <!-- Giới tính -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="Gender">Giới tính</label>
-                                <div class="col-md-3"> 
+                                <div class="col-md-9"> 
                                     <label class="radio-inline" for="Gender-0">
                                         <input type="radio" name="Gender" id="Gender-0" value="1" checked="checked">Nam
                                     </label> 
@@ -87,7 +87,7 @@
                             <!--Địa chỉ-->
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="Address">Địa chỉ</label>  
-                                <div class="col-md-3">
+                                <div class="col-md-9">
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <i class="glyphicon glyphicon-map-marker"></i>
@@ -99,34 +99,34 @@
                             
                             <!--Quốc gia-->
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="Country">Quốc gia</label>  
-                                <div class="col-md-3">
+                                <label class="col-md-3 control-label" for="Country">Quốc tịch</label>  
+                                <div class="col-md-9">
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <i class="glyphicon glyphicon-star"></i>
                                         </div>
-                                        <input id="Country" name="Country" type="text" placeholder="Quốc gia" class="form-control input-md">
+                                        <input id="Country" name="Country" type="text" placeholder="Quốc tịch" class="form-control input-md">
                                     </div> 
                                 </div>
                             </div>
                             
                             <!-- Primary Occupation-->
                             <div class="form-group">
-                                <label class="col-md-3 control-label" for="Primary Occupation">Primary Occupation</label>  
-                                <div class="col-md-3">
+                                <label class="col-md-3 control-label" for="Personal Link">Link cá nhân</label>  
+                                <div class="col-md-9">
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <i class="fa fa-briefcase"></i>
                                         </div>
-                                        <input id="Primary Occupation" name="Primary Occupation" type="text" placeholder="Primary Occupation" class="form-control input-md">
+                                        <input id="Personal Link" name="Personal Link" type="text" placeholder="Link cá nhân" class="form-control input-md">
                                     </div> 
                                 </div>
                             </div>
                             
                             <!-- Secondary Occupation (if any-->
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label class="col-md-3 control-label" for="Secondary Occupation (if any)">Secondary Occupation (if any)</label>  
-                                <div class="col-md-3">
+                                <div class="col-md-9">
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <i class="fa fa-briefcase"></i>
@@ -134,12 +134,12 @@
                                         <input id="Secondary Occupation" name="Secondary Occupation (if any)" type="text" placeholder="Secondary Occupation" class="form-control input-md">
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             
                             <!-- Skills-->
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="Skills">Skills</label>  
-                                <div class="col-md-3">
+                                <div class="col-md-9">
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <i class="fa fa-graduation-cap"></i>
@@ -150,9 +150,9 @@
                             </div>
 
                             <!-- Working Experience-->
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label class="col-md-3 control-label" for="Working Experience (time period)">Kinh nghiệm làm việc</label>  
-                                <div class="col-md-3">
+                                <div class="col-md-9">
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <i class="fa fa-clock-o"></i>
@@ -160,12 +160,12 @@
                                         <input id="Working Experience" name="Working Experience" type="text" placeholder="Enter time period " class="form-control input-md">	   
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             
                             <!-- Email Address-->
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label class="col-md-3 control-label" for="Email Address">Địa chỉ Email</label>  
-                                <div class="col-md-3">
+                                <div class="col-md-9">
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <i class="fa fa-envelope-o"></i>
@@ -173,12 +173,12 @@
                                         <input id="Email Address" name="Email Address" type="text" placeholder="Email Address" class="form-control input-md">
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             
                             <!-- About -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="About">About</label>
-                                <div class="col-md-3">                     
+                                <div class="col-md-9">                     
                                     <div class="input-group">
                                         <div class="input-group-addon">
                                             <i class="glyphicon glyphicon-exclamation-sign"></i>
