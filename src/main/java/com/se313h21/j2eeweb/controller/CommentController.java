@@ -60,30 +60,23 @@ public class CommentController extends BaseAuthorizationUserController {
         return "redirect:post?id=" + post.getId();
     }
 
-    @RequestMapping(value = "/comment-edit", method = RequestMethod.POST, params = {"id"})
-    @ResponseBody
-    public int comment_edit(HttpServletRequest request,
+    @RequestMapping(value = "/comment-edit", method = RequestMethod.POST,params={"id"})
+    //@ResponseBody
+    public String comment_edit(HttpServletRequest request,
             HttpServletResponse response,
             @RequestParam(value = "id") int commentId,
             @RequestParam(value = "post_id") int postId,
             ModelMap model) {
-        String content = request.getParameter("comment-content");
+        String content = request.getParameter("edit-comment-content");
         User user = super.fetchUser(request, response);
         Comment comment = commentDao.getCommentById(commentId);
         if (comment != null) {
             comment.setContent(content);
-            comment.setdate(Utils.currentTimestamp());
+            comment.setDate(Utils.currentTimestamp());
+            System.out.println(comment.getId()+" - "+content+" - "+ comment.getDate());
         }
-        Comment commentSuccess=commentDao.update(comment);
-        if(commentSuccess!=null){
-            System.out.println("aaaaaaaaaaaaaa ");
-            return 200;
-        }else{ 
-             System.out.println("aaaaaaaaaaaaaa ");
-            return 400;
-        }
-        //return "redirect:post?id=" + postId;
-        //return "post/post_show";
+        Comment commentSuccess=commentDao.update(comment);       
+        return "redirect:post?id=" + postId;
     }
 
     @RequestMapping(value = "/comment-delete", method = RequestMethod.GET,params = {"id"})
@@ -93,17 +86,13 @@ public class CommentController extends BaseAuthorizationUserController {
             @RequestParam(value = "id") int commentId,
             ModelMap model) {
         Comment comment=commentDao.getCommentById(commentId);
-        System.out.println("delete ------comment--- "+commentId);
         boolean success = commentDao.delete(comment);
         if (success) {
-            System.out.println("aaaaaaaaaa");
             return 200;
             
         } else {
-            System.out.println("bbbbbbbbbb");
             return 400;
         }
-        //return "post/post_show";
     }
 
 //    @RequestMapping(value = "/post", method = RequestMethod.GET, params = "{id}")

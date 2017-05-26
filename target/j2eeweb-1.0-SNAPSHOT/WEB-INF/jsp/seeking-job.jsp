@@ -30,36 +30,34 @@
             <div id="imaginary_container" style="margin: 20px;"> 
                 <form class="input-group stylish-input-group" action="${pageContext.servletContext.contextPath}/seeking-job" method="post">
                    <input type="text" name="password" id="password"  class="form-control" placeholder="Search" value="${searchText}">
-                    <span class="input-group-addon">
+<!--                    <span class="input-group-addon">
                         <button type="submit" >
                             <span class="glyphicon glyphicon-search"></span>
-                        </button>  
-                    </span>
+                        </button>                      
+                    </span>-->
+                        <span class="input-group-addon" style = "padding: 0px; background-color: transparent; border: 1px;
+                        border-style: solid;
+                        border-radius: 5px;
+                        border-color: transparent;">
+                            <button type="submit" class="btn btn-primary">
+                                                <i class="glyphicon glyphicon-search"></i>
+                                            </button>
+                        </span>
+                    
                 </form>
             </div>
         </div>
 	</div>
-<!--       <div>
-            <p>abc</p>
-  <c:forEach items="${listseekingJob}" var="seekingJob">
-    
-      
-    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
- <b><c:out value="${seekingJob.developmentTypeId.name}" /></b>
-    <b><c:out value="${seekingJob.maxSalary}" /></b>
-</div>
-  </c:forEach>
-       </div>-->
-<table>
+
+<table >
             
              <c:forEach items="${listseekingJob}" var="seekingJob">
     
       
 <tr class="item">
               <div class="demo-card-wide mdl-card mdl-shadow--3dp">
-
-                <div style = " background-color:green; width: 180px; height: 180px; float:left;margin: 10px;">
-                  <img src="resources/image/android.PNG" alt="Mountain View" style="width:100%;height:100%;">
+                <div style = "  width: 180px; height: 180px; float:left;margin: 10px;">
+                  <img src="resources/image/${seekingJob.developmentTypeId.image}" alt="Mountain View" style="width:100%;height:100%;">
                 </div>
 
 
@@ -96,6 +94,7 @@
                     </c:forEach>
                   </div>
                 </div>
+                    </div>
             </tr>
   </c:forEach>
           </table>

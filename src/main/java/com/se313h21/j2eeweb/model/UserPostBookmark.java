@@ -48,10 +48,10 @@ public class UserPostBookmark implements Serializable {
     @Size(min = 0, max = 1024)
     private String note;
     @JoinColumn(name = "post_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Post post;
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private User user;
 
     public UserPostBookmark() {

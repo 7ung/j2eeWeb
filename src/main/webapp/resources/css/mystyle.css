@@ -100,6 +100,13 @@
     margin-bottom: 5px;
     font-weight: 700;
 }
+.dropdown-menu{
+    display: inline-block;
+    max-width: 100%;
+    min-width: 100px;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
 .drop-ttl{
     font-weight:400;
     padding:5px 20px;

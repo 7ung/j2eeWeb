@@ -26,7 +26,9 @@
                 </div>
             </div>            
         </form>
+           
     </div>
+                  
 </row>
 <row class="row-fluid">
     <h2  class="glyphicon glyphicon-comment">Comments(<span>${post.commentCollection.size()}</span>)</h2>
@@ -40,7 +42,7 @@
                                 <c:set var="comment" value="${p}" scope="request"/>
                                 <jsp:include page="../partial_view/comment/comment_card.jsp"/>
                             </c:forEach>
-                            <c:remove var="comment"/>                           
+                            //<c:remove var="comment"/>                  
                         </ul>
                     </row>                                          
             </c:when>

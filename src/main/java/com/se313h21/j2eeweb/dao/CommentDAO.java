@@ -22,57 +22,54 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CommentDAO {
+
     @Autowired
     CommentRepository commentRepo;
-    
+
     @Autowired
     UserRepository userRepo;
-    
+
     @Autowired
     PostRepository postRepo;
-    
-    public List<Comment> getMany(User user){
-        List<Comment> listComment=commentRepo.findByUserId(user.getId());
+
+    public List<Comment> getMany(User user) {
+        List<Comment> listComment = commentRepo.findByUserId(user.getId());
         return listComment;
     }
-    
-    public List<Comment> getMany(Post post){
-        List<Comment> listComment=commentRepo.findByPostId(post);
+
+    public List<Comment> getMany(Post post) {
+        List<Comment> listComment = commentRepo.findByPostId(post);
         return listComment;
     }
-    
-    public Comment getCommentById(Integer CommentId){
+
+    public Comment getCommentById(Integer CommentId) {
         return commentRepo.findById(CommentId);
     }
-    
-    public Comment create(String content, User user, Post post){
-        Comment comment=new Comment(-1,content);
+
+    public Comment create(String content, User user, Post post) {
+        Comment comment = new Comment(-1, content);
         comment.setDate(Utils.currentTimestamp());
         comment.setUserId(user);
         comment.setPostId(post);
         commentRepo.save(comment);
         return comment;
     }
-    
-    public Comment update(Comment comment){
+
+    public Comment update(Comment comment) {
         return commentRepo.save(comment);
     }
-    
-    public boolean delete(Comment comment){
-        try{
-            System.out.println("delete ------comment "+comment.getId());
-        commentRepo.delete(comment.getId());
-            
-        return true;}
-        catch(Exception e){
+
+    public boolean delete(Comment comment) {
+        try {
+            commentRepo.delete(comment.getId());
+            return true;
+        } catch (Exception e) {
             return false;
         }
     }
-    
-    public Integer getCommentCount(Post post){
+
+    public Integer getCommentCount(Post post) {
         return post.getCommentCollection().size();
     }
-    
-    
-    
+
 }
