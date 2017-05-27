@@ -14,6 +14,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ProfileRepository extends JpaRepository<Profile, Integer>{
    
-   @Query ("SELECT * FROM profile WHERE user_id = user.id")
-   public List<Profile> findByUserId(User user);
+   //@Query ("SELECT p FROM profile p WHERE p.userId = :user")
+   //public List<Profile> findByUserId(User user);
 }
