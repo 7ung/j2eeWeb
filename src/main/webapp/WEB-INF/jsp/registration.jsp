@@ -62,9 +62,7 @@
                                                 <p>${status.message}</p>
                                             </c:when>
                                         </c:choose>
-                                        <p>${redirect_login} </p>
-                                        <p>${token} </p>
-                                        <p>${time} </p>
+
 
                                         <div class="form-group">
                                             <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="${defUsername}">

@@ -8,12 +8,13 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
+<!--    <head>
         <link href="resources/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
         <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="resources/mycss/findjob.css" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" href="resources/material/material.min.css" type="text/css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="resources/css/mystyle.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="resources/material/material.min.css" type="text/css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         
 
         <script src="resources/material/material.min.js" type="text/javascript"></script>
@@ -22,8 +23,11 @@
         <script src="resources/registration/javascript/registration.js" type="text/javascript"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-    </head>
+    </head>-->
+    <jsp:include page="../jsp/partial_view/head.jsp"/>
     <body>
+        <jsp:include page="../jsp/header.jsp"/>
+
         <div class="container">
 	<div class="row">
         <div class="col-sm-6 col-sm-offset-3">

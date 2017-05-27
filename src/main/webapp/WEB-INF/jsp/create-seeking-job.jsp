@@ -7,11 +7,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-        <head>
+<!--        <head>
         <link href="resources/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
         <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="resources/mycss/findjob.css" rel="stylesheet" type="text/css"/>
-        <!--<link href="resources/css/mystyle.css" rel="stylesheet" type="text/css"/>-->
+        <link href="resources/css/mystyle.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="resources/material/material.min.css" type="text/css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         
@@ -24,7 +24,8 @@
         <script src="resources/js/findjob.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-    </head>
+    </head>-->
+    <jsp:include page="../jsp/partial_view/head.jsp"/>
     <body>
         <jsp:include page="../jsp/header.jsp"/>
         <div class="container" style ="margin-top: 100px; " >
