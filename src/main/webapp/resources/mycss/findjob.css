@@ -8,15 +8,13 @@ and open the template in the editor.
     Author     : quytocngheo
 */
 
-.demo-card-wide.mdl-card {
+.seek-show-card.mdl-card {
   width: 550px;
   height: 200px;
   display: block;
   background-color: #EFF6E6;
-    margin: 30px;
-    transform-origin:center;
-     position: relative;
-     left: 22%;
+    margin: 25px;
+    
 }
 .my-seek-card.mdl-card {
  width: 550px;
@@ -29,12 +27,12 @@ and open the template in the editor.
      left: 25%;
 
 }
-.demo-card-wide > .mdl-card__title {
+.seek-show-card > .mdl-card__title {
   color: #fff;
   height: 176px;
   background: purple;
 }
-.demo-card-wide > .mdl-card__menu {
+.seek-show-card > .mdl-card__menu {
   color: #fff;
 }
 

@@ -31,7 +31,7 @@
         <div class="container">
 	<div class="row">
         <div class="col-sm-6 col-sm-offset-3">
-            <div id="imaginary_container" style="margin: 20px;"> 
+            <div id="imaginary_container" style="margin-top: 100px;margin-left: 150px;margin-right: 20px;margin-bottm: 20px;"> 
                 <form class="input-group stylish-input-group" action="${pageContext.servletContext.contextPath}/seeking-job" method="post">
                    <input type="text" name="password" id="password"  class="form-control" placeholder="Search" value="${searchText}">
 <!--                    <span class="input-group-addon">
@@ -52,14 +52,17 @@
             </div>
         </div>
 	</div>
-
-<table >
+                <div class="col-md-2"  style='background-color: rgb(240, 240, 240)'>
+                    <jsp:include page="partial_view/left_toolbar.jsp"/>
+                </div>
+                <div class=" create-seek"div class="create-seek" style =" width: 600px;padding: 0px; float: right; margin-left: 350px; position:  absolute; margin-bottom: 20px; margin-top: 20px;background-color: white;" >
+                    <table >
             
              <c:forEach items="${listseekingJob}" var="seekingJob">
     
       
 <tr class="item">
-              <div class="demo-card-wide mdl-card mdl-shadow--3dp">
+              <div class="seek-show-card mdl-card mdl-shadow--3dp">
                 <div style = "  width: 180px; height: 180px; float:left;margin: 10px;">
                   <img src="resources/image/${seekingJob.developmentTypeId.image}" alt="Mountain View" style="width:100%;height:100%;">
                 </div>
@@ -102,6 +105,8 @@
             </tr>
   </c:forEach>
           </table>
+                </div>
+
 
 </div>
     </body>

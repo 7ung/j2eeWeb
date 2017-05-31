@@ -15,4 +15,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface DevelopmentTypeRepository extends JpaRepository<DevelopmentType, Integer>{
     public List<DevelopmentType> findByName(String name);
+    public List<DevelopmentType> findAll();
 }

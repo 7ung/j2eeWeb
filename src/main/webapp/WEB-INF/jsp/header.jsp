@@ -77,6 +77,8 @@
                                     <li><a href="${pageContext.servletContext.contextPath}">Tài khoản</a></li>
                                     <li class="divider"></li>
                                     <li><a href="${pageContext.servletContext.contextPath}">Đăng xuất</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="${pageContext.servletContext.contextPath}/create-seeking-job">Tạo yêu cầu tìm việc</a></li>
                                 </ul>
                             </div>
                         </li>

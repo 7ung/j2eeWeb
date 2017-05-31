@@ -46,6 +46,8 @@ public class CreateSeekingJobController extends BaseAuthorizationUserController 
      @Autowired(required = false)
     SeniorityRepository repoSe;
      
+    
+     
      @Autowired(required = false)
     DevelopmentTypeRepository repoDev;
      
@@ -106,7 +108,7 @@ public class CreateSeekingJobController extends BaseAuthorizationUserController 
         if (user == null) {
             return ProfileController.redirect;
         }
-        List<DevelopmentType> listDevelope = (List<DevelopmentType>) user.getDevelopmentTypeCollection();
+        List<DevelopmentType> listDevelope =Lists.newArrayList( repoDev.findAll().iterator());
         model.addAttribute("developmentTypeCollection", listDevelope);
         List<Seniority> seniorities = repoSe.findAll();
         model.addAttribute("seniorities", seniorities);
@@ -212,7 +214,7 @@ public class CreateSeekingJobController extends BaseAuthorizationUserController 
     }
     
     String doneCreate(User user, ModelMap model) {
-        List<DevelopmentType> listDevelope = (List<DevelopmentType>) user.getDevelopmentTypeCollection();
+        List<DevelopmentType> listDevelope = Lists.newArrayList( repoDev.findAll().iterator());
         model.addAttribute("developmentTypeCollection", listDevelope);
         List<Seniority> seniorities = repoSe.findAll();
         model.addAttribute("seniorities", seniorities);

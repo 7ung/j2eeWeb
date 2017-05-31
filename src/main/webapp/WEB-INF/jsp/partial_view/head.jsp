@@ -26,6 +26,7 @@
     <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.tmpl.min.js" type="text/javascript"></script>
     <link href="${pageContext.request.contextPath}/resources/mycss/findjob.css" rel="stylesheet" type="text/css"/>
+    <script src="${pageContext.request.contextPath}/resources/js/findjob.js"></script>
 
     <!-- Include Editor style. -->
     <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>

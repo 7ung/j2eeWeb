@@ -21,6 +21,9 @@
         </c:choose>
         <button class="mdl-button mdl-js-button mdl-button--secondary left-action-btn" onclick="redirectToRecentPost()">
             Bài viết mới nhất
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--secondary left-action-btn" onclick="redirectToSeekingJob()">
+            Xem tin tìm việc
         </button>  
     </div>
 </row>
@@ -61,6 +64,10 @@
     
     function redirectToRecentPost(){
         window.location = "${pageContext.request.contextPath}/recent";
+    }
+    
+    function redirectToSeekingJob() {
+        window.location = "${pageContext.request.contextPath}/seeking-job";
     }
 
 </script>
