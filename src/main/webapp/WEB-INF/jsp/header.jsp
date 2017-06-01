@@ -26,32 +26,25 @@
             </form>
             <ul class="nav navbar-nav">
                 <li><a href="${pageContext.servletContext.contextPath}" class="btn btn-primary btnprimary" role="button"> Trang chủ</a></li>
-                    <li>
-                        <div class="dropdown custom-dropdown">
-                            <button class="btn btn-primary dropdown-toggle btnprimary" type="button" data-toggle="dropdown">Trending
+                <li>
+                    <div class="dropdown custom-dropdown">
+                        <button class="btn btn-primary dropdown-toggle btnprimary" type="button" data-toggle="dropdown">Trending
                             <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a href="${pageContext.servletContext.contextPath}">Bài viết</a></li>
-                                <li><a href="${pageContext.servletContext.contextPath}">Chủ đề</a></li>
-                            </ul>
-                        </div>
-                    </li>
+                        <ul class="dropdown-menu">
+                            <li><a href="${pageContext.servletContext.contextPath}">Bài viết</a></li>
+                            <li><a href="${pageContext.servletContext.contextPath}">Chủ đề</a></li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
             <c:choose>
                 <c:when test="${user != null}">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <div class="dropdown">
-                                <button class="btn btn-primary" type="button" data-toggle="dropdown" id="notification" >${commentfollow.size()}<span class="glyphicon glyphicon-bell"></span></button>
-                                <ul class="dropdown-menu" style="min-width: 100px;">                                                                     
-                                    <c:choose>
-                                        <c:when test='${commentfollow.isEmpty() == false}'>
-                                            <c:forEach items="${commentfollow}" var="p">
-                                                <li><a href="${pageContext.servletContext.contextPath}/post?id=${p.postId.id}"><span style="font-weight: bold; ">${p.userId.username}</span> commented on a post <span style="font-weight: bold;">${p.postId.title}</span></a></li>                                    
-                                            </c:forEach>
-
-                                        </c:when>
-                                    </c:choose>  
+                                <button class="btn btn-primary" type="button" data-toggle="dropdown" ><span class="glyphicon glyphicon-bell" id="notification"></span></button>
+                                <ul class="dropdown-menu" id="dropdown-notification" style="min-width: 100px;">                                                                     
+              
                                 </ul> 
                             </div>
                         </li>
@@ -68,7 +61,7 @@
                         <li>
                             <div class="dropdown custom-dropdown">
                                 <button class="btn btn-primary dropdown-toggle btnprimary" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>
-                                <span class="caret"></span></button>
+                                    <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                     <li><span style="padding-left: 20px; font-weight: bold;">Xin chào, ${user.username}!</span></li>
                                     <li class="divider"></li>
@@ -96,11 +89,31 @@
 </div>
 <script>
     $(document).ready(function () {
-        var dateNumber = ${comment.date} * 1000;
-        var date = new Date(dateNumber);
+        
         $('#notification').click(function () {
-        $('#notification').text("");
+            $('#notification').text("");
+        });
+        var rs = $.ajax({
+            url: "${pageContext.request.contextPath}/notification", // path, nếu là query get thì để ở đây luôn
+            method: 'get',
+            success: function () {
+                // kết quả trả về/ 
+                // đoạn bên dươi thì tùy xử lý
+                var json = $.parseJSON(rs.responseText);
+                if(json.length !== 0){
+                    $('#notification').text(json.length);
+                }
+                
+                json.forEach(function (item, index) {
+                   var li='<li><a href="${pageContext.servletContext.contextPath}/post?id='+item.postId.id+'">'+
+                   '<span style="font-weight: bold; ">'+item.userId.username+'</span>'+
+                   ' commented on a post <span style="font-weight: bold;">'+item.postId.title+'</span>'+
+                   '</a></li>';
+                    $("#dropdown-notification").append(li);
+                });
+            }
+        });
     });
-});
+   
 </script>
 <!--</div>-->

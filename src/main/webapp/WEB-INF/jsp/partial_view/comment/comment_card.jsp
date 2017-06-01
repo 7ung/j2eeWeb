@@ -9,17 +9,16 @@
 <!DOCTYPE html>
 
 <div class="comment-body">
-    <div class="col-md-12 well well-lg">
-        <div class="col-md-12">
+    <div class="col-md-12 well well-lg" >
+        <div class="col-md-12 " style="background: #fff">
 
             <h4 class="col-md-8"><span></span> <c:out value="${comment.userId.username}"/></h4>
             <div class="col-md-4" id="commnent-date-${comment.id}">
 
             </div>
         </div>
-        <div class="well well-lg">
+        <div class="well well-lg" style="background: #fff">
             <p class="media-comment">
-                <c:out value="${comment.id}"/>
                 <c:out value="${comment.content}"/>
             </p>
             <!--            <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>-->

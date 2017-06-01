@@ -50,9 +50,6 @@ public class HomeController extends BaseAuthorizationUserController {
             HttpServletResponse response,
             ModelMap model) {
         User user = super.fetchUser(request, response);
-        if (user != null) {
-            userDao.updateLastLogin(user);
-        }
 
         if (user != null) {
             List<Subject> followedSubjects = subjectDao.getFollowedSubject(user);
@@ -76,6 +73,8 @@ public class HomeController extends BaseAuthorizationUserController {
         if (user != null) {
             List<Comment> notifications = userPostBookmarkDao.getNotifyByUserBookmark(user);
             model.addAttribute("commentfollow", notifications);
+            // set lastLogin again for next notification
+            userDao.updateLastLogin(user);
         }
 
         return "index";

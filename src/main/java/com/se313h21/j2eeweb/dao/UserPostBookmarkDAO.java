@@ -34,6 +34,7 @@ public class UserPostBookmarkDAO {
 
     @Autowired
     PostRepository postRepo;
+    
 
     public boolean isUserFollowedPost(User user, Post post) {
         List<UserPostBookmark> bookmarks = repo.findByUserIdAndPostId(user.getId(), post.getId());
@@ -59,6 +60,7 @@ public class UserPostBookmarkDAO {
                 }
             }
         }
+        
         return result;
     }
 

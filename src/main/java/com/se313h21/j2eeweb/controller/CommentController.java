@@ -89,27 +89,11 @@ public class CommentController extends BaseAuthorizationUserController {
         boolean success = commentDao.delete(comment);
         if (success) {
             return 200;
-            
         } else {
             return 400;
         }
     }
 
-//    @RequestMapping(value = "/post", method = RequestMethod.GET, params = "{id}")
-//    public String comment_show(HttpServletRequest request,
-//            HttpServletResponse response,
-//            @RequestParam(value = "id") int postId,
-//            ModelMap model) {
-//
-//        Post post = postDao.get(postId);
-//
-//        List<Comment> comments = commentDao.getMany(post);
-//        if (comments.size() > 8) {
-//            comments = comments.subList(0, 8);
-//        }
-//
-//        //model.addAttribute("comments", comments);
-//        return "post/post_show";
-//    }
+  
 
 }
