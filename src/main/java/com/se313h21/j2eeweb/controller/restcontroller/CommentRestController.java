@@ -37,7 +37,6 @@ public class CommentRestController extends BaseAuthorizationUserController {
         User user = super.fetchUser(request, response);
         List<Comment> notifies = bookmarkDao.getNotifyByUserBookmark(user);
         userDao.updateLastLogin(user);
-        System.out.println(notifies+"-------------------- ");
         return notifies;
     }
 }

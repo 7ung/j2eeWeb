@@ -70,13 +70,6 @@ public class HomeController extends BaseAuthorizationUserController {
             model.addAttribute("recent_post", allPosts);
         }
 
-        if (user != null) {
-            List<Comment> notifications = userPostBookmarkDao.getNotifyByUserBookmark(user);
-            model.addAttribute("commentfollow", notifications);
-            // set lastLogin again for next notification
-            userDao.updateLastLogin(user);
-        }
-
         return "index";
     }
 
