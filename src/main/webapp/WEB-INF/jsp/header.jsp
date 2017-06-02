@@ -44,7 +44,7 @@
                             <div class="dropdown">
                                 <button class="btn btn-primary" type="button" data-toggle="dropdown" ><span class="glyphicon glyphicon-bell" id="notification"></span></button>
                                 <ul class="dropdown-menu" id="dropdown-notification" style="min-width: 100px;">                                                                     
-              
+
                                 </ul> 
                             </div>
                         </li>
@@ -89,31 +89,33 @@
 </div>
 <script>
     $(document).ready(function () {
-        
+
         $('#notification').click(function () {
             $('#notification').text("");
         });
-        var rs = $.ajax({
-            url: "${pageContext.request.contextPath}/notification", // path, nếu là query get thì để ở đây luôn
-            method: 'get',
-            success: function () {
-                // kết quả trả về/ 
-                // đoạn bên dươi thì tùy xử lý
-                var json = $.parseJSON(rs.responseText);
-                if(json.length !== 0){
-                    $('#notification').text(json.length);
+        if (user != null) {
+            var rs = $.ajax({
+                url: "${pageContext.request.contextPath}/notification", // path, nếu là query get thì để ở đây luôn
+                method: 'get',
+                success: function () {
+                    // kết quả trả về/ 
+                    // đoạn bên dươi thì tùy xử lý
+                    var json = $.parseJSON(rs.responseText);
+                    if (json.length !== 0) {
+                        $('#notification').text(json.length);
+                    }
+
+                    json.forEach(function (item, index) {
+                        var li = '<li><a href="${pageContext.servletContext.contextPath}/post?id=' + item.postId.id + '">' +
+                                '<span style="font-weight: bold; ">' + item.userId.username + '</span>' +
+                                ' commented on a post <span style="font-weight: bold;">' + item.postId.title + '</span>' +
+                                '</a></li>';
+                        $("#dropdown-notification").append(li);
+                    });
                 }
-                
-                json.forEach(function (item, index) {
-                   var li='<li><a href="${pageContext.servletContext.contextPath}/post?id='+item.postId.id+'">'+
-                   '<span style="font-weight: bold; ">'+item.userId.username+'</span>'+
-                   ' commented on a post <span style="font-weight: bold;">'+item.postId.title+'</span>'+
-                   '</a></li>';
-                    $("#dropdown-notification").append(li);
-                });
-            }
-        });
+            });
+        }
     });
-   
+
 </script>
 <!--</div>-->
